@@ -1,0 +1,8 @@
+message MessageServantStateReply
+{
+    repeated string id      = 1;
+    repeated int32 state    = 2;
+    repeated int32 cpu      = 3;
+    repeated int32 memory   = 4;
+    repeated int32 type     = 5;
+}

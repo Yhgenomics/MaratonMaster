@@ -1,0 +1,4 @@
+message MessageGreeting
+{
+    required int32 code = 1;
+}

@@ -1,3 +1,29 @@
+/***********************************************************************************
+This file is part of Project for MaratonFramework
+For the latest info, see  https://github.com/Yhgenomics/MaratonFramework.git
+
+Copyright 2016 Yhgenomics
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+***********************************************************************************/
+
+/***********************************************************************************
+* Description   : 
+* Creator       : 
+* Date          : 
+* Modifed       : When      | Who       | What
+***********************************************************************************/
+
 #ifndef PRCOESS_H_
 #define PRCOESS_H_
 
@@ -19,21 +45,21 @@ class SysProcess
 {
 public:
 
-    typedef std::function<void( SysProcess* , size_t )> prceoss_callback_t;
+    typedef std::function<void( SysProcess* , size_t )> PrceossCallbackType;
     
-    static SysProcess* create( std::string  file , std::string  args , std::string  directry , prceoss_callback_t on_finish );
-    static SysProcess* create( std::string  file , std::string  args , prceoss_callback_t on_finish );
-    static SysProcess* create( std::string  file , prceoss_callback_t on_finish );
-    static void desctroy( SysProcess** process );
+    static SysProcess* Create( std::string  file , std::string  args , std::string  directry , PrceossCallbackType on_finish );
+    static SysProcess* Create( std::string  file , std::string  args , PrceossCallbackType on_finish );
+    static SysProcess* Create( std::string  file , PrceossCallbackType on_finish );
+    static void Desctroy( SysProcess** process );
 
     
-    void* data() { return this->data_; };
-    void data( void* pdata ) { this->data_ = pdata; };
+    void* Data() { return this->data_; };
+    void  Data( void* pdata ) { this->data_ = pdata; };
 
-    std::string std_out() { return this->std_out_; };
+    std::string StdOut() { return this->std_out_; };
 
-    void start();
-    void kill();
+    void Start();
+    void Kill();
 
 private:
 
@@ -43,12 +69,12 @@ private:
     static void uv_prcoess_read_stream( uv_stream_t *stream , ssize_t nread , const uv_buf_t *buf );
    
     SysProcess();
-    SysProcess( std::string  file , std::string  args , std::string  directry , prceoss_callback_t on_finish );
-    SysProcess( std::string  file , std::string  args , prceoss_callback_t on_finish );
-    SysProcess( std::string  file , prceoss_callback_t on_finish );
+    SysProcess( std::string  file , std::string  args , std::string  directry , PrceossCallbackType on_finish );
+    SysProcess( std::string  file , std::string  args , PrceossCallbackType on_finish );
+    SysProcess( std::string  file , PrceossCallbackType on_finish );
     ~SysProcess();
 
-    size_t wait_for_exit();
+    size_t WaitForExit();
 
 #ifdef _WIN32
     STARTUPINFO si_;
@@ -59,25 +85,25 @@ private:
 
 #endif
 
-    prceoss_callback_t callback;
+    PrceossCallbackType callback_;
 
-    void invoke();
+    void Invoke();
 
-    const int STR_LENGTH = 1024;
+    const int   kStrLength = 1024;
 
-    char* file_ = NULL;
-    char* args_ = NULL;;
-    char* directory_ = NULL;
+    char*       file_ = NULL;
+    char*       args_ = NULL;;
+    char*       directory_ = NULL;
 
-    int result = 0;
+    int         result_ = 0;
 
-    uv_sem_t sem;
+    uv_sem_t    sem;
 
-    void* data_ = nullptr;
+    void*       data_ = nullptr;
 
     uv_process_t child_req;
     uv_process_options_t options = { 0 };
-    uv_pipe_t pipe_;
+    uv_pipe_t   pipe_;
 
     std::string std_out_;
 };

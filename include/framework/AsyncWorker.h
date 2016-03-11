@@ -1,9 +1,28 @@
-/* * * * * * * * * * * * * * * *
-* YHGenomics Inc.
-* Author     : yang shubo
-* Date       :
-* Description:
-* * * * * * * * * * * * * * * */
+/***********************************************************************************
+This file is part of Project for MaratonFramework
+For the latest info, see  https://github.com/Yhgenomics/MaratonFramework.git
+
+Copyright 2016 Yhgenomics
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+***********************************************************************************/
+
+/***********************************************************************************
+* Description   :
+* Creator       :
+* Date          :
+* Modifed       : When      | Who       | What
+***********************************************************************************/
 
 #ifndef ASYNC_WORKER_H_
 #define ASYNC_WORKER_H_ 
@@ -20,41 +39,41 @@ class AsyncWorker;
 class IAsyncWorkerNotifier
 {
 public:
-    virtual void on_async_work( AsyncWorker* worker ) { };
-    virtual void on_async_work_finish( AsyncWorker* worker ) { };
+    virtual void OnAsyncWork( AsyncWorker* worker ) {};
+    virtual void OnAsyncWorkFinish( AsyncWorker* worker ) {};
 };
 
 class AsyncWorker
 {
 public:
 
-    typedef std::function<void( AsyncWorker* )> callback_t;
-    
-    static AsyncWorker* create ( callback_t acting , 
-                                 callback_t finish, 
-                                 void* data );
+    typedef std::function<void( AsyncWorker* )> CallbackType;
 
-    static AsyncWorker* create ( callback_t acting , 
-                                 void* data );
+    static AsyncWorker* Create( CallbackType acting ,
+                                CallbackType finish ,
+                                void* data );
 
-    static void         stop   ( AsyncWorker* worker );
+    static AsyncWorker* Create( CallbackType acting ,
+                                void* data );
+
+    static void         Stop( AsyncWorker* worker );
 
 
-    void data           ( void* value ) { this->data_ = value; };
-    void* data          ( ) { return this->data_; };
+    void  Data( void* value ) { this->data_ = value; };
+    void* Data() { return this->data_; };
 
 
 private:
 
-    void stop( );
-    AsyncWorker( callback_t acting, callback_t finish );
+    void Stop();
+    AsyncWorker( CallbackType acting , CallbackType finish );
 
-    void start();
+    void Start();
 
     void*       data_;
-    uv_work_t   worker;
-    callback_t  acting_callback_;
-    callback_t  finish_callback_;
+    uv_work_t   worker_;
+    CallbackType  acting_callback_;
+    CallbackType  finish_callback_;
 
     static void uv_process_work_callback( uv_work_t* req );
     static void uv_process_after_work_callback( uv_work_t* req , int status );
@@ -63,4 +82,3 @@ private:
 NS_MARATON_END
 
 #endif // !ASYNC_WORKER_H_ 
- 

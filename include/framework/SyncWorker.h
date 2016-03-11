@@ -1,9 +1,28 @@
-/* * * * * * * * * * * * * * * *
-* YHGenomics Inc.
-* Author     : yang shubo
-* Date       : 2015-11-11
-* Description:
-* * * * * * * * * * * * * * * */
+/***********************************************************************************
+This file is part of Project for MaratonFramework
+For the latest info, see  https://github.com/Yhgenomics/MaratonFramework.git
+
+Copyright 2016 Yhgenomics
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+***********************************************************************************/
+
+/***********************************************************************************
+* Description   : 
+* Creator       : 
+* Date          : 
+* Modifed       : When      | Who       | What
+***********************************************************************************/
 
 #ifndef SYNC_WORKER_H_
 #define SYNC_WORKER_H_
@@ -19,22 +38,22 @@ class SyncWorker
 {
 public:
 
-    typedef std::function<bool( SyncWorker* )> syncworker_callback_t;
+    typedef std::function<bool( SyncWorker* )> SyncworkerCallbackType;
 
-    static SyncWorker* create       ( const syncworker_callback_t  work_callback , 
-                                      const syncworker_callback_t  after_callback , 
+    static SyncWorker* Create       ( const SyncworkerCallbackType  work_callback , 
+                                      const SyncworkerCallbackType  after_callback , 
                                       void* data );
 
-    static SyncWorker* create       ( const size_t time_span,
-                                      const syncworker_callback_t  work_callback , 
-                                      const syncworker_callback_t  after_callback , 
+    static SyncWorker* Create       ( const size_t time_span,
+                                      const SyncworkerCallbackType  work_callback , 
+                                      const SyncworkerCallbackType  after_callback , 
                                       void* data );
-    static void        stop         ( SyncWorker * worker );
+    static void        Stop         ( SyncWorker * worker );
 
-    void*              data         ( ) { return this->data_; };
-    void               data         ( void* value ) { this->data_ = value; };
-    size_t             loop_count   ( ) { return loop_count_; };
-    size_t             loop_time    ( ) { return loop_time_ * loop_count_; };
+    void*              Data         () { return this->data_; };
+    void               Data         ( void* value ) { this->data_ = value; };
+    size_t             LoopCount    () { return loop_count_; };
+    size_t             LoopTime     () { return loop_time_ * loop_count_; };
 
 private:
 
@@ -43,16 +62,16 @@ private:
     SyncWorker  ( );
     ~SyncWorker ( );
 
-    void stop   ( );
-    void start  ( );
+    void Stop   ( );
+    void Start  ( );
 
     bool                            finished_       = false;
     void*                           data_           = nullptr;
     uv_timer_t                      timer_          = { 0 };
     size_t                          loop_time_      = 1;
 
-    syncworker_callback_t           cb_work_        = nullptr;
-    syncworker_callback_t           cb_after_work_  = nullptr;
+    SyncworkerCallbackType           cb_work_        = nullptr;
+    SyncworkerCallbackType           cb_after_work_  = nullptr;
     size_t                          loop_count_     = 1;
 };
 

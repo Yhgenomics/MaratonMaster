@@ -1,0 +1,4 @@
+message MessageStateReply
+{
+    required int32 code = 1;
+}

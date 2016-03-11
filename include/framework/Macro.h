@@ -1,9 +1,28 @@
-/* * * * * * * * * * * * * * * *
-* YHGenomics Inc.
-* Author     : yang shubo
-* Date       : 2015-11-19
-* Description:
-* * * * * * * * * * * * * * * */
+/***********************************************************************************
+This file is part of Project for MaratonFramework
+For the latest info, see  https://github.com/Yhgenomics/MaratonFramework.git
+
+Copyright 2016 Yhgenomics
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+***********************************************************************************/
+
+/***********************************************************************************
+* Description   : 
+* Creator       : 
+* Date          : 
+* Modifed       : When      | Who       | What
+***********************************************************************************/
 
 #ifndef MRT_MACRO_H_
 #define MRT_MACRO_H_
@@ -75,10 +94,10 @@ public:                                                     \
 
 #if _WIN32
 
-#define LOG_DEBUG(msg_,...) Logger::log("%s:%d "##msg_,__FILE__,__LINE__,##__VA_ARGS__)
+#define LOG_DEBUG(msg_,...) Logger::Log("%s:%d "##msg_,__FILE__,__LINE__,##__VA_ARGS__)
 #define LOG_DEBUG_UV(status) \
                 if( status != 0 ) \
-                    Logger::log("%s:%d %s",\
+                    Logger::Log("%s:%d %s",\
                                 __FILE__,\
                                 __LINE__,\
                                 uv_strerror((int)status))
@@ -98,8 +117,8 @@ public:                                                     \
 
 #define LOG_UV_ERROR(__x__) if ( __x__ != 0 ) printf( "error %s", \
                                                   uv_strerror((int)__x__));
-#define LOG_SYS(msg_,...) Logger::sys(msg_,__VA_ARGS__)
-#define LOG_EERROR(msg_,...) Logger::error(msg_,__VA_ARGS__)
+#define LOG_SYS(msg_,...) Logger::Sys(msg_,__VA_ARGS__)
+#define LOG_EERROR(msg_,...) Logger::Error(msg_,__VA_ARGS__)
 #define UV_ERROR(status) uv_strerror((int)status)
 
 #else

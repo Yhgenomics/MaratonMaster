@@ -84,9 +84,14 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
+      <AdditionalIncludeDirectories>$(ProjectDir)..\3rd;$(ProjectDir)..\include;$(ProjectDir)..\include\framework;$(ProjectDir)..\include\message;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+      <PreprocessorDefinitions>_SCL_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalLibraryDirectories>$(ProjectDir)..\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>MaratonFramework.lib;libuv.lib;advapi32.lib;iphlpapi.lib;psapi.lib;shell32.lib;userenv.lib;ws2_32.lib;libprotobuf.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -119,6 +124,69 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <None Include="..\LICENSE" />
+    <None Include="..\proto\MessageGreeting.proto" />
+    <None Include="..\proto\MessageHeartBeat.proto" />
+    <None Include="..\proto\MessageRegist.proto" />
+    <None Include="..\proto\MessageServantState.proto" />
+    <None Include="..\proto\MessageServantStateReply.proto" />
+    <None Include="..\proto\MessageState.proto" />
+    <None Include="..\proto\MessageStateReply.proto" />
+    <None Include="..\proto\MessageTaskDeliver.proto" />
+    <None Include="..\proto\MessageTaskDeliverReply.proto" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\include\message\MessageGreeting.pb.cc" />
+    <ClCompile Include="..\include\message\MessageHeartBeat.pb.cc" />
+    <ClCompile Include="..\include\message\MessageRegist.pb.cc" />
+    <ClCompile Include="..\include\message\MessageServantState.pb.cc" />
+    <ClCompile Include="..\include\message\MessageServantStateReply.pb.cc" />
+    <ClCompile Include="..\include\message\MessageState.pb.cc" />
+    <ClCompile Include="..\include\message\MessageStateReply.pb.cc" />
+    <ClCompile Include="..\include\message\MessageTaskDeliver.pb.cc" />
+    <ClCompile Include="..\include\message\MessageTaskDeliverReply.pb.cc" />
+    <ClCompile Include="..\source\AddAllHandler.cpp" />
+    <ClCompile Include="..\source\GeneralSession.cpp" />
+    <ClCompile Include="..\source\MasterMain.cpp" />
+    <ClCompile Include="..\source\Servant.cpp" />
+    <ClCompile Include="..\source\ServantListener.cpp" />
+    <ClCompile Include="..\source\ServantManager.cpp" />
+    <ClCompile Include="..\source\ServantSession.cpp" />
+    <ClCompile Include="..\source\Task.cpp" />
+    <ClCompile Include="..\source\TaskManager.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\include\BusinessListener.h" />
+    <ClInclude Include="..\include\BusinessSession.h" />
+    <ClInclude Include="..\include\Error.h" />
+    <ClInclude Include="..\include\GeneralSession.h" />
+    <ClInclude Include="..\include\handler\MessageGreetingHandler.h" />
+    <ClInclude Include="..\include\handler\MessageHeartBeatHandler.h" />
+    <ClInclude Include="..\include\handler\MessageRegistHandler.h" />
+    <ClInclude Include="..\include\handler\MessageServantStateHandler.h" />
+    <ClInclude Include="..\include\handler\MessageServantStateReplyHandler.h" />
+    <ClInclude Include="..\include\handler\MessageStateHandler.h" />
+    <ClInclude Include="..\include\handler\MessageStateReplyHandler.h" />
+    <ClInclude Include="..\include\handler\MessageTaskDeliverHandler.h" />
+    <ClInclude Include="..\include\handler\MessageTaskDeliverReplyHandler.h" />
+    <ClInclude Include="..\include\MasterGloable.h" />
+    <ClInclude Include="..\include\MessageHandler.h" />
+    <ClInclude Include="..\include\MessageHub.h" />
+    <ClInclude Include="..\include\message\MessageGreeting.pb.h" />
+    <ClInclude Include="..\include\message\MessageHeartBeat.pb.h" />
+    <ClInclude Include="..\include\message\MessageRegist.pb.h" />
+    <ClInclude Include="..\include\message\MessageServantState.pb.h" />
+    <ClInclude Include="..\include\message\MessageServantStateReply.pb.h" />
+    <ClInclude Include="..\include\message\MessageState.pb.h" />
+    <ClInclude Include="..\include\message\MessageStateReply.pb.h" />
+    <ClInclude Include="..\include\message\MessageTaskDeliver.pb.h" />
+    <ClInclude Include="..\include\message\MessageTaskDeliverReply.pb.h" />
+    <ClInclude Include="..\include\Servant.h" />
+    <ClInclude Include="..\include\ServantListener.h" />
+    <ClInclude Include="..\include\ServantManager.h" />
+    <ClInclude Include="..\include\ServantSession.h" />
+    <ClInclude Include="..\include\Task.h" />
+    <ClInclude Include="..\include\TaskDescriptor.h" />
+    <ClInclude Include="..\include\TaskManager.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

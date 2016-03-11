@@ -1,0 +1,8 @@
+message MessageRegist
+{
+    required string id      = 1;
+    required int32 state    = 2;
+    required int32 cpu      = 3;
+    required int32 memory   = 4;
+    required int32 type     = 5;
+}

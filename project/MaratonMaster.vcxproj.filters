@@ -13,8 +13,198 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="MessageHandlers">
+      <UniqueIdentifier>{c5a0f1f6-dd6a-4025-b3c8-af980760fa49}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Proto">
+      <UniqueIdentifier>{81b3882b-b1a1-42ae-b9b1-33b87131ab29}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Proto\defines">
+      <UniqueIdentifier>{4f7f3a76-ad9d-4217-9fc6-d64998b4aa7c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\LICENSE" />
+    <None Include="..\proto\MessageServantState.proto">
+      <Filter>Proto\defines</Filter>
+    </None>
+    <None Include="..\proto\MessageServantStateReply.proto">
+      <Filter>Proto\defines</Filter>
+    </None>
+    <None Include="..\proto\MessageState.proto">
+      <Filter>Proto\defines</Filter>
+    </None>
+    <None Include="..\proto\MessageStateReply.proto">
+      <Filter>Proto\defines</Filter>
+    </None>
+    <None Include="..\proto\MessageTaskDeliver.proto">
+      <Filter>Proto\defines</Filter>
+    </None>
+    <None Include="..\proto\MessageTaskDeliverReply.proto">
+      <Filter>Proto\defines</Filter>
+    </None>
+    <None Include="..\proto\MessageGreeting.proto">
+      <Filter>Proto\defines</Filter>
+    </None>
+    <None Include="..\proto\MessageRegist.proto">
+      <Filter>Proto\defines</Filter>
+    </None>
+    <None Include="..\proto\MessageHeartBeat.proto">
+      <Filter>Proto\defines</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\source\MasterMain.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\source\ServantListener.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\source\ServantSession.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\source\Servant.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\source\AddAllHandler.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\source\GeneralSession.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\source\ServantManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\source\Task.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\include\message\MessageServantState.pb.cc">
+      <Filter>Proto</Filter>
+    </ClCompile>
+    <ClCompile Include="..\include\message\MessageServantStateReply.pb.cc">
+      <Filter>Proto</Filter>
+    </ClCompile>
+    <ClCompile Include="..\include\message\MessageState.pb.cc">
+      <Filter>Proto</Filter>
+    </ClCompile>
+    <ClCompile Include="..\include\message\MessageStateReply.pb.cc">
+      <Filter>Proto</Filter>
+    </ClCompile>
+    <ClCompile Include="..\include\message\MessageTaskDeliver.pb.cc">
+      <Filter>Proto</Filter>
+    </ClCompile>
+    <ClCompile Include="..\include\message\MessageTaskDeliverReply.pb.cc">
+      <Filter>Proto</Filter>
+    </ClCompile>
+    <ClCompile Include="..\include\message\MessageGreeting.pb.cc">
+      <Filter>Proto</Filter>
+    </ClCompile>
+    <ClCompile Include="..\include\message\MessageRegist.pb.cc">
+      <Filter>Proto</Filter>
+    </ClCompile>
+    <ClCompile Include="..\source\TaskManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\include\message\MessageHeartBeat.pb.cc">
+      <Filter>Proto</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\include\Servant.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\GeneralSession.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\ServantSession.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\ServantListener.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\Error.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\MasterGloable.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\TaskDescriptor.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\ServantManager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\Task.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\TaskManager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\MessageHub.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\MessageHandler.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\handler\MessageServantStateHandler.h">
+      <Filter>MessageHandlers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\handler\MessageServantStateReplyHandler.h">
+      <Filter>MessageHandlers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\BusinessSession.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\BusinessListener.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\handler\MessageStateHandler.h">
+      <Filter>MessageHandlers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\handler\MessageStateReplyHandler.h">
+      <Filter>MessageHandlers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\handler\MessageTaskDeliverHandler.h">
+      <Filter>MessageHandlers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\handler\MessageTaskDeliverReplyHandler.h">
+      <Filter>MessageHandlers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\message\MessageServantState.pb.h">
+      <Filter>Proto</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\message\MessageServantStateReply.pb.h">
+      <Filter>Proto</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\message\MessageState.pb.h">
+      <Filter>Proto</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\message\MessageStateReply.pb.h">
+      <Filter>Proto</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\message\MessageTaskDeliver.pb.h">
+      <Filter>Proto</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\message\MessageTaskDeliverReply.pb.h">
+      <Filter>Proto</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\message\MessageGreeting.pb.h">
+      <Filter>Proto</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\message\MessageRegist.pb.h">
+      <Filter>Proto</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\handler\MessageGreetingHandler.h">
+      <Filter>MessageHandlers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\handler\MessageRegistHandler.h">
+      <Filter>MessageHandlers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\message\MessageHeartBeat.pb.h">
+      <Filter>Proto</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\handler\MessageHeartBeatHandler.h">
+      <Filter>MessageHandlers</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

@@ -1,0 +1,4 @@
+message MessageServantState
+{
+    required int32 code = 1;
+}

@@ -1,9 +1,28 @@
-/* * * * * * * * * * * * * * * *
-* YHGenomics Inc.
-* Author     : yang shubo
-* Date       : 2015-11-20
-* Description:
-* * * * * * * * * * * * * * * */
+/***********************************************************************************
+This file is part of Project for MaratonFramework
+For the latest info, see  https://github.com/Yhgenomics/MaratonFramework.git
+
+Copyright 2016 Yhgenomics
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+***********************************************************************************/
+
+/***********************************************************************************
+* Description   : 
+* Creator       : 
+* Date          : 
+* Modifed       : When      | Who       | What
+***********************************************************************************/
 
 #ifndef HTTP_H_
 #define HTTP_H_
@@ -23,25 +42,25 @@ NS_MARATON_BEGIN
 class HTTPRequest;
 class HTTPResponse;
 
-typedef std::function<uptr<Buffer>( HTTPRequest* req )> write_callback_t;
-typedef std::function<uptr<Buffer>( HTTPResponse* rep )> read_callback_t;
-typedef std::function<void( HTTPResponse* rep , uptr<Buffer> buffer )> rep_read_callback_t;
+typedef std::function<uptr<Buffer>( HTTPRequest* req )> WriteCallbackType;
+typedef std::function<uptr<Buffer>( HTTPResponse* rep )> ReadCallbackType;
+typedef std::function<void( HTTPResponse* rep , uptr<Buffer> buffer )> RepReadCallbackType;
 
 class Url
 {
 public:
 
     Url                  ( std::string url );
-    ~Url                 ( );
+    ~Url                 ();
                     
-    std::string domain   ( );
-    std::string path     ( );
-    std::string protocol ( );
-    int port             ( );
+    std::string Domain   ();
+    std::string Path     ();
+    std::string Protocol ();
+    int         Port     ();
 
 protected:
 
-    virtual void parse( std::string url );
+    virtual void Parse( std::string url );
 
 private:
 
@@ -49,7 +68,7 @@ private:
     std::string domain_   = "";
     std::string path_     = "";
     std::string protocol_ = "";
-    int port_             = 80;
+    int         port_     = 80;
     std::string tmp_      = "";
 };
 // ===========================================
@@ -61,31 +80,30 @@ public:
      
     HTTPRequest ( std::string url ,
                   std::string method );
-    HTTPRequest ( );
-    ~HTTPRequest( );
+    HTTPRequest ();
+    ~HTTPRequest();
 
-    void write_callback         ( write_callback_t callback );
+    void         WriteCallback  ( WriteCallbackType callback );
 
-    void content                ( uptr<Buffer> content );
-    uptr<Buffer> content        ( );
-    void content_length         ( size_t size );
-    size_t content_length       ( );
+    void         Content        ( uptr<Buffer> content );
+    uptr<Buffer> Content        ();
+    void         ContentLength  ( size_t size );
+    size_t       ContentLength  ();
     
-    void header                 ( std::string key ,
-                                  std::string value );
-    std::string header          ( std::string key );
-    std::string domain          ( ){ return this->domain_; };
-    std::string host            ( ){ return this->ip_;};
+    void         Header         ( std::string key , std::string value );
+    std::string  Header         ( std::string key );
+    std::string  Domain         (){ return this->domain_; };
+    std::string  Host           (){ return this->ip_;     };
 
-    void parse                  ( uptr<Buffer> data );
+    void Parse                  ( uptr<Buffer> data );
 
-    uptr<Buffer> build_header   ( );
-    uptr<Buffer> build_body     ( );
+    uptr<Buffer> BuildHeader    ();
+    uptr<Buffer> BuildBody      ();
 
-    void* data                  ( );
-    void data                   ( void* value );
+    void*        Data           ();
+    void         Data           ( void* value );
 
-    bool finish                 ( );
+    bool         Finish         ();
      
 private:
 
@@ -97,7 +115,7 @@ private:
     std::map<std::string , std::string> header_;
     size_t                              content_length_ = 0;
     uptr<Buffer>                        content_        = nullptr;
-    write_callback_t                    write_callback_ = nullptr;
+    WriteCallbackType                   write_callback_ = nullptr;
     void*                               data_           = nullptr;
 
     // Parsing used
@@ -127,33 +145,33 @@ class HTTPResponse
 {
 public:
      
-    //HTTPResponse                 ( size_t status );
-    HTTPResponse                 ( );
-    ~HTTPResponse                ( );
+    //HTTPResponse                 ( size_t Status );
+    HTTPResponse                 ();
+    ~HTTPResponse                ();
 
-    void         read_callback   ( rep_read_callback_t callback );
+    void         ReadCallback    ( RepReadCallbackType callback );
                                  
-    void*        data            ( );
-    void         data            ( void* value );
+    void*        Data            ();
+    void         Data            ( void* value );
                                         
-    void         header          ( std::string key , 
+    void         Header          ( std::string key , 
                                    std::string value );
-    std::string  header          ( std::string key );
+    std::string  Header          ( std::string key );
                  
-    void         content         ( uptr<Buffer> content );
-    uptr<Buffer> content         ( );
-    void         content_length  ( size_t size );
-    size_t       content_length  ( );
+    void         Content         ( uptr<Buffer> content );
+    uptr<Buffer> Content         ();
+    void         ContentLength   ( size_t size );
+    size_t       ContentLength   ();
 
-    void         status          ( size_t code );
-    size_t       status          ( );
+    void         Status          ( size_t code );
+    size_t       Status          ();
 
-    uptr<Buffer> build_header    ( );
-    uptr<Buffer> build_body      ( );
+    uptr<Buffer> BuildHeader     ();
+    uptr<Buffer> BuildBody       ();
 
-    void         parse           ( uptr<Buffer> data );
+    void         Parse           ( uptr<Buffer> data );
 
-    bool         finish          ( );
+    bool         Finish          ();
 
 private: 
 
@@ -161,12 +179,12 @@ private:
     std::string         status_str_     = "";
     size_t              content_length_ = 0;
     std::string         protocol_       = "";
-    rep_read_callback_t read_callback_  = nullptr;
+    RepReadCallbackType read_callback_  = nullptr;
     void*               data_           = nullptr;
     uptr<Buffer>        content_        = nullptr;
     std::map<
        std::string , 
-       std::string> header_;
+       std::string>     header_;
 
     // Parsing used
     // ==================================================================
@@ -193,14 +211,14 @@ public:
     WebRequestSession           ( uptr<HTTPRequest> req );
     ~WebRequestSession          ( );
 
-    uptr<HTTPResponse> response ( );
+    uptr<HTTPResponse> Response ( );
 
 protected:
 
-    virtual void on_connect ( )                  ;
-    virtual void on_read    ( uptr<Buffer> data );
-    virtual void on_write   ( uptr<Buffer> data );
-    virtual void on_close   ( )                  ;
+    virtual void OnConnect      ()                  ;
+    virtual void OnRead         ( uptr<Buffer> data );
+    virtual void OnWrite        ( uptr<Buffer> data );
+    virtual void OnClose        ()                  ;
 
 private:
 
@@ -217,15 +235,15 @@ private:
 //public:
 //
 //    WebRequestConnector ( uptr<HTTPRequest> req , 
-//                          callback_response_t callback);
+//                          callback_response_t callback_);
 //    ~WebRequestConnector( );
 //protected:
 //
-//    virtual Session * create_session( ) override;
+//    virtual Session * CreateSession( ) override;
 //
-//    virtual void on_session_open    ( Session * session ) override;
+//    virtual void OnSessionOpen    ( Session * session ) override;
 //
-//    virtual void on_session_close   ( Session * session ) override;
+//    virtual void OnSessionClose   ( Session * session ) override;
 //
 //private:
 //
@@ -241,7 +259,7 @@ private:
 //public:
 //
 //    void get( std::string url , 
-//              callback_response_t callback);
+//              callback_response_t callback_);
 //};
 
 NS_MARATON_END

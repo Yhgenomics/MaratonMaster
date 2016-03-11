@@ -1,9 +1,28 @@
-/* * * * * * * * * * * * * * * *
-* YHGenomics Inc.
-* Author     : yang shubo
-* Date       : 2015-11-22
-* Description:
-* * * * * * * * * * * * * * * */
+/***********************************************************************************
+This file is part of Project for MaratonFramework
+For the latest info, see  https://github.com/Yhgenomics/MaratonFramework.git
+
+Copyright 2016 Yhgenomics
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+***********************************************************************************/
+
+/***********************************************************************************
+* Description   : 
+* Creator       : 
+* Date          : 
+* Modifed       : When      | Who       | What
+***********************************************************************************/
 
 #ifndef WEB_CLIENT_H_
 #define WEB_CLIENT_H_
@@ -16,7 +35,7 @@
 
 NS_MARATON_BEGIN 
 
-typedef std::function<void( uptr<HTTPResponse> )>  callback_response_t;
+typedef std::function<void( uptr<HTTPResponse> )>  CallbackResponseType;
  
 class WebClient
 {
@@ -24,23 +43,23 @@ public:
 
     WebClient ( );
 
-    void get        ( std::string url , 
-                      callback_response_t callback );
+    void Get        ( std::string url , 
+                      CallbackResponseType callback );
 
-    void post       ( std::string url , 
+    void Post       ( std::string url , 
                       std::string data , 
-                      callback_response_t callback );
+                      CallbackResponseType callback );
 
-    void post_file  ( std::string url , 
+    void PostFile   ( std::string url , 
                       std::string file_token , 
                       FILE* pfile , 
-                      callback_response_t callback );
+                      CallbackResponseType callback );
 
-    void dl_file    ( std::string url ,
+    void DownloadFile ( std::string url ,
                       FILE* pfile ,
-                      callback_response_t callback);
+                      CallbackResponseType callback);
 
-    void header( std::string key, std::string value );
+    void Header( std::string key, std::string value );
 
 private:
 
@@ -48,26 +67,26 @@ private:
     {
     public:
 
-        uptr<HTTPRequest>   req              = nullptr;
-        uptr<HTTPResponse>  rep              = nullptr;
-        callback_response_t callback         = nullptr; 
+        uptr<HTTPRequest>    req_             = nullptr;
+        uptr<HTTPResponse>   rep_             = nullptr;
+        CallbackResponseType callback_        = nullptr; 
 
-        std::string       ip                 = "";
-        std::string       address            = "";
-        int               port               = 0;
+        std::string       ip_                = "";
+        std::string       address_            = "";
+        int               port_               = 0;
         uv_loop_t*        uv_loop            = nullptr;
         uv_getaddrinfo_t  uv_getaddrinfo     = { 0 };
-        addrinfo          addrinfo           = { 0 };
-        sockaddr_in       addr_in            = { 0 };
+        addrinfo          addrinfo_           = { 0 };
+        sockaddr_in       addr_in_            = { 0 };
                                             
         uv_connect_t      uv_connect         = { 0 };
         uv_tcp_t          uv_tcp             = { 0 };
 
-        void invoke_callback( uptr<HTTPResponse> rep )
+        void InvokeCallback( uptr<HTTPResponse> rep )
         {
-            if ( this->callback != nullptr )
+            if ( this->callback_ != nullptr )
             {
-                this->callback( move_ptr( rep ) );
+                this->callback_( move_ptr( rep ) );
             }
         }
     };
@@ -79,8 +98,8 @@ private:
         WebClientRequestToken *     session = nullptr;
     };
 
-    void query_dns                      ( uptr<WebClientRequestToken> token );
-    void fill_header                    ( HTTPRequest* req );
+    void QueryDns                      ( uptr<WebClientRequestToken> token );
+    void FillHeader                    ( HTTPRequest* req );
     static void uv_send_request         ( WebClientRequestToken* token );
     static void uv_process_resolved     ( uv_getaddrinfo_t * req , 
                                           int status , 

@@ -26,11 +26,11 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Main.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
+    <None Include="..\LICENSE" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\LICENSE" />
+    <ClCompile Include="TestMain.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>
