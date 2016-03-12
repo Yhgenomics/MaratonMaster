@@ -26,24 +26,25 @@ limitations under the License.
 #ifndef BUSINESS_SESSION_H_
 #define BUSINESS_SESSION_H_ 
 
+#include "GeneralSession.h"
+#include "MRT.h"
 #include <vector>
 #include <mutex>
 #include <string>
 
-#include "GeneralSession.h"
-#include "MRT.h"
-
-class BusinessSession :
-    public GeneralSession
+// @Description : Business session is the session responseable to a business node.
+// @Example     : Be created and use in Business listener. See BusinessListener for
+//                more deatails              
+// @Note        : It is under one-time use and no-hold strategy, which means master 
+//                will not manage them.
+class BusinessSession : public GeneralSession
 {
 public:
-
+    //Constructor
     BusinessSession() {};
+
+    //Deconstrucotr
     ~BusinessSession() override {};
-
-protected:
-
-private:
 
 };
 

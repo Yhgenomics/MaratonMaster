@@ -29,26 +29,45 @@ limitations under the License.
 
 #include "MRT.h"
 #include <google/protobuf/message.h>
-#include <memory>
 
-class GeneralSession : public MRT::Session,public std::enable_shared_from_this<GeneralSession>
+// @Description : General Session for handle the protobuf messages.                      
+// @Note        : The messages are transed by TCP. 
+class GeneralSession : public MRT::Session
 {
 public:
 
-    GeneralSession           (){};
-    virtual ~GeneralSession  () override {};
-    size_t  ID               (){return id_ ;};
-    virtual void SendOut     ( uptr<::google::protobuf::Message> );
+    // Contructor
+    GeneralSession();
+    
+    // Deconstructor
+    virtual ~GeneralSession() override {};
+
+    // Getter for ID
+    // @note    : ID is set in constructor automaticly in an increaing way.
+    //            No ID setter here.
+    size_t  ID()                       { return id_; };
+    
+    // Send an porotobuf message out in Maraton's style
+    virtual void SendOut( uptr<::google::protobuf::Message> );
 
 protected:
     
+    // Callback when session connecting
     virtual void OnConnect()                       override;
+
+    // Callback when receiving data from net
     virtual void OnRead( uptr<MRT::Buffer> data )  override;
+
+    // Callback when write adata to net
     virtual void OnWrite( uptr<MRT::Buffer> data ) override;
+
+    // Callback when session closing
     virtual void OnClose()                         override;
 
 private:
 
+    // The TCP package may not delivered at one time
+    // so it's important to remember what have done. 
     enum MessageParseState
     {
         kHeader = 1,
@@ -56,13 +75,25 @@ private:
         kBody
     };
 
-    MRT::CircleBuffer   circle_buffer_; 
+    // Restore the raw data from net
+    MRT::CircleBuffer   circle_buffer_;
+    
+    // Current parse staste 
     MessageParseState   parse_state_     = MessageParseState::kHeader;
+    
+    // Message body's length
     size_t              body_length_     = 0;
-    size_t              oringal_size_    = 0;
+
+    // [NOT IN USE NOW]Orignal message's size
+    size_t              original_size_   = 0;
+
+    // [NOT IN USE NOW]Compressed message's size
     size_t              compressed_size_ = 0;
+
+    // General session's ID
     size_t              id_              = -1;
 
+    // [NOT IN USE NOW]
     void TryPopMessage( );
 };
 

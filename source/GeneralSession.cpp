@@ -26,10 +26,18 @@ limitations under the License.
 
 #include <GeneralSession.h>
 #include <MessageHub.h>
+#include "MasterGloable.h"
 #include <memory>
 
 void GeneralSession::OnConnect()
 {
+}
+
+GeneralSession::GeneralSession()
+{
+    static size_t general_session_id = 10000;
+    this->id_          = general_session_id;
+    general_session_id = ( general_session_id + 1 ) % MAX_GENERAL_SESSION;
 }
 
 void GeneralSession::SendOut( uptr<::google::protobuf::Message> message )

@@ -108,6 +108,12 @@
     <ClCompile Include="..\include\message\MessageHeartBeat.pb.cc">
       <Filter>Proto</Filter>
     </ClCompile>
+    <ClCompile Include="..\source\BusinessListener.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\source\MessageHub.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\include\Servant.h">

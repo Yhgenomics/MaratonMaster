@@ -93,14 +93,14 @@ bool Servant::CheckTimeout()
 {
     size_t delta = Timer::Tick() - this->last_update_time_;
 
-    //if ( delta >= SERVANT_TIMEOUT )
-    //{
-    //    this->last_update_time_ = Timer::Tick();
-    //    this->connected_        = false;
-    //    this->session_->close();
-    //    LOG_SYS( "Kick %ld\r\n" , this->Session()->ID() );
-    //    return true;
-    //}
+    if ( delta >= SERVANT_TIMEOUT )
+    {
+        this->last_update_time_ = Timer::Tick();
+        this->connected_        = false;
+        this->session_->close();
+        LOG_SYS( "Kick Servant Session ID: [ %ld ] \r\n" , this->Session()->ID() );
+        return true;
+    }
 
     return false;
 }

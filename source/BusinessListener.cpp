@@ -18,33 +18,33 @@ limitations under the License.
 ***********************************************************************************/
 
 /***********************************************************************************
-* Description   : 
+* Description   : Listener for Business session.
 * Creator       : Ke Yang(keyang@yhgenomics.com)
-* Date          : 2016/2/29
+* Date          : 2016/3/12
 * Modifed       : When      | Who       | What
 ***********************************************************************************/
-#ifndef MARATON_GLOABLE_H_
-#define MARATON_GLOABLE_H_ 
 
-#include <stdio.h> 
-#include "MRT.h"
+#include "BusinessListener.h"
 
-#ifdef DEBUB_ONLY
-#define SERVANT_TIMEOUT     99999999
+// Callback when the business session opening.
+// @note    : use naked new and raw pointer under the constrains from Maraton's
+//            framework.      
+MRT::Session * BusinessListener::CreateSession()
+{
+    return new BusinessSession();   
+}
 
-#else
-// @note    :unit ms
-//           1 s = 1000000 ms
-#define SERVANT_TIMEOUT     10000000
-#endif
+// Callback when the business session opening.
+void BusinessListener::OnSessionOpen( MRT::Session * session )
+{
+    LOG_SYS( "Business session in. IP Address :[ %ld ]\r\n" , session->ip_address() );
+}
 
-#define MAX_GENERAL_SESSION 0xFFFFFFFF
-
-#define LISTEN_PORT         90
-#define BUSINESS_PORT       91
-#define RESTAPI_PORT        8080
-
-#define WEB_SERVER_NAME         "YHGenomics/Maraton"
-#define CONF_KEY_WEBSUBSCRIBER  "web_subscriber"
-
-#endif // !MARATON_GLOABLE_H_ 
+// Callback when the business session closing.
+// @note    : Maraton's Listener must delete the session pointer in the OnsessionClose
+//            method, as the listener may manage multi sessions. 
+void BusinessListener::OnSessionClose( MRT::Session * session )
+{
+    SAFE_DELETE( session ); 
+    LOG_SYS( "Business session close. IP Address :[ %ld ]\r\n" , session->ip_address() );
+}

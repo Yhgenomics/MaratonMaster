@@ -145,8 +145,10 @@
     <ClCompile Include="..\include\message\MessageTaskDeliver.pb.cc" />
     <ClCompile Include="..\include\message\MessageTaskDeliverReply.pb.cc" />
     <ClCompile Include="..\source\AddAllHandler.cpp" />
+    <ClCompile Include="..\source\BusinessListener.cpp" />
     <ClCompile Include="..\source\GeneralSession.cpp" />
     <ClCompile Include="..\source\MasterMain.cpp" />
+    <ClCompile Include="..\source\MessageHub.cpp" />
     <ClCompile Include="..\source\Servant.cpp" />
     <ClCompile Include="..\source\ServantListener.cpp" />
     <ClCompile Include="..\source\ServantManager.cpp" />

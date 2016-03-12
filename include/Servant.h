@@ -34,7 +34,7 @@ limitations under the License.
 
 #include <string.h>
 
-using namespace std;
+using std::string;
 
 class Servant
 {
@@ -58,7 +58,7 @@ public:
     enum ServantTypes
     {
         kSoftware  = 0 ,
-        kOther = 10
+        kOther     = 10
     };
 
     Servant( ServantSession * session );

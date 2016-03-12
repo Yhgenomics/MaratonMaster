@@ -18,7 +18,7 @@ limitations under the License.
 ***********************************************************************************/
 
 /***********************************************************************************
-* Description   : Listener for Business events.
+* Description   : Listener for Business session.
 * Creator       : Ke Yang(keyang@yhgenomics.com)
 * Date          : 2016/3/4
 * Modifed       : When      | Who       | What
@@ -27,27 +27,60 @@ limitations under the License.
 #ifndef BUSINESS_LISTENER_H_
 #define BUSINESS_LISTENER_H_
 
+#include "BusinessSession.h"
+#include "MasterGloable.h"
+#include "MRT.h"
 #include <string>
 
-#include "MRT.h"
-#include "BusinessSession.h"
-
+// @Description : Listener to a business session( given by ip and port ). 
+//                The businiess session will not be hold.
+//                The Business Listerner should be regist into the Maraton's
+//                framework first, then it will work after the framework
+//                start to run.            
+// @Example     : 
+//                {
+//                    ...
+//                    MRT::Maraton::Instance()->Regist
+//                    (
+//                        make_uptr( BusinessListener , "0.0.0.0" ) 
+//                    );
+//                    ...
+//                    MRT::Maraton::Instance()->Run();   
+//                }            
+// @Note        : As a listener, three interfaces must be override is the CreatSession
+//                OnSessionOpen and the OnSessionClose.
+//                Do not use a smart pointer on the session as a constrain from
+//                the Maraton framewrok. 
 class BusinessListener : public MRT::Listener
 {
 public:
 
+    // Constructor takes an IP address as the input, but the port is predefined.
+    // @param   : ip is the IP address of the business session. Set 0.0.0.0 to listen
+    //            to any IP address.  
+    // @example : 
+    //            {
+    //                make_uptr( BusinessListener , "0.0.0.0" ) ;
+    //            }   
     BusinessListener( std::string ip ) :MRT::Listener( ip , BUSINESS_PORT ) {};
-    ~BusinessListener() {};
 
-protected:
+    // Deconstructor.
+    ~BusinessListener() {};
 
 private:
 
-    virtual MRT::Session * CreateSession() override { return new BusinessSession(); };
+    // Callback when the business session is connected.
+    virtual MRT::Session * CreateSession()                override;            
+    
+    // Callback when the business session opening.
+    // @param   : session is the pointer to the session and can be cast to 
+    //            the pointer to BusinessSession by static cast.                                                      
+    virtual void OnSessionOpen( MRT::Session * session )  override; 
 
-    virtual void OnSessionOpen( MRT::Session * session ) override { std::cout << "Business session in" << std::endl; };
-
-    virtual void OnSessionClose( MRT::Session * session ) override { SAFE_DELETE( session ); std::cout << "Business session close" << std::endl; };
+    // Callback when the business session closing.
+    // @param   : session is the pointer to the session and can be cast to 
+    //            the pointer to BusinessSession by static cast. 
+    virtual void OnSessionClose( MRT::Session * session ) override;
 
 };
 
