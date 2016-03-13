@@ -43,7 +43,7 @@ public:
     //Constructor
     BusinessSession() {};
 
-    //Deconstrucotr
+    // Destructor.
     ~BusinessSession() override {};
 
 };

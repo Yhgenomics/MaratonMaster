@@ -27,26 +27,58 @@ limitations under the License.
 #ifndef SERVANT_LISTENER_H_
 #define SERVANT_LISTENER_H_
 
+#include "ServantSession.h"
+#include "MRT.h"
 #include <string>
 
-#include "MRT.h"
-#include "ServantSession.h"
-
+// @Description : Listener to a servant session.
+//                Keep the servant session into Servant manager when session open,
+//                and pop and delete it when session close.            
+// @Example     : 
+//                {
+//                    ...
+//                    MRT::Maraton::Instance()->Regist
+//                    (
+//                        make_uptr( ServantListener , "0.0.0.0" ) 
+//                    );
+//                    ...
+//                    MRT::Maraton::Instance()->Run();   
+//                }            
+// @Note        : As a listener, three interfaces must be override is the CreatSession
+//                OnSessionOpen and the OnSessionClose.
+//                Do not use a smart pointer on the session as a constrain from
+//                the Maraton framewrok. 
 class ServantListener : public MRT::Listener
 {
 public:
-
+    
+    // Constructor
+    // @param   : ip is the IP address of the servant session. Set 0.0.0.0 to listen
+    //            to any IP address.  
+    // @example : 
+    //            {
+    //                make_uptr( BusinessListener , "0.0.0.0" ) ;
+    //            }   
     ServantListener( std::string ip );
+    
+    // Destructor.
     ~ServantListener( );
 
 protected:
 
 private:
-
+    
+    // Callback when the servant session is connected.
     virtual MRT::Session * CreateSession( ) override;
 
+    // Callback when the servant session opening.
+    // @param   : session is the pointer to the session and can be cast to 
+    //            the pointer to ServantSession by static cast. 
     virtual void OnSessionOpen( MRT::Session * session ) override;
 
+    // Callback when the servant session closing.
+    // @param   : session is the pointer to the session and can be cast to 
+    //            the pointer to ServantSession by static cast. 
     virtual void OnSessionClose( MRT::Session * session ) override;
 
 };

@@ -68,7 +68,7 @@ namespace Protocal
         // Constructor
         MessageHub()  {};
 
-        // Deconstructor
+        // Destructor
         ~MessageHub() {};
 
         // Add one handler to the Hub

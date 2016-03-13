@@ -25,8 +25,6 @@ limitations under the License.
 ***********************************************************************************/
 
 #include "MessageHub.h"
-#include <memory>
-#include "MRT.h"
 #include "handler\MessageServantStateHandler.h"
 #include "handler\MessageServantStateReplyHandler.h"
 #include "handler\MessageStateHandler.h"
@@ -36,6 +34,8 @@ limitations under the License.
 #include "handler\MessageGreetingHandler.h"
 #include "handler\MessageRegistHandler.h"
 #include "handler\MessageHeartBeatHandler.h"
+#include "MRT.h"
+#include <memory>
 
 namespace Protocal
 {

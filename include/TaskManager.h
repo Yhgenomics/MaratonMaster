@@ -34,16 +34,22 @@ limitations under the License.
 #include "TaskDescriptor.h"
 #include "Task.h"
 
+// @Description : Manager for tasks from business layer.
 class TaskManager : 
     public MRT::Manager<Task>,
     public MRT::Singleton<TaskManager> 
 {
 public:
 
+    // Update each task status launching it if is pending. 
     void  Update();
 
+    // Stop task
+    // @param   : taskID
     void  Stop( std::string taskID );
-          
+    
+    // Launch task
+    // @param   : taskID
     Error Launch( std::string taskID );
 
 private:

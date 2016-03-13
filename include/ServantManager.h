@@ -31,20 +31,42 @@ limitations under the License.
 #include "Servant.h"
 #include "GeneralSession.h"
 
+// @Description : Manager for servants.            
+// @Example     : 
+//                {
+//                    auto servantlist = ServantManager()->Instance()->AllServants();  
+//                }            
+// @Note        : Once a servant be added into ServantManager, all access to it should
+//                via ServantManager.
 class ServantManager :
     public MRT::Manager<Servant>,
     public MRT::Singleton<ServantManager>
 {
 public:
-
+    
+    // Find Servant by a session's shared pointer.
     sptr<Servant>               FindBySeesion( sptr<GeneralSession> session );
+    
+    // Find Servant by a session ID.
+    // @note    : used mostly in message handler, which always known the session ID.
     sptr<Servant>               FindBySessionID( size_t sessionID );
+
+    // Find Servnat by a servant ID.
     sptr<Servant>               FindByServantID( std::string servantID );
+    
+    // Find Servant which is handling the given task
     std::vector<sptr<Servant>>  FindByTaskID( std::string taskID );
+
+    // Get sum score for a list of Servants' ID 
     size_t                      GetScore(const vector<std::string>& servantIDList);
+    
+    // Get the score for one Servant.
     size_t                      GetScore(const std::string& servantID);
+    
+    // Access to all alived servants.
     std::vector<sptr<Servant>>  AllServants();
 
+    // Update each Servant's status
     void                        Update();
 
 private:

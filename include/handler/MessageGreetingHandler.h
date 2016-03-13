@@ -27,12 +27,12 @@ limitations under the License.
 #ifndef MESSAGEGREETING_HANDLER_H_
 #define MESSAGEGREETING_HANDLER_H_
 
-#include <functional>
-#include <string>
-#include <memory>
 #include "GeneralSession.h"
 #include "MessageHandler.h"
 #include "MessageGreeting.pb.h"
+#include <functional>
+#include <string>
+#include <memory>
 #include <iostream>
 
 namespace Protocal

@@ -64,7 +64,7 @@ public:
     //            }   
     BusinessListener( std::string ip ) :MRT::Listener( ip , BUSINESS_PORT ) {};
 
-    // Deconstructor.
+    // Destructor.
     ~BusinessListener() {};
 
 private:
@@ -74,7 +74,7 @@ private:
     
     // Callback when the business session opening.
     // @param   : session is the pointer to the session and can be cast to 
-    //            the pointer to BusinessSession by static cast.                                                      
+    //            the pointer to BusinessSession by static cast.                           
     virtual void OnSessionOpen( MRT::Session * session )  override; 
 
     // Callback when the business session closing.

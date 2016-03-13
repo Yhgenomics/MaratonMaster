@@ -31,7 +31,6 @@ limitations under the License.
 #include "MessageRegist.pb.h"
 #include "ServantManager.h"
 #include "GeneralSession.h"
-
 #include <functional>
 #include <string>
 #include <memory>

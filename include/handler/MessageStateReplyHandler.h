@@ -27,12 +27,12 @@ limitations under the License.
 #ifndef MESSAGESTATEREPLY_HANDLER_H_
 #define MESSAGESTATEREPLY_HANDLER_H_
 
-#include <functional>
-#include <string>
-#include <memory>
 #include "GeneralSession.h"
 #include "MessageHandler.h"
 #include "MessageStateReply.pb.h"
+#include <functional>
+#include <string>
+#include <memory>
 
 namespace Protocal
 {

@@ -27,16 +27,17 @@ limitations under the License.
 #ifndef TASK_DESCRIPTOR_H_
 #define TASK_DESCRIPTOR_H_ 
 
-#include <string>
-#include <vector>
-
 #include "MRT.h"
 #include "MasterGloable.h"
 #include "MessageTaskDeliver.pb.h"
+#include <string>
+#include <vector>
 
 using std::string;
 using std::vector;
 
+// @Description : Description for a pipe.
+//                A pipe is one contianer run for one time. 
 class PipeDescriptor
 {
 public:
@@ -48,6 +49,8 @@ public:
     vector<string> parameters_;
 };
 
+// @Description : Description for a pipeline.
+//                A pipeline serval pipes run one by one. 
 class PipelineDescriptor
 {
 public:
@@ -56,10 +59,13 @@ public:
     vector<PipeDescriptor> pipes_;
 };
 
+
+// @Description : Description for a task. 
 class TaskDescriptor
 {
 public:
 
+    // Constructor from the protobuf message
     TaskDescriptor( const MessageTaskDeliver& orignalMessage )
     {
         this->id_             = orignalMessage.id();
@@ -101,6 +107,20 @@ public:
         }
     }
 
+    // Constructor from another task descriptor
+    // @note    : Useful to make sub tasks
+    TaskDescriptor( const TaskDescriptor& other )
+    {    
+        this->id_          = other.id_;
+        this->original_id_ = other.original_id_;
+        this->is_parallel_ = other.is_parallel_;
+        this->resources_   = other.resources_;
+        this->input_       = other.input_;
+        this->servants_    = other.servants_;
+        this->pipeline_    = other.pipeline_;   
+    }
+
+    // Make a protobuf message
     uptr<MessageTaskDeliver> MakeMessage()
     {
         auto result = make_uptr( MessageTaskDeliver );
@@ -141,17 +161,7 @@ public:
         return move_ptr(result);
     }
 
-    TaskDescriptor( const TaskDescriptor& other )
-    {    
-        this->id_          = other.id_;
-        this->original_id_ = other.original_id_;
-        this->is_parallel_ = other.is_parallel_;
-        this->resources_   = other.resources_;
-        this->input_       = other.input_;
-        this->servants_    = other.servants_;
-        this->pipeline_    = other.pipeline_;   
-    }
-
+    // Copy from other task descriptor
     TaskDescriptor& operator=( const TaskDescriptor& other )
     {
         this->id_          = other.id_;
@@ -164,26 +174,40 @@ public:
         return *this;
     }    
 
+    // Getter and Setter for task ID.
     string ID()                               { return id_;                          }
     void ID( string value )                   { id_= value;                          }
-                                                                                     
+    
+    // Getter and Setter for Parallel mark
     bool IsParallel()                         { return is_parallel_;                 }
     void IsParallel( bool value )             { is_parallel_ = value;                }
-                                                                                     
+    
+    // Getter and Setter for resource list
     vector<string> Resources()                { return vector<string>( resources_ ); }
     void Resources( vector<string> value )    { resources_ = value;                  }
-                                                                                     
+
+    // Clear the input list
+    // @note    : use for making a sub task.
     void ResetInput()                         { input_.clear();                      }
+    
+    // Getter and Setter for input list
     vector<string> Input()                    { return vector<string>( input_ );     }
     void Input( vector<string> value )        { input_ = value;                      }
                                                                                      
+    // Clear the servants list
+    // @note    : use for making a sub task.
     void ResetServants()                      { servants_.clear();                   }
+    
+    // Getter and Setter servants list
+    // @note    : subtask only have one servant.
     vector<string> Servants()                 { return vector<string>( servants_ );  }
     void Servants( vector<string> value )     { servants_ = value;                   }
-                                                                                     
+    
+    // Getter and Setter for pipeline
     PipelineDescriptor Pipeline()             { return pipeline_;                    }
     void Pipeline( PipelineDescriptor value ) { pipeline_ = value;                   }
     
+    // Make a task a new ID, and ready for resign the input and servant
     void PrepareAsSubtask()
     {
         ResetInput();
@@ -192,15 +216,28 @@ public:
     }
 
 private:
-
+    
+    // Task ID
     string             id_ ;
+    
+    // Origninal task ID
+    // @note    : use for connect a sub task to an original task,
+    //            such as uploading processed data to the original task. 
     string             original_id_;
+
+    // if true, task may be remapped into substasks.
     bool               is_parallel_;
 
+    // Resource list
     vector<string>     resources_;
+
+    // Input list
     vector<string>     input_;
+
+    // Servant list
     vector<string>     servants_;                       
     
+    // Pipeline used in this task.
     PipelineDescriptor pipeline_;
 };
 

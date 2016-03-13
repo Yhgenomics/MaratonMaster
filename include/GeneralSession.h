@@ -39,7 +39,7 @@ public:
     // Contructor
     GeneralSession();
     
-    // Deconstructor
+    // Destructor
     virtual ~GeneralSession() override {};
 
     // Getter for ID

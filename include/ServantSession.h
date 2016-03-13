@@ -26,24 +26,23 @@ limitations under the License.
 #ifndef SERVANT_SESSION_H_
 #define SERVANT_SESSION_H_ 
 
+#include "GeneralSession.h"
+#include "MRT.h"
 #include <vector>
 #include <mutex>
 #include <string>
 
-#include "GeneralSession.h"
-#include "MRT.h"
-
-class ServantSession :
-    public GeneralSession
+// @Description : Servant session is the session responseable to a Servant node.
+// @Example     : Be created and use in Servant listener. See ServantListener for
+//                more deatails              
+class ServantSession : public GeneralSession
 {
 public:
-
+    // Constructor.
     ServantSession();
+
+    // Destructor.
     virtual ~ServantSession() override;
-
-protected: 
-
-private: 
 
 };
 
