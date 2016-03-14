@@ -43,7 +43,7 @@ class Servant
 public:
     
     // Status on the servant session.
-    // @note    : note the status of the task running on it.  
+    // @note    : not the status of the task running on it.  
     enum ServantStatus
     {
         kUnknow              = 0 ,
@@ -51,11 +51,7 @@ public:
         kSelfTesting         = 2 ,
         kStandby             = 3 ,
         kError               = 4 ,
-        kResourceDownloading = 10 ,
-        kTaskDataPreparing   = 11 ,
-        kComputing           = 12 ,
-        kUploading           = 13 ,
-        kTaskFinished        = 14 ,
+        kWorking             = 5 ,
         kException           = 20
     };
 

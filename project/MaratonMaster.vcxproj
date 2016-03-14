@@ -129,10 +129,12 @@
     <None Include="..\proto\MessageRegist.proto" />
     <None Include="..\proto\MessageServantState.proto" />
     <None Include="..\proto\MessageServantStateReply.proto" />
+    <None Include="..\proto\MessageServantUpdate.proto" />
     <None Include="..\proto\MessageState.proto" />
     <None Include="..\proto\MessageStateReply.proto" />
     <None Include="..\proto\MessageTaskDeliver.proto" />
     <None Include="..\proto\MessageTaskDeliverReply.proto" />
+    <None Include="..\proto\MessageTaskUpdate.proto" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\include\message\MessageGreeting.pb.cc" />
@@ -140,10 +142,12 @@
     <ClCompile Include="..\include\message\MessageRegist.pb.cc" />
     <ClCompile Include="..\include\message\MessageServantState.pb.cc" />
     <ClCompile Include="..\include\message\MessageServantStateReply.pb.cc" />
+    <ClCompile Include="..\include\message\MessageServantUpdate.pb.cc" />
     <ClCompile Include="..\include\message\MessageState.pb.cc" />
     <ClCompile Include="..\include\message\MessageStateReply.pb.cc" />
     <ClCompile Include="..\include\message\MessageTaskDeliver.pb.cc" />
     <ClCompile Include="..\include\message\MessageTaskDeliverReply.pb.cc" />
+    <ClCompile Include="..\include\message\MessageTaskUpdate.pb.cc" />
     <ClCompile Include="..\source\AddAllHandler.cpp" />
     <ClCompile Include="..\source\BusinessListener.cpp" />
     <ClCompile Include="..\source\GeneralSession.cpp" />
@@ -166,10 +170,12 @@
     <ClInclude Include="..\include\handler\MessageRegistHandler.h" />
     <ClInclude Include="..\include\handler\MessageServantStateHandler.h" />
     <ClInclude Include="..\include\handler\MessageServantStateReplyHandler.h" />
+    <ClInclude Include="..\include\handler\MessageServantUpdateHandler.h" />
     <ClInclude Include="..\include\handler\MessageStateHandler.h" />
     <ClInclude Include="..\include\handler\MessageStateReplyHandler.h" />
     <ClInclude Include="..\include\handler\MessageTaskDeliverHandler.h" />
     <ClInclude Include="..\include\handler\MessageTaskDeliverReplyHandler.h" />
+    <ClInclude Include="..\include\handler\MessageTaskUpdateHandler.h" />
     <ClInclude Include="..\include\MasterGloable.h" />
     <ClInclude Include="..\include\MessageHandler.h" />
     <ClInclude Include="..\include\MessageHub.h" />
@@ -178,10 +184,12 @@
     <ClInclude Include="..\include\message\MessageRegist.pb.h" />
     <ClInclude Include="..\include\message\MessageServantState.pb.h" />
     <ClInclude Include="..\include\message\MessageServantStateReply.pb.h" />
+    <ClInclude Include="..\include\message\MessageServantUpdate.pb.h" />
     <ClInclude Include="..\include\message\MessageState.pb.h" />
     <ClInclude Include="..\include\message\MessageStateReply.pb.h" />
     <ClInclude Include="..\include\message\MessageTaskDeliver.pb.h" />
     <ClInclude Include="..\include\message\MessageTaskDeliverReply.pb.h" />
+    <ClInclude Include="..\include\message\MessageTaskUpdate.pb.h" />
     <ClInclude Include="..\include\Servant.h" />
     <ClInclude Include="..\include\ServantListener.h" />
     <ClInclude Include="..\include\ServantManager.h" />

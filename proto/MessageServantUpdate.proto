@@ -1,0 +1,4 @@
+message MessageServantUpdate
+{
+    required int32 status = 1;
+}

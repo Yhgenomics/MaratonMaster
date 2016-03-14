@@ -52,6 +52,12 @@
     <None Include="..\proto\MessageHeartBeat.proto">
       <Filter>Proto\defines</Filter>
     </None>
+    <None Include="..\proto\MessageTaskUpdate.proto">
+      <Filter>Proto\defines</Filter>
+    </None>
+    <None Include="..\proto\MessageServantUpdate.proto">
+      <Filter>Proto\defines</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\source\MasterMain.cpp">
@@ -113,6 +119,12 @@
     </ClCompile>
     <ClCompile Include="..\source\MessageHub.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\include\message\MessageServantUpdate.pb.cc">
+      <Filter>Proto</Filter>
+    </ClCompile>
+    <ClCompile Include="..\include\message\MessageTaskUpdate.pb.cc">
+      <Filter>Proto</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -210,6 +222,18 @@
       <Filter>Proto</Filter>
     </ClInclude>
     <ClInclude Include="..\include\handler\MessageHeartBeatHandler.h">
+      <Filter>MessageHandlers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\message\MessageServantUpdate.pb.h">
+      <Filter>Proto</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\message\MessageTaskUpdate.pb.h">
+      <Filter>Proto</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\handler\MessageServantUpdateHandler.h">
+      <Filter>MessageHandlers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\handler\MessageTaskUpdateHandler.h">
       <Filter>MessageHandlers</Filter>
     </ClInclude>
   </ItemGroup>

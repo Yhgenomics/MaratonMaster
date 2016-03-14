@@ -40,3 +40,12 @@ void TaskManager::Update()
         }
     }
 }
+
+void TaskManager::UpdateSubtaskStatus( std::string taskID , Task::TaskStatus status )
+{
+    for ( auto task : Instances() )
+    {
+        task->UpdateSubtaskStatus( taskID ,
+                                   status );
+    }
+}

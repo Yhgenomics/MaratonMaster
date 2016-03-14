@@ -1,0 +1,4 @@
+message MessageTaskUpdate
+{
+    required int32 status = 1;
+}

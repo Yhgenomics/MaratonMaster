@@ -67,6 +67,12 @@ public:
 
     // Launch task
     Error      Launch();
+    
+    // If every subtasks finished
+    bool       CheckFinish();
+
+    // On every subtask finished
+    void       OnFinish();
 
     // Abort task
     void       Abort();

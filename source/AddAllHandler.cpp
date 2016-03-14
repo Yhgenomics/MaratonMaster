@@ -25,15 +25,18 @@ limitations under the License.
 ***********************************************************************************/
 
 #include "MessageHub.h"
-#include "handler\MessageServantStateHandler.h"
-#include "handler\MessageServantStateReplyHandler.h"
-#include "handler\MessageStateHandler.h"
-#include "handler\MessageStateReplyHandler.h"
-#include "handler\MessageTaskDeliverHandler.h"
-#include "handler\MessageTaskDeliverReplyHandler.h"
-#include "handler\MessageGreetingHandler.h"
-#include "handler\MessageRegistHandler.h"
-#include "handler\MessageHeartBeatHandler.h"
+#include "handler/MessageServantStateHandler.h"
+#include "handler/MessageServantStateReplyHandler.h"
+#include "handler/MessageStateHandler.h"
+#include "handler/MessageStateReplyHandler.h"
+#include "handler/MessageTaskDeliverHandler.h"
+#include "handler/MessageTaskDeliverReplyHandler.h"
+#include "handler/MessageGreetingHandler.h"
+#include "handler/MessageRegistHandler.h"
+#include "handler/MessageHeartBeatHandler.h"
+#include "handler/MessageServantUpdateHandler.h"
+#include "handler/MessageTaskUpdateHandler.h"
+
 #include "MRT.h"
 #include <memory>
 
@@ -50,6 +53,8 @@ namespace Protocal
         AddHandler( std::move( make_uptr( Protocal::MessageGreetingHandler          ) ) );
         AddHandler( std::move( make_uptr( Protocal::MessageRegistHandler            ) ) );
         AddHandler( std::move( make_uptr( Protocal::MessageHeartBeatHandler         ) ) );
+        AddHandler( std::move( make_uptr( Protocal::MessageServantUpdateHandler     ) ) );
+        AddHandler( std::move( make_uptr( Protocal::MessageTaskUpdateHandler        ) ) );
         return true;
     }
 }

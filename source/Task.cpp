@@ -24,8 +24,12 @@ limitations under the License.
 * Modifed       : When      | Who       | What
 ***********************************************************************************/
 
+#include "MRT.h"
+#include "json.hpp"
 #include "Task.h"
 #include "ServantManager.h"
+
+using nlohmann::json; 
 
 bool Task::MakeSubtasks()
 {
@@ -111,6 +115,16 @@ bool Task::MakeSubtasks()
     return is_sub_tasks_ready;
 }
 
+void Task::UpdateSubtaskStatus( string subTaskID , TaskStatus status )
+{
+    if(sub_tasks_status_.count( subTaskID ) > 0 )
+    {
+        sub_tasks_status_[ subTaskID ] = status;
+        if(CheckFinish())
+        OnFinish();
+    }
+}
+
 Task::Task( uptr<TaskDescriptor> task)
 {
     original_task_    = move_ptr( task );
@@ -141,7 +155,7 @@ Error Task::Launch()
     {
         Abort();
         TaskLaunchResult.Code(1);
-        TaskLaunchResult.Message("task is not ready");
+        TaskLaunchResult.Message( "task is not ready" );
         
         return TaskLaunchResult;
     }
@@ -163,6 +177,42 @@ Error Task::Launch()
 
     //TODO report to business layer
     return TaskLaunchResult;
+}
+
+bool Task::CheckFinish()
+{
+    bool result = true;
+    for( auto subtask : sub_tasks_status_ )
+    {
+        result = result && subtask.second == Task::TaskStatus::kFinished;
+    }
+    return result;
+}
+
+void Task::OnFinish()
+{
+    std::cout << "all sub task finished!" << std::endl;
+    
+    json result;
+   
+    result[ "status" ] = Task::TaskStatus::kFinished;
+    result[ "taskid" ] = original_message_->id();
+    result[ "pipelineid" ] = original_message_->pipeline().id();
+
+    //result[ "data" ].push_back( "result.bam" );
+    
+    std::cout << result.dump() << std::endl;
+
+    MRT::WebClient myWebClient;
+    myWebClient.Header( "Content-Type" , "application/json" );
+    myWebClient.Post( "http://10.0.0.20:888/maraton/result" ,
+                      result.dump() ,
+                      [] ( uptr<MRT::HTTPResponse> response )
+    {
+
+    }
+    );
+
 }
 
 void Task::Abort()

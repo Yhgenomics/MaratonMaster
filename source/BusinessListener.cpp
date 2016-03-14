@@ -45,6 +45,6 @@ void BusinessListener::OnSessionOpen( MRT::Session * session )
 //            method, as the listener may manage multi sessions. 
 void BusinessListener::OnSessionClose( MRT::Session * session )
 {
-    SAFE_DELETE( session ); 
     LOG_SYS( "Business session close. IP Address :[ %ld ]\r\n" , session->ip_address() );
+    SAFE_DELETE( session ); 
 }

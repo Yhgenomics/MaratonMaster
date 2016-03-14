@@ -52,6 +52,9 @@ public:
     // @param   : taskID
     Error Launch( std::string taskID );
 
+    // UpdateSubtaskStatus
+    void  UpdateSubtaskStatus( std::string taskID , Task::TaskStatus status );
+
 private:
 
     friend Singleton<TaskManager>; 
