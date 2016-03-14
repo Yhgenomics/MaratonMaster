@@ -32,8 +32,9 @@ void protobuf_AssignDesc_MessageTaskUpdate_2eproto() {
       "MessageTaskUpdate.proto");
   GOOGLE_CHECK(file != NULL);
   MessageTaskUpdate_descriptor_ = file->message_type(0);
-  static const int MessageTaskUpdate_offsets_[1] = {
+  static const int MessageTaskUpdate_offsets_[2] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MessageTaskUpdate, status_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MessageTaskUpdate, output_),
   };
   MessageTaskUpdate_reflection_ =
     new ::google::protobuf::internal::GeneratedMessageReflection(
@@ -76,8 +77,8 @@ void protobuf_AddDesc_MessageTaskUpdate_2eproto() {
   GOOGLE_PROTOBUF_VERIFY_VERSION;
 
   ::google::protobuf::DescriptorPool::InternalAddGeneratedFile(
-    "\n\027MessageTaskUpdate.proto\"#\n\021MessageTask"
-    "Update\022\016\n\006status\030\001 \002(\005", 62);
+    "\n\027MessageTaskUpdate.proto\"3\n\021MessageTask"
+    "Update\022\016\n\006status\030\001 \002(\005\022\016\n\006output\030\002 \003(\t", 78);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "MessageTaskUpdate.proto", &protobuf_RegisterTypes);
   MessageTaskUpdate::default_instance_ = new MessageTaskUpdate();
@@ -96,6 +97,7 @@ struct StaticDescriptorInitializer_MessageTaskUpdate_2eproto {
 
 #ifndef _MSC_VER
 const int MessageTaskUpdate::kStatusFieldNumber;
+const int MessageTaskUpdate::kOutputFieldNumber;
 #endif  // !_MSC_VER
 
 MessageTaskUpdate::MessageTaskUpdate()
@@ -115,6 +117,7 @@ MessageTaskUpdate::MessageTaskUpdate(const MessageTaskUpdate& from)
 }
 
 void MessageTaskUpdate::SharedCtor() {
+  ::google::protobuf::internal::GetEmptyString();
   _cached_size_ = 0;
   status_ = 0;
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
@@ -153,6 +156,7 @@ MessageTaskUpdate* MessageTaskUpdate::New() const {
 
 void MessageTaskUpdate::Clear() {
   status_ = 0;
+  output_.Clear();
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
   mutable_unknown_fields()->Clear();
 }
@@ -177,6 +181,25 @@ bool MessageTaskUpdate::MergePartialFromCodedStream(
         } else {
           goto handle_unusual;
         }
+        if (input->ExpectTag(18)) goto parse_output;
+        break;
+      }
+
+      // repeated string output = 2;
+      case 2: {
+        if (tag == 18) {
+         parse_output:
+          DO_(::google::protobuf::internal::WireFormatLite::ReadString(
+                input, this->add_output()));
+          ::google::protobuf::internal::WireFormat::VerifyUTF8StringNamedField(
+            this->output(this->output_size() - 1).data(),
+            this->output(this->output_size() - 1).length(),
+            ::google::protobuf::internal::WireFormat::PARSE,
+            "output");
+        } else {
+          goto handle_unusual;
+        }
+        if (input->ExpectTag(18)) goto parse_output;
         if (input->ExpectAtEnd()) goto success;
         break;
       }
@@ -211,6 +234,16 @@ void MessageTaskUpdate::SerializeWithCachedSizes(
     ::google::protobuf::internal::WireFormatLite::WriteInt32(1, this->status(), output);
   }
 
+  // repeated string output = 2;
+  for (int i = 0; i < this->output_size(); i++) {
+  ::google::protobuf::internal::WireFormat::VerifyUTF8StringNamedField(
+    this->output(i).data(), this->output(i).length(),
+    ::google::protobuf::internal::WireFormat::SERIALIZE,
+    "output");
+    ::google::protobuf::internal::WireFormatLite::WriteString(
+      2, this->output(i), output);
+  }
+
   if (!unknown_fields().empty()) {
     ::google::protobuf::internal::WireFormat::SerializeUnknownFields(
         unknown_fields(), output);
@@ -224,6 +257,16 @@ void MessageTaskUpdate::SerializeWithCachedSizes(
   // required int32 status = 1;
   if (has_status()) {
     target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(1, this->status(), target);
+  }
+
+  // repeated string output = 2;
+  for (int i = 0; i < this->output_size(); i++) {
+    ::google::protobuf::internal::WireFormat::VerifyUTF8StringNamedField(
+      this->output(i).data(), this->output(i).length(),
+      ::google::protobuf::internal::WireFormat::SERIALIZE,
+      "output");
+    target = ::google::protobuf::internal::WireFormatLite::
+      WriteStringToArray(2, this->output(i), target);
   }
 
   if (!unknown_fields().empty()) {
@@ -246,6 +289,13 @@ int MessageTaskUpdate::ByteSize() const {
     }
 
   }
+  // repeated string output = 2;
+  total_size += 1 * this->output_size();
+  for (int i = 0; i < this->output_size(); i++) {
+    total_size += ::google::protobuf::internal::WireFormatLite::StringSize(
+      this->output(i));
+  }
+
   if (!unknown_fields().empty()) {
     total_size +=
       ::google::protobuf::internal::WireFormat::ComputeUnknownFieldsSize(
@@ -271,6 +321,7 @@ void MessageTaskUpdate::MergeFrom(const ::google::protobuf::Message& from) {
 
 void MessageTaskUpdate::MergeFrom(const MessageTaskUpdate& from) {
   GOOGLE_CHECK_NE(&from, this);
+  output_.MergeFrom(from.output_);
   if (from._has_bits_[0 / 32] & (0xffu << (0 % 32))) {
     if (from.has_status()) {
       set_status(from.status());
@@ -300,6 +351,7 @@ bool MessageTaskUpdate::IsInitialized() const {
 void MessageTaskUpdate::Swap(MessageTaskUpdate* other) {
   if (other != this) {
     std::swap(status_, other->status_);
+    output_.Swap(&other->output_);
     std::swap(_has_bits_[0], other->_has_bits_[0]);
     _unknown_fields_.Swap(&other->_unknown_fields_);
     std::swap(_cached_size_, other->_cached_size_);

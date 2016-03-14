@@ -56,8 +56,14 @@ namespace Protocal
                 if ( servant )
                 {
                    auto subtaskID = servant->CurrentTask()->ID();
+                   std::vector<std::string> outputs;
+                   for( auto item : msg->output() )
+                   {
+                       outputs.push_back( item );
+                   }
                    TaskManager::Instance()->UpdateSubtaskStatus( subtaskID , 
-                                                                 Task::TaskStatus( msg->status() ) );
+                                                                 Task::TaskStatus( msg->status() ) ,
+                                                                 outputs);
                 }
                 return true;
             };

@@ -24,6 +24,11 @@ limitations under the License.
 * Modifed       : When      | Who       | What
 ***********************************************************************************/
 #include "TaskManager.h"
+#include <vector>
+#include <string>
+
+using std::vector;
+using std::string;
 
 void TaskManager::Update()
 {
@@ -41,11 +46,12 @@ void TaskManager::Update()
     }
 }
 
-void TaskManager::UpdateSubtaskStatus( std::string taskID , Task::TaskStatus status )
+void TaskManager::UpdateSubtaskStatus( std::string taskID , Task::TaskStatus status , vector<string> outputs )
 {
     for ( auto task : Instances() )
     {
         task->UpdateSubtaskStatus( taskID ,
-                                   status );
+                                   status ,
+                                   outputs);
     }
 }

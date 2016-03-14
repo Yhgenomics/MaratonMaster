@@ -28,8 +28,12 @@ limitations under the License.
 #include "json.hpp"
 #include "Task.h"
 #include "ServantManager.h"
+#include <vector>
+#include <string>
 
-using nlohmann::json; 
+using nlohmann::json;
+using std::vector;
+using std::string; 
 
 bool Task::MakeSubtasks()
 {
@@ -115,12 +119,17 @@ bool Task::MakeSubtasks()
     return is_sub_tasks_ready;
 }
 
-void Task::UpdateSubtaskStatus( string subTaskID , TaskStatus status )
+void Task::UpdateSubtaskStatus( string subTaskID , TaskStatus status , vector<string> outputs)
 {
     if(sub_tasks_status_.count( subTaskID ) > 0 )
     {
+        for(auto item : outputs )
+        {
+            outputs_.push_back( item );
+        }
+
         sub_tasks_status_[ subTaskID ] = status;
-        if(CheckFinish())
+        if ( CheckFinish() )
         OnFinish();
     }
 }
@@ -199,7 +208,7 @@ void Task::OnFinish()
     result[ "taskid" ] = original_message_->id();
     result[ "pipelineid" ] = original_message_->pipeline().id();
 
-    //result[ "data" ].push_back( "result.bam" );
+    result[ "data" ] = outputs_;
     
     std::cout << result.dump() << std::endl;
 

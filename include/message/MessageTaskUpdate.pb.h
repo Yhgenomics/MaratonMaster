@@ -95,6 +95,22 @@ class MessageTaskUpdate : public ::google::protobuf::Message {
   inline ::google::protobuf::int32 status() const;
   inline void set_status(::google::protobuf::int32 value);
 
+  // repeated string output = 2;
+  inline int output_size() const;
+  inline void clear_output();
+  static const int kOutputFieldNumber = 2;
+  inline const ::std::string& output(int index) const;
+  inline ::std::string* mutable_output(int index);
+  inline void set_output(int index, const ::std::string& value);
+  inline void set_output(int index, const char* value);
+  inline void set_output(int index, const char* value, size_t size);
+  inline ::std::string* add_output();
+  inline void add_output(const ::std::string& value);
+  inline void add_output(const char* value);
+  inline void add_output(const char* value, size_t size);
+  inline const ::google::protobuf::RepeatedPtrField< ::std::string>& output() const;
+  inline ::google::protobuf::RepeatedPtrField< ::std::string>* mutable_output();
+
   // @@protoc_insertion_point(class_scope:MessageTaskUpdate)
  private:
   inline void set_has_status();
@@ -104,6 +120,7 @@ class MessageTaskUpdate : public ::google::protobuf::Message {
 
   ::google::protobuf::uint32 _has_bits_[1];
   mutable int _cached_size_;
+  ::google::protobuf::RepeatedPtrField< ::std::string> output_;
   ::google::protobuf::int32 status_;
   friend void  protobuf_AddDesc_MessageTaskUpdate_2eproto();
   friend void protobuf_AssignDesc_MessageTaskUpdate_2eproto();
@@ -141,6 +158,60 @@ inline void MessageTaskUpdate::set_status(::google::protobuf::int32 value) {
   set_has_status();
   status_ = value;
   // @@protoc_insertion_point(field_set:MessageTaskUpdate.status)
+}
+
+// repeated string output = 2;
+inline int MessageTaskUpdate::output_size() const {
+  return output_.size();
+}
+inline void MessageTaskUpdate::clear_output() {
+  output_.Clear();
+}
+inline const ::std::string& MessageTaskUpdate::output(int index) const {
+  // @@protoc_insertion_point(field_get:MessageTaskUpdate.output)
+  return output_.Get(index);
+}
+inline ::std::string* MessageTaskUpdate::mutable_output(int index) {
+  // @@protoc_insertion_point(field_mutable:MessageTaskUpdate.output)
+  return output_.Mutable(index);
+}
+inline void MessageTaskUpdate::set_output(int index, const ::std::string& value) {
+  // @@protoc_insertion_point(field_set:MessageTaskUpdate.output)
+  output_.Mutable(index)->assign(value);
+}
+inline void MessageTaskUpdate::set_output(int index, const char* value) {
+  output_.Mutable(index)->assign(value);
+  // @@protoc_insertion_point(field_set_char:MessageTaskUpdate.output)
+}
+inline void MessageTaskUpdate::set_output(int index, const char* value, size_t size) {
+  output_.Mutable(index)->assign(
+    reinterpret_cast<const char*>(value), size);
+  // @@protoc_insertion_point(field_set_pointer:MessageTaskUpdate.output)
+}
+inline ::std::string* MessageTaskUpdate::add_output() {
+  return output_.Add();
+}
+inline void MessageTaskUpdate::add_output(const ::std::string& value) {
+  output_.Add()->assign(value);
+  // @@protoc_insertion_point(field_add:MessageTaskUpdate.output)
+}
+inline void MessageTaskUpdate::add_output(const char* value) {
+  output_.Add()->assign(value);
+  // @@protoc_insertion_point(field_add_char:MessageTaskUpdate.output)
+}
+inline void MessageTaskUpdate::add_output(const char* value, size_t size) {
+  output_.Add()->assign(reinterpret_cast<const char*>(value), size);
+  // @@protoc_insertion_point(field_add_pointer:MessageTaskUpdate.output)
+}
+inline const ::google::protobuf::RepeatedPtrField< ::std::string>&
+MessageTaskUpdate::output() const {
+  // @@protoc_insertion_point(field_list:MessageTaskUpdate.output)
+  return output_;
+}
+inline ::google::protobuf::RepeatedPtrField< ::std::string>*
+MessageTaskUpdate::mutable_output() {
+  // @@protoc_insertion_point(field_mutable_list:MessageTaskUpdate.output)
+  return &output_;
 }
 
 

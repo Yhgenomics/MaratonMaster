@@ -53,7 +53,7 @@ public:
     Error Launch( std::string taskID );
 
     // UpdateSubtaskStatus
-    void  UpdateSubtaskStatus( std::string taskID , Task::TaskStatus status );
+    void  UpdateSubtaskStatus( std::string taskID , Task::TaskStatus status, vector<string> outputs );
 
 private:
 

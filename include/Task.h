@@ -37,6 +37,9 @@ limitations under the License.
 #include <vector>
 #include <map>
 
+using std::string;
+using std::vector;
+
 // @Description : Logical task be managed by TaskManager.
 // @note        : Task should first be binded to servants, then can be executed.
 //                Task from business layer may be remaped to multi servants if the
@@ -85,7 +88,8 @@ public:
 
     // Update the status of the tasks executed by Servant.
     void       UpdateSubtaskStatus( string     subTaskID ,
-                                    TaskStatus status   );
+                                    TaskStatus status    , 
+                                    vector<string> outputs);
                
     // Getter and Setter for task status
     TaskStatus Status()             { return this->status_;        }
@@ -119,6 +123,9 @@ private:
     // The status for all subtasks
     std::map<std::string ,       
         TaskStatus>              sub_tasks_status_;
+    
+    // List gathering all subtasks' products information
+    vector<std::string>          outputs_;
 
 };
 

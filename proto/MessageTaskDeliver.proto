@@ -3,25 +3,25 @@ message MessagePipe
     required string id              = 1;
     required string name            = 2;
     required string executor        = 3;
-    required bool multipleInput     = 4;
-    required bool multipleThread    = 5;
+    required bool   multipleInput   = 4;
+    required bool   multipleThread  = 5;
     repeated string parameters      = 6;
 }
 
 message MessagePipeline
 {
-    required string id         = 1;
-    required string name       = 2;
+    required string      id    = 1;
+    required string      name  = 2;
     repeated MessagePipe pipes = 3;
 }
 
 message MessageTaskDeliver
 {
-    required string id                  = 1;
-    repeated string resources           = 2;
-    repeated string input               = 3;
-    repeated string servants            = 4;
+    required string          id         = 1;
+    repeated string          resources  = 2;
+    repeated string          input      = 3;
+    repeated string          servants   = 4;
     required MessagePipeline pipeline   = 5;
-    required bool isParallel            = 6;
-	required string originalID          = 7;
+    required bool            isParallel = 6;
+	required string          originalID = 7;
 }

@@ -1,6 +1,6 @@
 message MessageTaskDeliverReply
 {
     required string taskid  = 1;
-    required int32 code     = 2;
+    required int32  code    = 2;
     required string message = 3;
 }
