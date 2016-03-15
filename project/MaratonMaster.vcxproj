@@ -158,6 +158,7 @@
     <ClCompile Include="..\source\ServantManager.cpp" />
     <ClCompile Include="..\source\ServantSession.cpp" />
     <ClCompile Include="..\source\Task.cpp" />
+    <ClCompile Include="..\source\TaskDescriptor.cpp" />
     <ClCompile Include="..\source\TaskManager.cpp" />
   </ItemGroup>
   <ItemGroup>

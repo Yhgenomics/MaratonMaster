@@ -126,6 +126,9 @@
     <ClCompile Include="..\include\message\MessageTaskUpdate.pb.cc">
       <Filter>Proto</Filter>
     </ClCompile>
+    <ClCompile Include="..\source\TaskDescriptor.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\include\Servant.h">

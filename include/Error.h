@@ -42,6 +42,7 @@ limitations under the License.
 class Error
 {
 public:
+
     // Constructor
     Error() {}
     

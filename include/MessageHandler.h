@@ -31,32 +31,32 @@ limitations under the License.
 #include <string>
 #include "GeneralSession.h"
 
-// @Description : Basic Class for kinds of message handler used by MessageHub 
-//                automaticly after be add to the MessageHub.Check MessageHub
-//                for more details.
-// @Example     : namespace Protocal
-//                {
-//                    class SomeMessageHandler : public MessageHandler
-//                    {
-//                    public:
-//                        MessageGreetingHandler()
-//                        {
-//                            MessageType("SomeMessage");
-//                            Method = []( GeneralSession* session , 
-//                                         const void* pData , 
-//                                         size_t length )     
-//                            {
-//                                //TODO add your codes here
-//                                return true;
-//                            };
-//                        }
-//                    };
-//                }              
-// @Note        : Add it to MessageHub to handle message automaticly.
-//                the message is in pData,it can be a protobuf message, or any
-//                other type determined by the original sender.
 namespace Protocal
 {
+    // @Description : Basic Class for kinds of message handler used by MessageHub 
+    //                automaticly after be add to the MessageHub.Check MessageHub
+    //                for more details.
+    // @Example     : namespace Protocal
+    //                {
+    //                    class SomeMessageHandler : public MessageHandler
+    //                    {
+    //                    public:
+    //                        MessageGreetingHandler()
+    //                        {
+    //                            MessageType("SomeMessage");
+    //                            Method = []( GeneralSession* session , 
+    //                                         const void* pData , 
+    //                                         size_t length )     
+    //                            {
+    //                                //TODO add your codes here
+    //                                return true;
+    //                            };
+    //                        }
+    //                    };
+    //                }              
+    // @Note        : Add it to MessageHub to handle message automaticly.
+    //                the message is in pData,it can be a protobuf message, or any
+    //                other type determined by the original sender.
     class MessageHandler
     {
     public:

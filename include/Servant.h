@@ -131,6 +131,7 @@ public:
     sptr<TaskDescriptor> CurrentTask()             { return current_task_;        }
 
 private:
+
     // Check time out and kick the session from ServantManager.
     bool            CheckTimeout();
 

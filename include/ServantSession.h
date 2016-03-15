@@ -38,6 +38,7 @@ limitations under the License.
 class ServantSession : public GeneralSession
 {
 public:
+
     // Constructor.
     ServantSession();
 
