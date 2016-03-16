@@ -72,6 +72,7 @@ namespace Protocal
         ~MessageHub() {};
 
         // Add one handler to the Hub
+        // @param   : one message handler in unique pointer.
         bool AddHandler( uptr<MessageHandler> oneHandler );
 
         // Gloable Message handlers management
@@ -79,9 +80,15 @@ namespace Protocal
         bool AddAllHandlers();
 
         // Handle one message arcoding to the handler map
+        // @param   : session is the source of the message.
+        // @param   : pData is the content of the message.
+        // @param   : length is the size of message.
+        // @note    : Just get the messageID this layer, the translation from the pData
+        //            to message should be done at certain MessageHandler.
         int Handle( GeneralSession* session , const void* pData , size_t length );
         
         // Build the protobuf message to buffer
+        // @param   : protobuf message in unique pointer
         uptr<MRT::Buffer> Build( uptr<::google::protobuf::Message> message );
 
     private:

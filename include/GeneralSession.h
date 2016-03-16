@@ -48,6 +48,7 @@ public:
     size_t  ID()                       { return id_; };
     
     // Send an porotobuf message out in Maraton's style
+    // @param   : protobuf message in unqiue pointer.
     virtual void SendOut( uptr<::google::protobuf::Message> );
 
 protected:
@@ -56,9 +57,11 @@ protected:
     virtual void OnConnect()                       override;
 
     // Callback when receiving data from net
+    // @param   : Buffer in unique pointer
     virtual void OnRead( uptr<MRT::Buffer> data )  override;
 
     // Callback when write adata to net
+    // @param   : Buffer in unique pointer
     virtual void OnWrite( uptr<MRT::Buffer> data ) override;
 
     // Callback when session closing

@@ -27,12 +27,11 @@ limitations under the License.
 #ifndef TASK_MANAGER_H_
 #define TASK_MANAGER_H_ 
 
-#include <string>
-#include <vector>
-
-#include "maraton.h"
 #include "TaskDescriptor.h"
 #include "Task.h"
+#include "MRT.h"
+#include <string>
+#include <vector>
 
 // @Description : Manager for tasks from business layer.
 class TaskManager : 
@@ -52,7 +51,11 @@ public:
     // @param   : taskID
     Error Launch( const std::string& taskID );
 
-    // UpdateSubtaskStatus
+    // Try UpdateSubtaskStatus in every task
+    // @param   : subTaskID is the ID for subtask not the task
+    // @param   : status is the status for subtask
+    // @param   : outputs is the subtask's output information witch should be append to
+    //            the task.
     void  UpdateSubtaskStatus( const std::string&      taskID ,
                                const Task::TaskStatus& status ,
                                const vector<string>&   outputs );

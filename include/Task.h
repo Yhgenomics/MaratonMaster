@@ -87,6 +87,10 @@ public:
     bool  MakeSubtasks();
 
     // Update the status of the tasks executed by Servant.
+    // @param   : subTaskID is the ID for subtask not the task
+    // @param   : status is the status for subtask
+    // @param   : outputs is the subtask's output information witch should be append to
+    //            the task.
     void  UpdateSubtaskStatus( const string&         subTaskID ,
                                const TaskStatus&     status    ,
                                const vector<string>& outputs   );
