@@ -53,11 +53,12 @@ namespace Protocal
                 msg->ParseFromArray( dataContent , msgLength );
 
                 auto servant = ServantManager::Instance()->FindBySessionID( session->ID() );
+
                 if ( servant )
                 {
                    auto subtaskID = servant->CurrentTask()->ID();
                    std::vector<std::string> outputs;
-                   for( auto item : msg->output() )
+                   for( const auto& item : msg->output() )
                    {
                        outputs.push_back( item );
                    }

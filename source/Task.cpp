@@ -131,8 +131,11 @@ void Task::UpdateSubtaskStatus( const string&         subTaskID ,
         }
 
         sub_tasks_status_[ subTaskID ] = status;
-        if ( CheckFinish() )
+        if ( IsAllSubtasksFinished() )
+        {
             OnFinish();
+        }
+           
     }
 }
 
@@ -190,7 +193,7 @@ Error Task::Launch()
     return TaskLaunchResult;
 }
 
-bool Task::CheckFinish()
+bool Task::IsAllSubtasksFinished()
 {
     bool result = true;
     for( const auto& subtask : sub_tasks_status_ )
@@ -206,11 +209,11 @@ void Task::OnFinish()
     
     json result;
    
-    result[ "status" ] = Task::TaskStatus::kFinished;
-    result[ "taskid" ] = original_message_->id();
+    result[ "status" ]     = Task::TaskStatus::kFinished;
+    result[ "taskid" ]     = original_message_->id();
     result[ "pipelineid" ] = original_message_->pipeline().id();
 
-    result[ "data" ] = outputs_;
+    result[ "data" ]       = outputs_;
     
     std::cout << result.dump() << std::endl;
 

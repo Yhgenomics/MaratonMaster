@@ -72,7 +72,7 @@ public:
     Error Launch();
     
     // If every subtasks finished
-    bool  CheckFinish();
+    bool  IsAllSubtasksFinished();
 
     // On every subtask finished
     void  OnFinish();
