@@ -94,41 +94,41 @@ public:
     ServantSession* Session();
     
     // Getter for the status show whether the servant is still alive.
-    bool Connected()                   { return this->connected_; }
-    
-    // Getter and Setter for CPU cores.
-    void CPU( size_t value )           { cpu_ = value;            }
-    size_t CPU()                       { return cpu_;             }
-    
-    // Getter and Setter for Memory size in KBs.
-    void MemorySize( size_t value )    { memory_size_ = value;    }
-    size_t MemorySize()                { return memory_size_;     }
-                                               
-    // Getter and Setter for Disk size in MBs.                 
-    void DiskSize( size_t value )      { disk_size_ = value;      }
-    size_t DiskSize()                  { return disk_size_;       }
-    
-    // Getter and Setter for the Servant ID.
-    // @note    £º Servant ID is given by the Servant via a MessageRegist.
-    void ID( string value )            { id_ = value;             }
-    string ID()                        { return id_;              }
-                                                                  
-    // Getter and Setter for a servant's ablility.
-    // @note    : The value is given by evalutaion method. 
-    void Ability( size_t value )       { ability_ = value;        }
-    size_t Ability()                   { return ability_;         }
-                                                                  
-    // Getter and Setter for servant's status.
-    void Status( ServantStatus value ) { status_ = value;         }
-    ServantStatus Status()             { return status_;          }
-    
-    // Getter and Setter for servant's type.
-    void Type(ServantTypes value)      { type_ = value;           }
-    ServantTypes Type()                { return type_;            }  
-                                           
+    bool Connected()                               { return this->connected_;     }
+
+    // Getter and Setter for CPU cores.                                           
+    size_t CPU()                                   { return cpu_;                 }
+    void CPU( const size_t& value )                { cpu_ = value;                }
+
+    // Getter and Setter for Memory size in KBs.                                  
+    size_t MemorySize()                            { return memory_size_;         }
+    void MemorySize( const size_t& value )         { memory_size_ = value;        }
+
+    // Getter and Setter for Disk size in MBs.                                    
+    size_t DiskSize()                              { return disk_size_;           }
+    void DiskSize( const size_t value )            { disk_size_ = value;          }
+
+    // Getter and Setter for the Servant ID.                                      
+    // @note    £º Servant ID is given by the Servant via a MessageRegist.        
+    string ID()                                    { return id_;                  }
+    void ID( const string& value )                 { id_ = value;                 }
+
+    // Getter and Setter for a servant's ablility.                                
+    // @note    : The value is given by evalutaion method.                        
+    size_t Ability()                               { return ability_;             }
+    void Ability( const size_t& value )            { ability_ = value;            }
+
+    // Getter and Setter for servant's status.                                    
+    ServantStatus Status()                         { return status_;              }
+    void Status( const ServantStatus& value )      { status_ = value;             }
+
+    // Getter and Setter for servant's type.                                      
+    ServantTypes Type()                            { return type_;                }  
+    void Type(const ServantTypes& value)           { type_ = value;               }
+
     // Getter and Settter for current task asigned to this servant.                     
-    void CurrentTask( sptr<TaskDescriptor> value ) { this->current_task_ = value; }
     sptr<TaskDescriptor> CurrentTask()             { return current_task_;        }
+    void CurrentTask( sptr<TaskDescriptor> value ) { this->current_task_ = value; }
 
 private:
 
@@ -168,6 +168,7 @@ private:
 
     // Current asigned task.
     sptr<TaskDescriptor> current_task_ = nullptr;
+
 };
 
 #endif // !SERVANT_H_ 

@@ -32,7 +32,7 @@ sptr<Servant> ServantManager::FindBySeesion( sptr<GeneralSession> session )
     return FindBySessionID( session->ID() );
 }
 
-sptr<Servant> ServantManager::FindBySessionID( size_t sessionID )
+sptr<Servant> ServantManager::FindBySessionID( const size_t& sessionID )
 {
     for ( auto item : this->Instances() )
     {
@@ -40,11 +40,12 @@ sptr<Servant> ServantManager::FindBySessionID( size_t sessionID )
         {
             return item;
         }
-        return sptr<Servant>();
     }
+
+    return sptr<Servant>();
 }
 
-sptr<Servant> ServantManager::FindByServantID( std::string ServantID )
+sptr<Servant> ServantManager::FindByServantID( const std::string& ServantID )
 {
     for ( auto item : this->Instances() )
     {
@@ -53,12 +54,14 @@ sptr<Servant> ServantManager::FindByServantID( std::string ServantID )
             return item;
         }
     }
+
     return sptr<Servant>();
 }
 
-std::vector<sptr<Servant>> ServantManager::FindByTaskID( std::string taskID )
+std::vector<sptr<Servant>> ServantManager::FindByTaskID( const std::string& taskID )
 {
     auto result = std::vector<sptr<Servant>>();
+
     for ( auto item : this->Instances() )
     {
         if ( nullptr != item->CurrentTask() && taskID == item->CurrentTask()->ID() )
@@ -66,6 +69,7 @@ std::vector<sptr<Servant>> ServantManager::FindByTaskID( std::string taskID )
             result.push_back( item );
         }
     }
+
     return result;
 }
 
@@ -73,24 +77,28 @@ size_t ServantManager::GetScore(const vector<std::string>& servantIDList )
 {
     size_t result = 0;
 
-    for ( auto item : servantIDList )
+    for ( const auto& item : servantIDList )
     {
         auto tempServant = FindByServantID( item );
         if ( tempServant )
-            result+=tempServant->Ability();
-        else
-        ;
-            //return 0;
+        {
+            result += tempServant->Ability();
+        }        
     }
+
     return result;
 }
 
 size_t ServantManager::GetScore( const std::string & servantID )
 {
-    size_t result = 0;
-    auto tempServant = FindByServantID( servantID );
+    size_t result      = 0;
+    auto   tempServant = FindByServantID( servantID );
+
     if ( tempServant )
+    {
         result = tempServant->Ability();
+    }
+
     return result;
 }
 

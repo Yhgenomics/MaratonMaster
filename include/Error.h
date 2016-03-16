@@ -50,7 +50,7 @@ public:
     // @param   : code is the error code with 0 for no error,
     //            while other value's meaning determinded by upper layer.
     // @param   : message is a readable string.
-    Error( size_t code , std::string message )
+    Error( const size_t& code , const std::string& message )
     {
         this->code_     = code;
         this->message_  = message_;
@@ -73,14 +73,14 @@ public:
     }
 
     //Getter and Setter for error code
-    size_t      Code()               { return this->code_;    };
-    void        Code( size_t value ) { this->code_ = value;   };
+    size_t Code()                    { return this->code_;    };
+    void Code( const size_t& value ) { this->code_ = value;   };
 
     //Getter and Setter for error message
     //@note     : Any message assigned to a non zero Error will be printed 
     //            to standard ouput automaticly. 
     std::string Message()            { return this->message_; };
-    void        Message( std::string value )
+    void Message( const std::string& value )
     {
         this->message_ = value;
         if ( this->code_ != 0 )
@@ -93,6 +93,7 @@ private:
 
     // Readable error message
     std::string message_ = "";
+
 };
 
 #endif // !ERROR_H_ 

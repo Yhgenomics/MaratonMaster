@@ -29,7 +29,7 @@ limitations under the License.
 #include "Servant.h"
 #include <iostream>
 
-ServantListener::ServantListener( std::string ip )
+ServantListener::ServantListener( const std::string& ip )
     : Listener( ip , LISTEN_PORT )
 {
 }

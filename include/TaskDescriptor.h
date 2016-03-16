@@ -42,11 +42,11 @@ class PipeDescriptor
 {
 public:
 
-    string id_;
-    string name_;
-    string executor_;
-    bool   multiple_input_;
-    bool   multiple_thread_;
+    string         id_;
+    string         name_;
+    string         executor_;
+    bool           multiple_input_;
+    bool           multiple_thread_;
     vector<string> parameters_;
 
 };
@@ -57,8 +57,8 @@ class PipelineDescriptor
 {
 public:
 
-    string id_;
-    string name_;
+    string                 id_;
+    string                 name_;
     vector<PipeDescriptor> pipes_;
 
 };
@@ -93,37 +93,37 @@ public:
     }    
 
     // Getter and Setter for task ID.
-    string ID()                               { return id_;                          }
-    void ID( string value )                   { id_= value;                          }
+    string ID()                                      { return id_;                          }
+    void ID( const string& value )                   { id_= value;                          }
     
     // Getter and Setter for Parallel mark
-    bool IsParallel()                         { return is_parallel_;                 }
-    void IsParallel( bool value )             { is_parallel_ = value;                }
+    bool IsParallel()                                { return is_parallel_;                 }
+    void IsParallel(const bool& value )              { is_parallel_ = value;                }
     
     // Getter and Setter for resource list
-    vector<string> Resources()                { return vector<string>( resources_ ); }
-    void Resources( vector<string> value )    { resources_ = value;                  }
+    vector<string> Resources()                       { return vector<string>( resources_ ); }
+    void Resources( const vector<string>& value )    { resources_ = value;                  }
 
     // Clear the input list
     // @note    : use for making a sub task.
-    void ResetInput()                         { input_.clear();                      }
+    void ResetInput()                                { input_.clear();                      }
     
     // Getter and Setter for input list
-    vector<string> Input()                    { return vector<string>( input_ );     }
-    void Input( vector<string> value )        { input_ = value;                      }
+    vector<string> Input()                           { return vector<string>( input_ );     }
+    void Input( const vector<string>& value )        { input_ = value;                      }
                                                                                      
     // Clear the servants list
     // @note    : use for making a sub task.
-    void ResetServants()                      { servants_.clear();                   }
+    void ResetServants()                             { servants_.clear();                   }
     
     // Getter and Setter servants list
     // @note    : subtask only have one servant.
-    vector<string> Servants()                 { return vector<string>( servants_ );  }
-    void Servants( vector<string> value )     { servants_ = value;                   }
+    vector<string> Servants()                        { return vector<string>( servants_ );  }
+    void Servants( const vector<string>& value )     { servants_ = value;                   }
     
     // Getter and Setter for pipeline
-    PipelineDescriptor Pipeline()             { return pipeline_;                    }
-    void Pipeline( PipelineDescriptor value ) { pipeline_ = value;                   }
+    PipelineDescriptor Pipeline()                    { return pipeline_;                    }
+    void Pipeline( const PipelineDescriptor& value ) { pipeline_ = value;                   }
     
     // Make a task a new ID, and ready for resign the input and servant
     void PrepareAsSubtask();

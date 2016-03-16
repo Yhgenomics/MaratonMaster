@@ -44,19 +44,19 @@ class ServantManager :
 {
 public:
     
+    // Find Servant which is handling the given task
+    std::vector<sptr<Servant>>  FindByTaskID( const std::string& taskID );
+
     // Find Servant by a session's shared pointer.
     sptr<Servant>               FindBySeesion( sptr<GeneralSession> session );
     
     // Find Servant by a session ID.
     // @note    : used mostly in message handler, which always known the session ID.
-    sptr<Servant>               FindBySessionID( size_t sessionID );
+    sptr<Servant>               FindBySessionID( const size_t& sessionID );
 
     // Find Servnat by a servant ID.
-    sptr<Servant>               FindByServantID( std::string servantID );
+    sptr<Servant>               FindByServantID( const std::string& servantID );
     
-    // Find Servant which is handling the given task
-    std::vector<sptr<Servant>>  FindByTaskID( std::string taskID );
-
     // Get sum score for a list of Servants' ID 
     size_t                      GetScore(const vector<std::string>& servantIDList);
     

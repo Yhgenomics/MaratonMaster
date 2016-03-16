@@ -89,10 +89,10 @@ namespace Protocal
         std::map<size_t , uptr<MessageHandler> > handler_map_;
 
         // Hash the name of a message
-        size_t HashName( std::string messageType );
+        size_t HashName( const std::string& messageType );
 
         friend MRT::Singleton<MessageHub>;
-    };
 
+    };
 }
 #endif // !MESSAGE_HUB_H_

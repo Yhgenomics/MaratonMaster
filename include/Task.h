@@ -69,34 +69,34 @@ public:
     ~Task();
 
     // Launch task
-    Error      Launch();
+    Error Launch();
     
     // If every subtasks finished
-    bool       CheckFinish();
+    bool  CheckFinish();
 
     // On every subtask finished
-    void       OnFinish();
+    void  OnFinish();
 
     // Abort task
-    void       Abort();
+    void  Abort();
 
     // Make sub tasks
     // @note    : The original task from Business to Master is in 1:1 relationship.
     //            the subtask is the task from Master to Servants it is 1:1 when 
     //            the original task is not parallel, 1:n otherwise.
-    bool       MakeSubtasks();
+    bool  MakeSubtasks();
 
     // Update the status of the tasks executed by Servant.
-    void       UpdateSubtaskStatus( string     subTaskID ,
-                                    TaskStatus status    , 
-                                    vector<string> outputs);
+    void  UpdateSubtaskStatus( const string&         subTaskID ,
+                               const TaskStatus&     status    ,
+                               const vector<string>& outputs   );
                
     // Getter and Setter for task status
-    TaskStatus Status()             { return this->status_;        }
-    void Status( TaskStatus value ) { this->status_ = value;       }
+    TaskStatus Status()                    { return this->status_;        }
+    void Status( const TaskStatus& value ) { this->status_ = value;       }
 
     // Getter of the task ID
-    std::string ID()                { return original_task_->ID(); }
+    std::string ID()                       { return original_task_->ID(); }
 
 private:
 

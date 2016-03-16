@@ -62,7 +62,7 @@ public:
     //            {
     //                make_uptr( BusinessListener , "0.0.0.0" ) ;
     //            }   
-    BusinessListener( std::string ip ) :MRT::Listener( ip , BUSINESS_PORT ) {};
+    BusinessListener( const std::string& ip ) :MRT::Listener( ip , BUSINESS_PORT ) {};
 
     // Destructor.
     ~BusinessListener() {};

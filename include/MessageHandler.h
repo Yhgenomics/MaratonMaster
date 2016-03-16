@@ -69,6 +69,7 @@ namespace Protocal
 
         HandlerMethod   Method = nullptr;
         std::string     message_type_;
+
     };
 }
 

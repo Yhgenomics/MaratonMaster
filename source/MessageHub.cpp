@@ -93,7 +93,7 @@ namespace Protocal
     }
 
     // Hash the name of a message
-    size_t MessageHub::HashName( std::string messageType )
+    size_t MessageHub::HashName( const std::string& messageType )
     {
         size_t result = 0;
         for ( int i = 0; i < messageType.length(); i++ )

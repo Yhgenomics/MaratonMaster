@@ -46,7 +46,9 @@ void TaskManager::Update()
     }
 }
 
-void TaskManager::UpdateSubtaskStatus( std::string taskID , Task::TaskStatus status , vector<string> outputs )
+void TaskManager::UpdateSubtaskStatus( const std::string&      taskID ,
+                                       const Task::TaskStatus& status ,
+                                       const vector<string>&   outputs )
 {
     for ( auto task : Instances() )
     {

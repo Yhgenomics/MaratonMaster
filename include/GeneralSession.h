@@ -95,6 +95,7 @@ private:
 
     // [NOT IN USE NOW]
     void TryPopMessage( );
+
 };
 
 #endif // !GENERAL_SESSION_H_

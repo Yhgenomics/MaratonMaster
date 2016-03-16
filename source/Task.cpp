@@ -63,7 +63,7 @@ bool Task::MakeSubtasks()
         auto originalServants = original_task_->Servants();
         auto sentialMark      = originalServants.begin();
 
-        for ( auto item : originalServants )
+        for ( const auto& item : originalServants )
         {
             // All inputs has been asigned to srvants
             if ( leftInputs <= 0 )
@@ -119,18 +119,20 @@ bool Task::MakeSubtasks()
     return is_sub_tasks_ready;
 }
 
-void Task::UpdateSubtaskStatus( string subTaskID , TaskStatus status , vector<string> outputs)
+void Task::UpdateSubtaskStatus( const string&         subTaskID ,
+                                const TaskStatus&     status    ,
+                                const vector<string>& outputs   )
 {
-    if(sub_tasks_status_.count( subTaskID ) > 0 )
+    if ( sub_tasks_status_.count( subTaskID ) > 0 )
     {
-        for(auto item : outputs )
+        for ( const auto& item : outputs )
         {
             outputs_.push_back( item );
         }
 
         sub_tasks_status_[ subTaskID ] = status;
         if ( CheckFinish() )
-        OnFinish();
+            OnFinish();
     }
 }
 
@@ -191,7 +193,7 @@ Error Task::Launch()
 bool Task::CheckFinish()
 {
     bool result = true;
-    for( auto subtask : sub_tasks_status_ )
+    for( const auto& subtask : sub_tasks_status_ )
     {
         result = result && subtask.second == Task::TaskStatus::kFinished;
     }
@@ -227,7 +229,7 @@ void Task::OnFinish()
 void Task::Abort()
 {
     Status(TaskStatus::kError);
-    for ( auto item : sub_tasks_status_ )
+    for ( auto& item : sub_tasks_status_ )
     {
         //TODO cancel task each servants vid a cancel task message
         item.second = TaskStatus::kError;

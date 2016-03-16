@@ -59,7 +59,7 @@ public:
     //            {
     //                make_uptr( BusinessListener , "0.0.0.0" ) ;
     //            }   
-    ServantListener( std::string ip );
+    ServantListener( const std::string& ip );
     
     // Destructor.
     ~ServantListener( );

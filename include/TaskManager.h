@@ -46,14 +46,16 @@ public:
 
     // Stop task
     // @param   : taskID
-    void  Stop( std::string taskID );
+    void  Stop( const std::string& taskID );
     
     // Launch task
     // @param   : taskID
-    Error Launch( std::string taskID );
+    Error Launch( const std::string& taskID );
 
     // UpdateSubtaskStatus
-    void  UpdateSubtaskStatus( std::string taskID , Task::TaskStatus status, vector<string> outputs );
+    void  UpdateSubtaskStatus( const std::string&      taskID ,
+                               const Task::TaskStatus& status ,
+                               const vector<string>&   outputs );
 
 private:
 
