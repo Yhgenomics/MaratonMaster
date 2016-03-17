@@ -43,8 +43,8 @@ void TaskManager::Update()
             {
                 break;
             }
-        }
-    }
+        } // end of if ( Task::TaskStatus::kPending == task->Status() )
+    } // end of for ( auto task : Instances() )
 }
 
 // Try UpdateSubtaskStatus in every task

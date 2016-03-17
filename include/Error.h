@@ -88,6 +88,7 @@ public:
     }
 
 private:
+
     // Error code
     size_t      code_    = 0;
 

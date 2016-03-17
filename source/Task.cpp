@@ -33,7 +33,7 @@ limitations under the License.
 
 using nlohmann::json;
 using std::vector;
-using std::string; 
+using std::string;
 
 // Make sub tasks
 // @note    : The original task from Business to Master is in 1:1 relationship.
@@ -56,10 +56,11 @@ bool Task::MakeSubtasks()
         sub_tasks_.push_back( tempSubtask );
         sub_tasks_status_[ tempSubtask->ID() ] = TaskStatus::kPending;
     }
+
     else
     {
 
-        auto totalScore       = ServantManager::Instance()->GetScore( original_task_->Servants() );              
+        auto totalScore       = ServantManager::Instance()->GetScore( original_task_->Servants() );
         auto totalInputs      = original_task_->Input().size();
         auto leftInputs       = totalInputs;
         auto originalInput    = original_task_->Input();
@@ -116,10 +117,11 @@ bool Task::MakeSubtasks()
 
             // Add the subtask watch list
             sub_tasks_status_[ tempSubtask->ID() ] = TaskStatus::kPending;
-        }
+        } // end of for ( const auto& item : originalServants )
+    } // end of else
 
-    }
     is_sub_tasks_ready = true;
+
     return is_sub_tasks_ready;
 }
 
@@ -129,8 +131,8 @@ bool Task::MakeSubtasks()
 // @outputs   : The subtask's output information witch should be append to
 //              the task.
 void Task::UpdateSubtaskStatus( const string&         subTaskID ,
-                                const TaskStatus&     status    ,
-                                const vector<string>& outputs   )
+                                const TaskStatus&     status ,
+                                const vector<string>& outputs )
 {
     if ( sub_tasks_status_.count( subTaskID ) > 0 )
     {
@@ -140,17 +142,18 @@ void Task::UpdateSubtaskStatus( const string&         subTaskID ,
         }
 
         sub_tasks_status_[ subTaskID ] = status;
+
         if ( IsAllSubtasksFinished() )
         {
             OnFinish();
         }
-           
+
     }
 }
 
 // Constructor from a task descriptor.
 // @task : Task descriptor in a unique pointer.
-Task::Task( uptr<TaskDescriptor> task)
+Task::Task( uptr<TaskDescriptor> task )
 {
     original_task_    = move_ptr( task );
     original_message_ = original_task_->MakeMessage();
@@ -158,7 +161,7 @@ Task::Task( uptr<TaskDescriptor> task)
 
 // Constructor from a protobuf message MessageTaskDeliver.
 // @message : task deliver message in a unique pointer
-Task::Task( uptr<MessageTaskDeliver> message)
+Task::Task( uptr<MessageTaskDeliver> message )
 {
     original_task_    = make_uptr( TaskDescriptor , *( message.get() ) );
     original_message_ = move_ptr( message );
@@ -173,27 +176,29 @@ Task::~Task()
 Error Task::Launch()
 {
     Error TaskLaunchResult( 0 , "" );
-    
-    if(!is_sub_tasks_ready)
+
+    if ( !is_sub_tasks_ready )
     {
         MakeSubtasks();
     }
 
-    if( this->status_ != TaskStatus::kFinished &&
-        this->status_ != TaskStatus::kPending )
+    if ( this->status_ != TaskStatus::kFinished &&
+         this->status_ != TaskStatus::kPending )
     {
         Abort();
-        TaskLaunchResult.Code(1);
+        TaskLaunchResult.Code( 1 );
         TaskLaunchResult.Message( "task is not ready" );
-        
+
         return TaskLaunchResult;
     }
 
     Status( Task::TaskStatus::kRunning );
-    for(auto subtask : sub_tasks_)
+
+    for ( auto subtask : sub_tasks_ )
     {
         auto servant = ServantManager::Instance()->FindByServantID( *subtask->Servants().begin() );
-        if(0 != servant->LaunchTask( subtask ).Code()) 
+
+        if ( 0 != servant->LaunchTask( subtask ).Code() )
         {
             TaskLaunchResult.Code( 1 );
             TaskLaunchResult.Message( "Servant ID:"
@@ -212,10 +217,12 @@ Error Task::Launch()
 bool Task::IsAllSubtasksFinished()
 {
     bool result = true;
-    for( const auto& subtask : sub_tasks_status_ )
+
+    for ( const auto& subtask : sub_tasks_status_ )
     {
         result = result && subtask.second == Task::TaskStatus::kFinished;
     }
+
     return result;
 }
 
@@ -223,38 +230,36 @@ bool Task::IsAllSubtasksFinished()
 void Task::OnFinish()
 {
     std::cout << "all sub task finished!" << std::endl;
-    
+
     json result;
-   
+
     result[ "status" ]     = Task::TaskStatus::kFinished;
     result[ "taskid" ]     = original_message_->id();
     result[ "pipelineid" ] = original_message_->pipeline().id();
-
     result[ "data" ]       = outputs_;
-    
+
     std::cout << result.dump() << std::endl;
 
     MRT::WebClient myWebClient;
     myWebClient.Header( "Content-Type" , "application/json" );
     myWebClient.Post( "http://10.0.0.20:888/maraton/result" ,
                       result.dump() ,
-                      [] ( uptr<MRT::HTTPResponse> response )
-    {
-
-    }
-    );
+                      [] ( uptr<MRT::HTTPResponse> response ) {}
+                    );
 
 }
 
 // Abort task
 void Task::Abort()
 {
-    Status(TaskStatus::kError);
+    Status( TaskStatus::kError );
+
     for ( auto& item : sub_tasks_status_ )
     {
         //TODO cancel task each servants vid a cancel task message
         item.second = TaskStatus::kError;
     }
+
     return;
 }
 

@@ -36,7 +36,6 @@ limitations under the License.
 #include "handler/MessageHeartBeatHandler.h"
 #include "handler/MessageServantUpdateHandler.h"
 #include "handler/MessageTaskUpdateHandler.h"
-
 #include "MRT.h"
 #include <memory>
 
@@ -55,6 +54,7 @@ namespace Protocal
         AddHandler( std::move( make_uptr( Protocal::MessageHeartBeatHandler         ) ) );
         AddHandler( std::move( make_uptr( Protocal::MessageServantUpdateHandler     ) ) );
         AddHandler( std::move( make_uptr( Protocal::MessageTaskUpdateHandler        ) ) );
+
         return true;
     }
 }

@@ -40,6 +40,7 @@ limitations under the License.
 class BusinessSession : public GeneralSession
 {
 public:
+
     //Constructor
     BusinessSession() {};
 

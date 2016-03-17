@@ -65,6 +65,7 @@ namespace Protocal
     class MessageHub : public MRT::Singleton<MessageHub>
     {
     public:
+
         // Constructor
         MessageHub()  {};
 
@@ -72,7 +73,7 @@ namespace Protocal
         ~MessageHub() {};
 
         // Add one handler to the Hub
-        // @param   : one message handler in unique pointer.
+        // @oneHandler : one message handler in unique pointer.
         bool AddHandler( uptr<MessageHandler> oneHandler );
 
         // Gloable Message handlers management
@@ -83,7 +84,7 @@ namespace Protocal
         // @session : The source of the message.
         // @pData   : The content of the message.
         // @length  : The size of message.
-        // @note    : Just get the messageID this layer, the translation from the pData
+        // @note    : Just get the messageID in this function, the translation from the pData
         //            to message should be done at certain MessageHandler.
         int Handle( GeneralSession* session , const void* pData , size_t length );
         
@@ -92,10 +93,13 @@ namespace Protocal
         uptr<MRT::Buffer> Build( uptr<::google::protobuf::Message> message );
 
     private:
+
         // Handler map keep the messageID and Handler in a 1:1 relationship
         std::map<size_t , uptr<MessageHandler> > handler_map_;
 
         // Hash the name of a message
+        // @messageType : message name's string
+        // @note        : When sending this hash code will be packaged to the buffer 
         size_t HashName( const std::string& messageType );
 
         friend MRT::Singleton<MessageHub>;

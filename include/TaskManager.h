@@ -63,6 +63,7 @@ public:
 private:
 
     friend Singleton<TaskManager>; 
+
 };
 
 #endif // !TASK_MANAGER_H_ 

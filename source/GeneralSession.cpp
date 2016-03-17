@@ -68,6 +68,7 @@ void GeneralSession::SendOut( uptr<::google::protobuf::Message> message )
 void GeneralSession::OnRead( uptr<MRT::Buffer> data )
 {
     this->circle_buffer_.Push( move_ptr( data ) );
+
     while ( true )
     {
         switch ( this->parse_state_ )
@@ -104,7 +105,7 @@ void GeneralSession::OnRead( uptr<MRT::Buffer> data )
                 body_length_        = len;
                 this->parse_state_  = MessageParseState::kBody;
 
-            }// end of case MessageParseState::kLength
+            } // end of case MessageParseState::kLength
             break;
 
             case MessageParseState::kBody:
@@ -126,7 +127,7 @@ void GeneralSession::OnRead( uptr<MRT::Buffer> data )
                 body_length_        = 0;
                 this->parse_state_  = MessageParseState::kHeader;
 
-            }// end of case MessageParseState::kBody
+            } // end of case MessageParseState::kBody
             break;
 
             default:

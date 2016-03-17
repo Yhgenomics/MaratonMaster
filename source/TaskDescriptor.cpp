@@ -118,6 +118,7 @@ uptr<MessageTaskDeliver> TaskDescriptor::MakeMessage()
             tempPipe->add_parameters( param );
         }
     }
+
     return move_ptr( result );
 }
 

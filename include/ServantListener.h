@@ -64,8 +64,6 @@ public:
     // Destructor.
     ~ServantListener( );
 
-protected:
-
 private:
     
     // Callback when the servant session is connected.

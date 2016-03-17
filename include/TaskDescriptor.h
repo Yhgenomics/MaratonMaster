@@ -152,6 +152,7 @@ private:
     
     // Pipeline used in this task.
     PipelineDescriptor pipeline_;
+
 };
 
 #endif // !TASK_DESCRIPTOR_H_ 
