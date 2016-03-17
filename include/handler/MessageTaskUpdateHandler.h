@@ -31,6 +31,7 @@ limitations under the License.
 #include "MessageHandler.h"
 #include "TaskManager.h"
 #include "GeneralSession.h"
+#include "MasterGloable.h"
 #include <functional>
 #include <string>
 #include <memory>
@@ -40,9 +41,11 @@ namespace Protocal
     class MessageTaskUpdateHandler : public MessageHandler
     {
     public:
+
         MessageTaskUpdateHandler()
         {
             MessageType("MessageTaskUpdate");
+
             Method = []( GeneralSession* session , const void* pData , size_t length )
             {
                 char* dataContent = ( char* )pData;
@@ -58,14 +61,17 @@ namespace Protocal
                 {
                    auto subtaskID = servant->CurrentTask()->ID();
                    std::vector<std::string> outputs;
+
                    for( const auto& item : msg->output() )
                    {
                        outputs.push_back( item );
                    }
+
                    TaskManager::Instance()->UpdateSubtaskStatus( subtaskID , 
-                                                                 Task::TaskStatus( msg->status() ) ,
+                                                                 TaskStatus( msg->status() ) ,
                                                                  outputs);
                 }
+
                 return true;
             };
         }

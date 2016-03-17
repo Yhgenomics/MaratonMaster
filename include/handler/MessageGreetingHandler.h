@@ -40,9 +40,11 @@ namespace Protocal
     class MessageGreetingHandler : public MessageHandler
     {
     public:
+
         MessageGreetingHandler()
         {
             MessageType("MessageGreeting");
+
             Method = []( GeneralSession* session , const void* pData , size_t length )
             {
                 //TODO add your codes here

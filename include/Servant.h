@@ -41,26 +41,6 @@ using std::string;
 class Servant
 {
 public:
-    
-    // Status on the servant session.
-    // @note    : not the status of the task running on it.  
-    enum ServantStatus
-    {
-        kUnknow              = 0 ,
-        kBooting             = 1 ,
-        kSelfTesting         = 2 ,
-        kStandby             = 3 ,
-        kError               = 4 ,
-        kWorking             = 5 ,
-        kException           = 20
-    };
-
-    // Servants with differents may offer variances. 
-    enum ServantTypes
-    {
-        kSoftware  = 0 ,
-        kOther     = 10
-    };
 
     // Constructor
     // @note    : Use the raw pointer as the constrains from Maraton Framework. 

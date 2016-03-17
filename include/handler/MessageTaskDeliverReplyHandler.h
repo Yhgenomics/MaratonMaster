@@ -39,9 +39,11 @@ namespace Protocal
     class MessageTaskDeliverReplyHandler : public MessageHandler
     {
     public:
+
         MessageTaskDeliverReplyHandler()
         {
             MessageType("MessageTaskDeliverReply");
+
             Method = []( GeneralSession* session , const void* pData , size_t length )
             {
                 //TODO add your codes here

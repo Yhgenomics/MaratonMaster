@@ -57,7 +57,7 @@ public:
     // @outputs : The subtask's output information witch should be append to
     //            the task.
     void  UpdateSubtaskStatus( const std::string&      taskID ,
-                               const Task::TaskStatus& status ,
+                               const TaskStatus& status ,
                                const vector<string>&   outputs );
 
 private:

@@ -39,12 +39,15 @@ namespace Protocal
     class MessageHeartBeatHandler : public MessageHandler
     {
     public:
+
         MessageHeartBeatHandler()
         {
             MessageType("MessageHeartBeat");
+
             Method = []( GeneralSession* session , const void* pData , size_t length )
             {
-                ServantManager::Instance()->FindBySessionID( session->ID() )->Refresh();            
+                ServantManager::Instance()->FindBySessionID( session->ID() )->Refresh();
+                            
                 return true;
             };
         }

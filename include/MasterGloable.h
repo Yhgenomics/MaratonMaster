@@ -47,4 +47,35 @@ limitations under the License.
 #define WEB_SERVER_NAME         "YHGenomics/Maraton"
 #define CONF_KEY_WEBSUBSCRIBER  "web_subscriber"
 
+// Task status
+enum TaskStatus
+{
+    kTaskUnknow = 0 ,
+    kPending ,
+    kRunning ,
+    kFinished ,
+    kStopped ,
+    kTaskError
+};
+
+// Status on the servant session.
+// @note    : not the status of the task running on it.  
+enum ServantStatus
+{
+    kUnknow              = 0 ,
+    kBooting             = 1 ,
+    kSelfTesting         = 2 ,
+    kStandby             = 3 ,
+    kError               = 4 ,
+    kWorking             = 5 ,
+    kException           = 20
+};
+
+// Servants with differents may offer variances. 
+enum ServantTypes
+{
+    kSoftware  = 0 ,
+    kOther     = 10
+};
+
 #endif // !MARATON_GLOABLE_H_ 

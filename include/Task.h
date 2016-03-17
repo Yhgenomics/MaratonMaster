@@ -33,6 +33,7 @@ limitations under the License.
 #include "Error.h"
 #include "maraton.h"
 #include "MessageTaskDeliver.pb.h"
+#include "MasterGloable.h"
 #include <string>
 #include <vector>
 #include <map>
@@ -47,17 +48,6 @@ using std::vector;
 class Task
 {
 public:
-
-    //Task Status.
-    enum TaskStatus
-    {
-        kUnknow = 0 ,
-        kPending,
-        kRunning,
-        kFinished,
-        kStopped,
-        kError
-    };
     
     // Constructor from a task descriptor.
     // @task : Task descriptor in a unique pointer.
@@ -121,7 +111,7 @@ private:
     bool                         is_sub_tasks_ready = false;
 
     // The Status for the task.
-    TaskStatus                   status_            = TaskStatus::kUnknow;
+    TaskStatus                   status_            = TaskStatus::kTaskUnknow;
 
     // The descriptor for all subtasks
     vector<sptr<TaskDescriptor>> sub_tasks_;

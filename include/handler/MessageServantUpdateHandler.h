@@ -39,9 +39,11 @@ namespace Protocal
     class MessageServantUpdateHandler : public MessageHandler
     {
     public:
+
         MessageServantUpdateHandler()
         {
             MessageType("MessageServantUpdate");
+
             Method = []( GeneralSession* session , const void* pData , size_t length )
             {
                 char* dataContent = ( char* )pData;
@@ -52,11 +54,12 @@ namespace Protocal
                 msg->ParseFromArray( dataContent , msgLength );
 
                 auto servant = ServantManager::Instance()->FindBySessionID( session->ID() );
+
                 if ( servant )
                 {                 
-                    servant->Status( Servant::ServantStatus( msg->status() ) );
+                    servant->Status( ServantStatus( msg->status() ) );
                 }
-                return true;
+
                 return true;
             };
         }

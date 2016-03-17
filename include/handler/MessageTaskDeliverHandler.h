@@ -33,6 +33,7 @@ limitations under the License.
 #include "TaskDescriptor.h"
 #include "GeneralSession.h"
 #include "MessageHandler.h"
+#include "MasterGloable.h"
 #include <functional>
 #include <string>
 #include <memory>
@@ -42,9 +43,11 @@ namespace Protocal
     class MessageTaskDeliverHandler : public MessageHandler
     {
     public:
+
         MessageTaskDeliverHandler()
         {
             MessageType("MessageTaskDeliver");
+
             Method = []( GeneralSession* session , const void* pData , size_t length )
             {
                 // Take the task in
@@ -56,7 +59,7 @@ namespace Protocal
                 msg->ParseFromArray( dataContent , msgLength );
 
                 auto task = make_sptr( Task , move_ptr( msg ) );
-                task->Status( Task::TaskStatus::kPending );
+                task->Status( TaskStatus::kPending );
                 TaskManager::Instance()->Push( task );
 
                 // Send the task received 
@@ -65,6 +68,7 @@ namespace Protocal
                 deliverReply->set_code( 0 );
                 deliverReply->set_message( "task received!" );
                 session->SendOut( std::move( deliverReply ) );
+
                 return true;
             };
         }

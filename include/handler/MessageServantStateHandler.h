@@ -41,9 +41,11 @@ namespace Protocal
     class MessageServantStateHandler : public MessageHandler
     {
     public:
+
         MessageServantStateHandler()
         {
             MessageType( "MessageServantState" );
+
             Method = [] ( GeneralSession* session , const void* pData , size_t length )
             {
                 //TODO add your codes here
@@ -57,7 +59,9 @@ namespace Protocal
                     reply->add_memory( item->MemorySize() );
                     reply->add_type( item->Type() );
                 }
+
                 session->SendOut( std::move( reply ) );
+
                 return true;
             };
         }

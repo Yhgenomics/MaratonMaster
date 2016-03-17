@@ -39,9 +39,11 @@ namespace Protocal
     class MessageStateReplyHandler : public MessageHandler
     {
     public:
+
         MessageStateReplyHandler()
         {
             MessageType("MessageStateReply");
+
             Method = []( GeneralSession* session , const void* pData , size_t length )
             {
                 //TODO add your codes here

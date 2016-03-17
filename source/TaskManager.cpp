@@ -35,7 +35,7 @@ void TaskManager::Update()
 {
     for ( auto task : Instances() )
     {
-        if ( Task::TaskStatus::kPending == task->Status() )
+        if ( TaskStatus::kPending == task->Status() )
         {
             auto result = task->Launch();
             
@@ -53,7 +53,7 @@ void TaskManager::Update()
 // @outputs : The subtask's output information witch should be append to
 //            the task.
 void TaskManager::UpdateSubtaskStatus( const std::string&      taskID ,
-                                       const Task::TaskStatus& status ,
+                                       const TaskStatus& status ,
                                        const vector<string>&   outputs )
 {
     for ( auto task : Instances() )

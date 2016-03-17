@@ -24,10 +24,10 @@ limitations under the License.
 * Modifed       : When      | Who       | What
 ***********************************************************************************/
 
-#include "MRT.h"
-#include "json.hpp"
 #include "Task.h"
 #include "ServantManager.h"
+#include "MRT.h"
+#include "json.hpp"
 #include <vector>
 #include <string>
 
@@ -192,7 +192,7 @@ Error Task::Launch()
         return TaskLaunchResult;
     }
 
-    Status( Task::TaskStatus::kRunning );
+    Status( TaskStatus::kRunning );
 
     for ( auto subtask : sub_tasks_ )
     {
@@ -204,7 +204,7 @@ Error Task::Launch()
             TaskLaunchResult.Message( "Servant ID:"
                                       + *subtask->Servants().begin()
                                       + "return Error when launching task" );
-            Status( Task::TaskStatus::kError );
+            Status( TaskStatus::kTaskError );
             break;
         }
     }
@@ -220,7 +220,7 @@ bool Task::IsAllSubtasksFinished()
 
     for ( const auto& subtask : sub_tasks_status_ )
     {
-        result = result && subtask.second == Task::TaskStatus::kFinished;
+        result = result && subtask.second == TaskStatus::kFinished;
     }
 
     return result;
@@ -233,7 +233,7 @@ void Task::OnFinish()
 
     json result;
 
-    result[ "status" ]     = Task::TaskStatus::kFinished;
+    result[ "status" ]     = TaskStatus::kFinished;
     result[ "taskid" ]     = original_message_->id();
     result[ "pipelineid" ] = original_message_->pipeline().id();
     result[ "data" ]       = outputs_;
@@ -252,12 +252,12 @@ void Task::OnFinish()
 // Abort task
 void Task::Abort()
 {
-    Status( TaskStatus::kError );
+    Status( TaskStatus::kTaskError );
 
     for ( auto& item : sub_tasks_status_ )
     {
         //TODO cancel task each servants vid a cancel task message
-        item.second = TaskStatus::kError;
+        item.second = TaskStatus::kTaskError;
     }
 
     return;

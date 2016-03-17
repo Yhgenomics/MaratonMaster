@@ -40,9 +40,11 @@ namespace Protocal
     class MessageRegistHandler : public MessageHandler
     {
     public:
+
         MessageRegistHandler()
         {
             MessageType( "MessageRegist" );
+
             Method = [] ( GeneralSession* session , const void* pData , size_t length )
             {
                 // Update the servant infomation 
@@ -54,15 +56,17 @@ namespace Protocal
                 msg->ParseFromArray( dataContent , msgLength );
 
                 auto servant = ServantManager::Instance()->FindBySessionID( session->ID() );
+
                 if ( servant )
                 {
                     servant->ID( msg->id() );
-                    servant->Status( Servant::ServantStatus( msg->state() ) );
+                    servant->Status( ServantStatus( msg->state() ) );
                     servant->CPU( msg->cpu() );
                     servant->MemorySize( msg->memory() );
-                    servant->Type( Servant::ServantTypes( msg->type() ) );
+                    servant->Type( ServantTypes( msg->type() ) );
                     servant->SelfEvaluate();
                 }
+
                 return true;
             };
         }
