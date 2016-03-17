@@ -35,6 +35,10 @@ using nlohmann::json;
 using std::vector;
 using std::string; 
 
+// Make sub tasks
+// @note    : The original task from Business to Master is in 1:1 relationship.
+//            the subtask is the task from Master to Servants it is 1:1 when 
+//            the original task is not parallel, 1:n otherwise.
 bool Task::MakeSubtasks()
 {
     // Design for remake subtask(will not happen for now)
@@ -119,6 +123,11 @@ bool Task::MakeSubtasks()
     return is_sub_tasks_ready;
 }
 
+// Update the status of the tasks executed by Servant.
+// @subTaskID : The ID for subtask not the task
+// @status    : The status for subtask
+// @outputs   : The subtask's output information witch should be append to
+//              the task.
 void Task::UpdateSubtaskStatus( const string&         subTaskID ,
                                 const TaskStatus&     status    ,
                                 const vector<string>& outputs   )
@@ -139,12 +148,16 @@ void Task::UpdateSubtaskStatus( const string&         subTaskID ,
     }
 }
 
+// Constructor from a task descriptor.
+// @task : Task descriptor in a unique pointer.
 Task::Task( uptr<TaskDescriptor> task)
 {
     original_task_    = move_ptr( task );
     original_message_ = original_task_->MakeMessage();
 }
 
+// Constructor from a protobuf message MessageTaskDeliver.
+// @message : task deliver message in a unique pointer
 Task::Task( uptr<MessageTaskDeliver> message)
 {
     original_task_    = make_uptr( TaskDescriptor , *( message.get() ) );
@@ -155,6 +168,8 @@ Task::~Task()
 {
 }
 
+// Launch task
+// @note    : Launch all subtasks
 Error Task::Launch()
 {
     Error TaskLaunchResult( 0 , "" );
@@ -193,6 +208,7 @@ Error Task::Launch()
     return TaskLaunchResult;
 }
 
+// return true when all subtasks finished successfully, flase otherwise.
 bool Task::IsAllSubtasksFinished()
 {
     bool result = true;
@@ -203,6 +219,7 @@ bool Task::IsAllSubtasksFinished()
     return result;
 }
 
+// On every subtask finished
 void Task::OnFinish()
 {
     std::cout << "all sub task finished!" << std::endl;
@@ -229,6 +246,7 @@ void Task::OnFinish()
 
 }
 
+// Abort task
 void Task::Abort()
 {
     Status(TaskStatus::kError);

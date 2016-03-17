@@ -56,7 +56,7 @@ class BusinessListener : public MRT::Listener
 public:
 
     // Constructor takes an IP address as the input, but the port is predefined.
-    // @param   : ip is the IP address of the business session. Set 0.0.0.0 to listen
+    // @ip      : The IP address of the business session. Set 0.0.0.0 to listen
     //            to any IP address.  
     // @example : 
     //            {
@@ -73,12 +73,12 @@ private:
     virtual MRT::Session * CreateSession()                override;            
     
     // Callback when the business session opening.
-    // @param   : session is the pointer to the session and can be cast to 
+    // @session : The pointer to the session and can be cast to 
     //            the pointer to BusinessSession by static cast.                           
     virtual void OnSessionOpen( MRT::Session * session )  override; 
 
     // Callback when the business session closing.
-    // @param   : session is the pointer to the session and can be cast to 
+    // @session : The pointer to the session and can be cast to 
     //            the pointer to BusinessSession by static cast. 
     virtual void OnSessionClose( MRT::Session * session ) override;
 

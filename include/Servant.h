@@ -69,7 +69,7 @@ public:
     // Destructor.
     ~Servant();
 
-    // Periodic function for updating the servant status.
+    // Periodically called function for updating the servant status.
     void Update();
     
     // Evaluate the servant's ability
@@ -87,6 +87,7 @@ public:
     void StopTask();
 
     // Launch a task specified by a TaskDescriptor.
+    // @task    : The task descriptor for a substak
     Error LaunchTask( sptr<TaskDescriptor> task );
 
     // Getter for servant session's raw pointer.
@@ -132,7 +133,7 @@ public:
 
 private:
 
-    // Check time out and kick the session from ServantManager.
+    // Check time out and kick the dead session from ServantManager.
     bool            CheckTimeout();
 
     // Pointer to the Servant's session.

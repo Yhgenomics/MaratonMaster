@@ -96,12 +96,14 @@ namespace Protocal
     size_t MessageHub::HashName( const std::string& messageType )
     {
         size_t result = 0;
+
         for ( int i = 0; i < messageType.length(); i++ )
         {
             char    b         = ( char )messageType[ i ];
             size_t  v         = ( ( ( size_t )b << ( ( i % ( char )8 ) * ( char )8 ) ) | i );
                     result   |= ( size_t )( v );
         }
+
         return result;
     }
 }

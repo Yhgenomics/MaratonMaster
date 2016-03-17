@@ -27,12 +27,13 @@ limitations under the License.
 #include "ServantSession.h"
 #include "MessageHub.h"
 
+// Constructor.
 ServantSession::ServantSession( )
 {
 }
 
+// Destructor.
 ServantSession::~ServantSession( )
 {
-
 }
 

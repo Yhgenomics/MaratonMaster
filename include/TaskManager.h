@@ -40,21 +40,21 @@ class TaskManager :
 {
 public:
 
-    // Update each task status launching it if is pending. 
+    // Update each task status and launch it if is pending. 
     void  Update();
 
     // Stop task
-    // @param   : taskID
+    // @taskID   : taskID
     void  Stop( const std::string& taskID );
     
     // Launch task
-    // @param   : taskID
+    // @taskID   : taskID
     Error Launch( const std::string& taskID );
 
     // Try UpdateSubtaskStatus in every task
-    // @param   : subTaskID is the ID for subtask not the task
-    // @param   : status is the status for subtask
-    // @param   : outputs is the subtask's output information witch should be append to
+    // @taskID  : The ID for subtask not the task
+    // @status  : The status for subtask
+    // @outputs : The subtask's output information witch should be append to
     //            the task.
     void  UpdateSubtaskStatus( const std::string&      taskID ,
                                const Task::TaskStatus& status ,

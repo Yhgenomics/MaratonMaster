@@ -28,10 +28,11 @@ limitations under the License.
 #include "TaskDescriptor.h"
 #include "MessageGreeting.pb.h"
 
+// Constructor
+// @note    : Use the raw pointer as the constrains from Maraton Framework. 
 Servant::Servant( ServantSession * session )
 {
     this->session_ = session;
-
     auto msg = make_uptr( MessageGreeting );
     msg->set_code(91);
     session->SendOut( move_ptr( msg ) );
@@ -42,9 +43,10 @@ Servant::~Servant()
 {
 }
 
+// Periodically called function for updating the servant status.
 void Servant::Update()
 {
-    if ( !this->Connected() ) return;
+    if ( !this->Connected() )   return;
 
     if ( this->CheckTimeout() ) return;
 }
@@ -55,21 +57,19 @@ void Servant::SelfEvaluate()
     Ability( CPU() * 1000 + MemorySize() );
 }
 
+// Stop the current runing task.
 void Servant::StopTask()
 {
-    /*if ( this->current_task_ == nullptr ) return;
-
-    uptr<Protocol::MessageTaskCancel> msg = make_uptr( Protocol::MessageTaskCancel );
-    msg->task_id( this->current_task_->id() );
-
-    this->session()->send_message( move_ptr( msg ) );*/
 }
 
+// Getter for servant session's raw pointer.
+// @note    : Do not delete the pointer. 
 ServantSession * Servant::Session()
 {
     return this->session_;
 }
 
+// Launch a task specified by a TaskDescriptor.
 Error Servant::LaunchTask( sptr<TaskDescriptor> task )
 {
     Error launchResult;
@@ -89,6 +89,7 @@ Error Servant::LaunchTask( sptr<TaskDescriptor> task )
     return launchResult;
 }
 
+// Check time out and kick the dead session from ServantManager.
 bool Servant::CheckTimeout()
 {
     size_t delta = Timer::Tick() - this->last_update_time_;

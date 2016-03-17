@@ -62,10 +62,10 @@ namespace Protocal
     public:
         
         // The handler typedefine
-        // @param   : session is the source of the message.
-        // @param   : pData is the content of the message.
-        // @param   : length is the size of message.
-        // @note    : should translate from the pData to certain message first.
+        // @session : The source of the message.
+        // @pData   : The content of the message.
+        // @length  : The size of message.
+        // @note    : Should translate from the pData to certain message first.
         typedef std::function<bool( GeneralSession* session ,
                                     const void*     pData   ,
                                     size_t          length )> HandlerMethod;

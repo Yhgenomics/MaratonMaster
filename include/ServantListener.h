@@ -53,7 +53,7 @@ class ServantListener : public MRT::Listener
 public:
     
     // Constructor
-    // @param   : ip is the IP address of the servant session. Set 0.0.0.0 to listen
+    // @ip      : The IP address of the servant session. Set 0.0.0.0 to listen
     //            to any IP address.  
     // @example : 
     //            {
@@ -72,12 +72,12 @@ private:
     virtual MRT::Session * CreateSession( ) override;
 
     // Callback when the servant session opening.
-    // @param   : session is the pointer to the session and can be cast to 
+    // @session : The pointer to the session and can be cast to 
     //            the pointer to ServantSession by static cast. 
     virtual void OnSessionOpen( MRT::Session * session ) override;
 
     // Callback when the servant session closing.
-    // @param   : session is the pointer to the session and can be cast to 
+    // @session : The pointer to the session and can be cast to 
     //            the pointer to ServantSession by static cast. 
     virtual void OnSessionClose( MRT::Session * session ) override;
 

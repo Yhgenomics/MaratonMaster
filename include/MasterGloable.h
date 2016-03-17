@@ -29,12 +29,12 @@ limitations under the License.
 #include <stdio.h> 
 #include "MRT.h"
 
-#ifdef DEBUB_ONLY
-#define SERVANT_TIMEOUT     99999999
+#ifdef WIN32
+// @note    :unit in ¦Ìs
+//           1 s = 1E6 ¦Ìs
+#define SERVANT_TIMEOUT     10000000
 
 #else
-// @note    :unit ms
-//           1 s = 1000000 ms
 #define SERVANT_TIMEOUT     10000000
 #endif
 

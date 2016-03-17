@@ -47,9 +47,9 @@ public:
     Error() {}
     
     // Constructor with the error code and message.
-    // @param   : code is the error code with 0 for no error,
+    // @code    : The error code with 0 for no error,
     //            while other value's meaning determinded by upper layer.
-    // @param   : message is a readable string.
+    // @message : A readable string.
     Error( const size_t& code , const std::string& message )
     {
         this->code_     = code;

@@ -45,22 +45,28 @@ class ServantManager :
 public:
     
     // Find Servant which is handling the given task
+    // @taskID : ID of a task(not a sub task).
     std::vector<sptr<Servant>>  FindByTaskID( const std::string& taskID );
 
     // Find Servant by a session's shared pointer.
+    // @session : a shared pointer to a GeneralSession
     sptr<Servant>               FindBySeesion( sptr<GeneralSession> session );
     
     // Find Servant by a session ID.
-    // @note    : used mostly in message handler, which always known the session ID.
+    // @sessionID : ID of a session.
+    // @note      : used mostly in message handler, which always known the session ID.
     sptr<Servant>               FindBySessionID( const size_t& sessionID );
 
     // Find Servnat by a servant ID.
+    // @servantID : ID of a servant
     sptr<Servant>               FindByServantID( const std::string& servantID );
     
     // Get sum score for a list of Servants' ID 
+    // @servantIDList : ID of servants need to be counted in.
     size_t                      GetScore(const vector<std::string>& servantIDList);
     
     // Get the score for one Servant.
+    // @servantID : ID of a servant
     size_t                      GetScore(const std::string& servantID);
     
     // Access to all alived servants.

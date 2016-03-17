@@ -32,10 +32,12 @@ limitations under the License.
 #include "BusinessListener.h"
 #include <memory>
 
+// Main function for Maraton Master
 int main( int argc , char** agrv )
-{
+{  
     Protocal::MessageHub::Instance()->AddAllHandlers();
 
+    // By returning flase will keep this worker running.
     MRT::SyncWorker::Create( 1 , [] ( MRT::SyncWorker* worker )
     {
         ServantManager::Instance()->Update();
@@ -43,15 +45,15 @@ int main( int argc , char** agrv )
         return false;
     } , nullptr , nullptr );
 
-
     while ( true )
     {
-        std::cout<< "main loop!"<<std::endl;
+        std::cout << "main loop!" << std::endl;
         
         MRT::Maraton::Instance()->Regist( make_uptr( BusinessListener , "0.0.0.0" ) );        
         MRT::Maraton::Instance()->Regist( make_uptr( ServantListener  , "0.0.0.0" ) );
         
         MRT::Maraton::Instance()->Run();
     }
+
     return 0;
 }

@@ -30,6 +30,7 @@ limitations under the License.
 using std::vector;
 using std::string;
 
+// Update each task status and launch it if is pending. 
 void TaskManager::Update()
 {
     for ( auto task : Instances() )
@@ -46,6 +47,11 @@ void TaskManager::Update()
     }
 }
 
+// Try UpdateSubtaskStatus in every task
+// @taskID  : The ID for subtask not the task
+// @status  : The status for subtask
+// @outputs : The subtask's output information witch should be append to
+//            the task.
 void TaskManager::UpdateSubtaskStatus( const std::string&      taskID ,
                                        const Task::TaskStatus& status ,
                                        const vector<string>&   outputs )

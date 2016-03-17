@@ -27,11 +27,16 @@ limitations under the License.
 #include "ServantManager.h"
 #include "Servant.h"
 
+// Find Servant by a session's shared pointer.
+// @session : a shared pointer to a GeneralSession
 sptr<Servant> ServantManager::FindBySeesion( sptr<GeneralSession> session )
 {
     return FindBySessionID( session->ID() );
 }
 
+// Find Servant by a session ID.
+// @sessionID : ID of a session.
+// @note      : used mostly in message handler, which always known the session ID.
 sptr<Servant> ServantManager::FindBySessionID( const size_t& sessionID )
 {
     for ( auto item : this->Instances() )
@@ -45,6 +50,8 @@ sptr<Servant> ServantManager::FindBySessionID( const size_t& sessionID )
     return sptr<Servant>();
 }
 
+// Find Servnat by a servant ID.
+// @servantID : ID of a servant
 sptr<Servant> ServantManager::FindByServantID( const std::string& ServantID )
 {
     for ( auto item : this->Instances() )
@@ -58,6 +65,8 @@ sptr<Servant> ServantManager::FindByServantID( const std::string& ServantID )
     return sptr<Servant>();
 }
 
+// Find Servant which is handling the given task
+// @taskID : ID of a task(not a sub task).
 std::vector<sptr<Servant>> ServantManager::FindByTaskID( const std::string& taskID )
 {
     auto result = std::vector<sptr<Servant>>();
@@ -73,6 +82,8 @@ std::vector<sptr<Servant>> ServantManager::FindByTaskID( const std::string& task
     return result;
 }
 
+// Get sum score for a list of Servants' ID 
+// @servantIDList : ID of servants need to be counted in.
 size_t ServantManager::GetScore(const vector<std::string>& servantIDList )
 {
     size_t result = 0;
@@ -89,6 +100,8 @@ size_t ServantManager::GetScore(const vector<std::string>& servantIDList )
     return result;
 }
 
+// Get the score for one Servant.
+// @servantID : ID of a servant
 size_t ServantManager::GetScore( const std::string & servantID )
 {
     size_t result      = 0;
@@ -102,11 +115,17 @@ size_t ServantManager::GetScore( const std::string & servantID )
     return result;
 }
 
+// Access to all alived servants.
 std::vector<sptr<Servant>> ServantManager::AllServants()
 {
     return Instances();
 }
 
+// Update each Servant's status
+// @note : the Update data for each servant will cause the 
+//         seesion to close if time out. But the OnClose, which will
+//         pop the servant out the servant manager, is guaranteed to 
+//         be called only after this for loop by the Maraton Framework.
 void ServantManager::Update()
 {
     for ( auto item : this->Instances() )

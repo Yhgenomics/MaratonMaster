@@ -60,9 +60,11 @@ public:
     };
     
     // Constructor from a task descriptor.
+    // @task : Task descriptor in a unique pointer.
     Task( uptr<TaskDescriptor> task);
 
     // Constructor from a protobuf message MessageTaskDeliver.
+    // @message : task deliver message in a unique pointer
     Task( uptr<MessageTaskDeliver> message);
         
     // Destructor
@@ -71,7 +73,7 @@ public:
     // Launch task
     Error Launch();
     
-    // If every subtasks finished
+    // return true when all subtasks finished successfully, flase otherwise.
     bool  IsAllSubtasksFinished();
 
     // On every subtask finished
@@ -87,10 +89,10 @@ public:
     bool  MakeSubtasks();
 
     // Update the status of the tasks executed by Servant.
-    // @param   : subTaskID is the ID for subtask not the task
-    // @param   : status is the status for subtask
-    // @param   : outputs is the subtask's output information witch should be append to
-    //            the task.
+    // @subTaskID : The ID for subtask not the task
+    // @status    : The status for subtask
+    // @outputs   : The subtask's output information witch should be append to
+    //              the task.
     void  UpdateSubtaskStatus( const string&         subTaskID ,
                                const TaskStatus&     status    ,
                                const vector<string>& outputs   );
