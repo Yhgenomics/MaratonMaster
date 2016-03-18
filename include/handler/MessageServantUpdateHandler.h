@@ -57,7 +57,7 @@ namespace Protocal
 
                 if ( servant )
                 {                 
-                    servant->Status( ServantStatus( msg->status() ) );
+                    servant->Status( ServantStatus::Code( msg->status() ) );
                 }
 
                 return true;

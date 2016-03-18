@@ -65,12 +65,12 @@ void ServantListener::OnSessionOpen( MRT::Session * session )
 // @note    : pop from servant manager and delete the session.
 void ServantListener::OnSessionClose( MRT::Session * session )
 {
-    auto s   = scast<ServantSession*>( session );
-    auto exe = ServantManager::Instance()->FindBySessionID( s->ID() );
+    auto servantSession   = scast<ServantSession*>( session );
+    auto servant          = ServantManager::Instance()->FindBySessionID( servantSession->ID() );
 
-    if ( exe != nullptr )
+    if ( servant != nullptr )
     {
-        ServantManager::Instance()->Pop( exe );
+        ServantManager::Instance()->Pop( servant );
     }
 
     SAFE_DELETE( session );

@@ -68,7 +68,7 @@ namespace Protocal
                    }
 
                    TaskManager::Instance()->UpdateSubtaskStatus( subtaskID , 
-                                                                 TaskStatus( msg->status() ) ,
+                                                                 TaskStatus::Code( msg->status() ) ,
                                                                  outputs);
                 }
 

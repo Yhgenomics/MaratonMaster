@@ -23,6 +23,7 @@ limitations under the License.
 * Date          : 2016/2/29
 * Modifed       : When      | Who       | What
 ***********************************************************************************/
+
 #include "TaskManager.h"
 #include <vector>
 #include <string>
@@ -39,7 +40,7 @@ void TaskManager::Update()
         {
             auto result = task->Launch();
             
-            if ( 0 != result.Code() )
+            if ( ErrorCode::kNoError != result.Code() )
             {
                 break;
             }
@@ -53,7 +54,7 @@ void TaskManager::Update()
 // @outputs : The subtask's output information witch should be append to
 //            the task.
 void TaskManager::UpdateSubtaskStatus( const std::string&      taskID ,
-                                       const TaskStatus& status ,
+                                       const TaskStatus::Code& status ,
                                        const vector<string>&   outputs )
 {
     for ( auto task : Instances() )

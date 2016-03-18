@@ -54,9 +54,9 @@ namespace Protocal
                 for ( auto item : ServantManager::Instance()->AllServants() )
                 {
                     reply->add_id( item->ID() );
-                    reply->add_cpu( item->CPU() );
+                    reply->add_cpu( ( int )item->CPU() );
                     reply->add_state( item->Status() );
-                    reply->add_memory( item->MemorySize() );
+                    reply->add_memory( ( int )item->MemorySize() );
                     reply->add_type( item->Type() );
                 }
 

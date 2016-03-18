@@ -113,6 +113,7 @@ uptr<MessageTaskDeliver> TaskDescriptor::MakeMessage()
         tempPipe->set_executor( item.executor_ );
         tempPipe->set_multipleinput( item.multiple_input_ );
         tempPipe->set_multiplethread( item.multiple_thread_ );
+
         for ( auto param : item.parameters_ )
         {
             tempPipe->add_parameters( param );

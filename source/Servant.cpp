@@ -54,7 +54,15 @@ void Servant::Update()
 // Just for test
 void Servant::SelfEvaluate()
 {
-    Ability( CPU() * 1000 + MemorySize() );
+    Ability( CPU() * kCPUFactor + MemorySize() );
+}
+
+
+// Update the last update time
+// @note    : be called when reciving a heartbeat message from servant.
+inline void Servant::Refresh()
+{
+    this->last_update_time_ = Timer::Tick();
 }
 
 // Stop the current runing task.
@@ -73,12 +81,12 @@ ServantSession * Servant::Session()
 Error Servant::LaunchTask( sptr<TaskDescriptor> task )
 {
     Error launchResult;
-    launchResult.Code( 0 );
+    launchResult.Code( ErrorCode::kNoError );
 
     if (status_ != ServantStatus::kStandby )
     {
-        launchResult.Code( 1 );
-        launchResult.Message( this->ID() + ": task running" );
+        launchResult.Code( ErrorCode::kServantBusy );
+        launchResult.Message( this->ID() + " servant busy." );
         return launchResult;
     }
 

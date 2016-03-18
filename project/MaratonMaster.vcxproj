@@ -164,6 +164,7 @@
   <ItemGroup>
     <ClInclude Include="..\include\BusinessListener.h" />
     <ClInclude Include="..\include\BusinessSession.h" />
+    <ClInclude Include="..\include\StatusBook.h" />
     <ClInclude Include="..\include\Error.h" />
     <ClInclude Include="..\include\GeneralSession.h" />
     <ClInclude Include="..\include\handler\MessageGreetingHandler.h" />

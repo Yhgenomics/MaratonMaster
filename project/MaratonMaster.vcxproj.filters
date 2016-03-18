@@ -239,5 +239,8 @@
     <ClInclude Include="..\include\handler\MessageTaskUpdateHandler.h">
       <Filter>MessageHandlers</Filter>
     </ClInclude>
+    <ClInclude Include="..\include\StatusBook.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

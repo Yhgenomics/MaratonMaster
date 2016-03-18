@@ -27,6 +27,7 @@ limitations under the License.
 #ifndef ERROR_H_
 #define ERROR_H_ 
 
+#include "MasterGloable.h"
 #include <string>
 
 // @Description : Error with error code and message            
@@ -83,7 +84,7 @@ public:
     void Message( const std::string& value )
     {
         this->message_ = value;
-        if ( this->code_ != 0 )
+        if ( this->code_ != ErrorCode::kNoError )
             printf( "Error:%s\r\n" , this->message_.c_str() );
     }
 

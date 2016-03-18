@@ -77,9 +77,9 @@ bool Task::MakeSubtasks()
             }
 
             // Watch out for zero inputs when a executor with very low ability is assigned
-            size_t tempInputNum = ceil( ( double )ServantManager::Instance()->FindByServantID( item )->Ability()
-                                        / ( double )totalScore
-                                        * totalInputs );
+            size_t tempInputNum = ( size_t )ceil( ( double )ServantManager::Instance()->FindByServantID( item )->Ability()
+                                                  / ( double )totalScore
+                                                  * totalInputs );
 
             if ( sentialMark != originalServants.end() - 1 && tempInputNum == 0 )
             {
@@ -131,7 +131,7 @@ bool Task::MakeSubtasks()
 // @outputs   : The subtask's output information witch should be append to
 //              the task.
 void Task::UpdateSubtaskStatus( const string&         subTaskID ,
-                                const TaskStatus&     status ,
+                                const TaskStatus::Code&     status ,
                                 const vector<string>& outputs )
 {
     if ( sub_tasks_status_.count( subTaskID ) > 0 )
@@ -175,7 +175,7 @@ Task::~Task()
 // @note    : Launch all subtasks
 Error Task::Launch()
 {
-    Error TaskLaunchResult( 0 , "" );
+    Error TaskLaunchResult( ErrorCode::kNoError , "" );
 
     if ( !is_sub_tasks_ready )
     {
@@ -186,7 +186,7 @@ Error Task::Launch()
          this->status_ != TaskStatus::kPending )
     {
         Abort();
-        TaskLaunchResult.Code( 1 );
+        TaskLaunchResult.Code( ErrorCode::kTaskNotReady );
         TaskLaunchResult.Message( "task is not ready" );
 
         return TaskLaunchResult;
@@ -198,13 +198,13 @@ Error Task::Launch()
     {
         auto servant = ServantManager::Instance()->FindByServantID( *subtask->Servants().begin() );
 
-        if ( 0 != servant->LaunchTask( subtask ).Code() )
+        if ( ErrorCode::kNoError != servant->LaunchTask( subtask ).Code() )
         {
-            TaskLaunchResult.Code( 1 );
+            TaskLaunchResult.Code( ErrorCode::kSubTaskError );
             TaskLaunchResult.Message( "Servant ID:"
                                       + *subtask->Servants().begin()
                                       + "return Error when launching task" );
-            Status( TaskStatus::kTaskError );
+            Status( TaskStatus::kError );
             break;
         }
     }
@@ -252,12 +252,12 @@ void Task::OnFinish()
 // Abort task
 void Task::Abort()
 {
-    Status( TaskStatus::kTaskError );
+    Status( TaskStatus::kError );
 
     for ( auto& item : sub_tasks_status_ )
     {
         //TODO cancel task each servants vid a cancel task message
-        item.second = TaskStatus::kTaskError;
+        item.second = TaskStatus::kError;
     }
 
     return;

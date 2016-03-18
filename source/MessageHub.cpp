@@ -87,7 +87,11 @@ namespace Protocal
 
                           pbuf      += sizeof( size_t );
 
+#if _WIN32
+        memcpy_s( pbuf , body.size() , body.c_str() , body.size() );
+#else
         memcpy( pbuf , body.c_str() , body.size() );
+#endif
 
         return move_ptr( buffer );
     }

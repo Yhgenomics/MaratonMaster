@@ -58,10 +58,7 @@ public:
 
     // Update the last update time
     // @note    : be called when reciving a heartbeat message from servant.
-    void Refresh()
-    {
-       this->last_update_time_ = Timer::Tick();
-    };
+    void Refresh();;
 
     // Stop the current runing task.
     void StopTask();
@@ -75,80 +72,83 @@ public:
     ServantSession* Session();
     
     // Getter for the status show whether the servant is still alive.
-    bool Connected()                               { return this->connected_;     }
+    bool Connected()                                { return this->connected_;     }
 
     // Getter and Setter for CPU cores.                                           
-    size_t CPU()                                   { return cpu_;                 }
-    void CPU( const size_t& value )                { cpu_ = value;                }
+    size_t CPU()                                    { return cpu_;                 }
+    void CPU( const size_t& value )                 { cpu_ = value;                }
 
     // Getter and Setter for Memory size in KBs.                                  
-    size_t MemorySize()                            { return memory_size_;         }
-    void MemorySize( const size_t& value )         { memory_size_ = value;        }
+    size_t MemorySize()                             { return memory_size_;         }
+    void MemorySize( const size_t& value )          { memory_size_ = value;        }
 
     // Getter and Setter for Disk size in MBs.                                    
-    size_t DiskSize()                              { return disk_size_;           }
-    void DiskSize( const size_t value )            { disk_size_ = value;          }
+    size_t DiskSize()                               { return disk_size_;           }
+    void DiskSize( const size_t value )             { disk_size_ = value;          }
 
     // Getter and Setter for the Servant ID.                                      
     // @note    £º Servant ID is given by the Servant via a MessageRegist.        
-    string ID()                                    { return id_;                  }
-    void ID( const string& value )                 { id_ = value;                 }
+    string ID()                                     { return id_;                  }
+    void ID( const string& value )                  { id_ = value;                 }
 
     // Getter and Setter for a servant's ablility.                                
     // @note    : The value is given by evalutaion method.                        
-    size_t Ability()                               { return ability_;             }
-    void Ability( const size_t& value )            { ability_ = value;            }
+    size_t Ability()                                { return ability_;             }
+    void Ability( const size_t& value )             { ability_ = value;            }
 
     // Getter and Setter for servant's status.                                    
-    ServantStatus Status()                         { return status_;              }
-    void Status( const ServantStatus& value )      { status_ = value;             }
-
-    // Getter and Setter for servant's type.                                      
-    ServantTypes Type()                            { return type_;                }  
-    void Type(const ServantTypes& value)           { type_ = value;               }
+    ServantStatus::Code Status()                    { return status_;              }
+    void Status( const ServantStatus::Code& value ) { status_ = value;             }     
+                                            
+    // Getter and Setter for servant's type.
+    ServantTypes::Code Type()                       { return type_;                }  
+    void Type(const ServantTypes::Code& value)      { type_ = value;               }
 
     // Getter and Settter for current task asigned to this servant.                     
-    sptr<TaskDescriptor> CurrentTask()             { return current_task_;        }
-    void CurrentTask( sptr<TaskDescriptor> value ) { this->current_task_ = value; }
+    sptr<TaskDescriptor> CurrentTask()              { return current_task_;        }
+    void CurrentTask( sptr<TaskDescriptor> value )  { this->current_task_ = value; }
 
 private:
 
     // Check time out and kick the dead session from ServantManager.
-    bool            CheckTimeout();
+    bool CheckTimeout();
 
     // Pointer to the Servant's session.
-    ServantSession* session_;
+    ServantSession*       session_;
                     
     // Last time tick when servant still alive
-    size_t          last_update_time_  = 0;
+    size_t                last_update_time_  = 0;
 
     // status on whether the servant is still alive.
-    bool            connected_         = true;
+    bool                  connected_         = true;
     
     //  Memory size in KBs.                                   
-    size_t          memory_size_       = 0;
+    size_t                memory_size_       = 0;
 
     // Disk size in MBs.
-    size_t          disk_size_         = 0;
+    size_t                disk_size_         = 0;
     
     // CPU cores.
-    size_t          cpu_               = 0;
+    size_t                cpu_               = 0;
 
     // Servant's ID.
     // note     £º Not the Session ID.
-    string          id_                = "";
+    string                id_                = "";
 
     // Servant's ablility evaluated in Master.
-    size_t          ability_           = 0;
+    size_t                ability_           = 0;
     
     // Servant's status.
-    ServantStatus   status_            = ServantStatus::kUnknow;
+    ServantStatus::Code   status_      = ServantStatus::kUnknow;
     
     // Servant's type.
-    ServantTypes    type_              = ServantTypes::kOther;
+    ServantTypes::Code    type_        = ServantTypes::kOther;
 
     // Current asigned task.
     sptr<TaskDescriptor> current_task_ = nullptr;
+
+    // only for test
+    const int            kCPUFactor    = 1000;
 
 };
 

@@ -60,10 +60,10 @@ namespace Protocal
                 if ( servant )
                 {
                     servant->ID( msg->id() );
-                    servant->Status( ServantStatus( msg->state() ) );
+                    servant->Status( ServantStatus::Code( msg->state() ) );
                     servant->CPU( msg->cpu() );
                     servant->MemorySize( msg->memory() );
-                    servant->Type( ServantTypes( msg->type() ) );
+                    servant->Type( ServantTypes::Code( msg->type() ) );
                     servant->SelfEvaluate();
                 }
 

@@ -84,15 +84,15 @@ public:
     // @outputs   : The subtask's output information witch should be append to
     //              the task.
     void  UpdateSubtaskStatus( const string&         subTaskID ,
-                               const TaskStatus&     status    ,
+                               const TaskStatus::Code&     status    ,
                                const vector<string>& outputs   );
                
     // Getter and Setter for task status
-    TaskStatus Status()                    { return this->status_;        }
-    void Status( const TaskStatus& value ) { this->status_ = value;       }
+    TaskStatus::Code Status()                    { return this->status_;        }
+    void Status( const TaskStatus::Code& value ) { this->status_ = value;       }
 
     // Getter of the task ID
-    std::string ID()                       { return original_task_->ID(); }
+    std::string ID()                             { return original_task_->ID(); }
 
 private:
 
@@ -111,14 +111,14 @@ private:
     bool                         is_sub_tasks_ready = false;
 
     // The Status for the task.
-    TaskStatus                   status_            = TaskStatus::kTaskUnknow;
+    TaskStatus::Code             status_      = TaskStatus::kUnknow;
 
     // The descriptor for all subtasks
     vector<sptr<TaskDescriptor>> sub_tasks_;
 
     // The status for all subtasks
     std::map<std::string ,       
-        TaskStatus>              sub_tasks_status_;
+        TaskStatus::Code>        sub_tasks_status_;
     
     // List gathering all subtasks' products information
     vector<std::string>          outputs_;

@@ -59,7 +59,7 @@ namespace Protocal
                 msg->ParseFromArray( dataContent , msgLength );
 
                 auto task = make_sptr( Task , move_ptr( msg ) );
-                task->Status( TaskStatus::kPending );
+                task->Status( TaskStatus::Code::kPending );
                 TaskManager::Instance()->Push( task );
 
                 // Send the task received 
