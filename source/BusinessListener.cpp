@@ -37,7 +37,7 @@ MRT::Session * BusinessListener::CreateSession()
 // Callback when the business session opening.
 void BusinessListener::OnSessionOpen( MRT::Session * session )
 {
-    LOG_SYS( "Business session in. IP Address :[ %ld ]\r\n" , session->ip_address() );
+    LOG_SYS( "Business session in. IP Address :[ % ]\r\n" , session->ip_address() );
 }
 
 // Callback when the business session closing.
@@ -45,6 +45,6 @@ void BusinessListener::OnSessionOpen( MRT::Session * session )
 //            method, as the listener may manage multi sessions. 
 void BusinessListener::OnSessionClose( MRT::Session * session )
 {
-    LOG_SYS( "Business session close. IP Address :[ %ld ]\r\n" , session->ip_address() );
+    LOG_SYS( "Business session close. IP Address :[ % ]\r\n" , session->ip_address() );
     SAFE_DELETE( session ); 
 }

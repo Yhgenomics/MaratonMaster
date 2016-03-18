@@ -229,7 +229,7 @@ bool Task::IsAllSubtasksFinished()
 // On every subtask finished
 void Task::OnFinish()
 {
-    std::cout << "all sub task finished!" << std::endl;
+    Logger::Log( "All Subtasks finished!");
 
     json result;
 
@@ -238,15 +238,12 @@ void Task::OnFinish()
     result[ "pipelineid" ] = original_message_->pipeline().id();
     result[ "data" ]       = outputs_;
 
-    std::cout << result.dump() << std::endl;
-
     MRT::WebClient myWebClient;
     myWebClient.Header( "Content-Type" , "application/json" );
     myWebClient.Post( "http://10.0.0.20:888/maraton/result" ,
                       result.dump() ,
                       [] ( uptr<MRT::HTTPResponse> response ) {}
                     );
-
 }
 
 // Abort task

@@ -107,7 +107,7 @@ bool Servant::CheckTimeout()
         this->last_update_time_ = Timer::Tick();
         this->connected_        = false;
         this->session_->close();
-        LOG_SYS( "Kick Servant Session ID: [ %ld ] \r\n" , this->Session()->ID() );
+        LOG_SYS( "Kick Servant Session ID: [ % ] \r\n" , this->Session()->ID() );
         return true;
     }
 

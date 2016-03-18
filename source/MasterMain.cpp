@@ -47,7 +47,7 @@ int main( int argc , char** agrv )
 
     while ( true )
     {
-        std::cout << "main loop!" << std::endl;
+        Logger::Log("Maraton Master's main loop begin");
         
         MRT::Maraton::Instance()->Regist( make_uptr( BusinessListener , "0.0.0.0" ) );        
         MRT::Maraton::Instance()->Regist( make_uptr( ServantListener  , "0.0.0.0" ) );
