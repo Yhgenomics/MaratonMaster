@@ -111,7 +111,7 @@ private:
     bool                         is_sub_tasks_ready = false;
 
     // The Status for the task.
-    TaskStatus::Code             status_      = TaskStatus::kUnknow;
+    TaskStatus::Code             status_      = TaskStatus::kUnknown;
 
     // The descriptor for all subtasks
     vector<sptr<TaskDescriptor>> sub_tasks_;

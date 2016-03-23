@@ -41,7 +41,7 @@ namespace ServantStatus
 {  
     enum Code
     {
-        kUnknow     = 100 ,
+        kUnknown    = 100 ,
         kStandby    = 101 ,
         kWorking    = 102 ,
         kRecovering = 103 ,
@@ -56,7 +56,7 @@ namespace TaskStatus
 {
     enum Code
     {
-        kUnknow   = 300 ,
+        kUnknown  = 300 ,
         kPending  = 301 ,
         kRunning  = 302 ,
         kFinished = 303 ,

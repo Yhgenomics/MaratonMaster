@@ -139,7 +139,7 @@ private:
     size_t                ability_           = 0;
     
     // Servant's status.
-    ServantStatus::Code   status_      = ServantStatus::kUnknow;
+    ServantStatus::Code   status_      = ServantStatus::kUnknown;
     
     // Servant's type.
     ServantTypes::Code    type_        = ServantTypes::kOther;
