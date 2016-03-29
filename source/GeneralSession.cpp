@@ -120,7 +120,7 @@ void GeneralSession::OnRead( uptr<MRT::Buffer> data )
 
                 if ( result < 0 )
                 {
-                    this->close();
+                    this->Close();
                     return;
                 }
 

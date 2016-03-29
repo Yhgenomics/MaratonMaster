@@ -34,9 +34,15 @@ limitations under the License.
 #include "Operator.h"
 #include "Listener.h"
 #include "Connector.h"
+#include "LoopEvent.h"
 
 NS_MARATON_BEGIN
 
+// @Description : Singleton class.
+//                Main class for then entire framework
+//                Every operator( Connector or Listener ) must be register
+//                Run must be invoked to 
+//                startup the dispatcher thread to dispatch messages and event
 class Maraton
 {
 public:
@@ -54,15 +60,28 @@ public:
         return inst;
     }
 
-    void Regist     ( sptr<Operator> listener );
+    // Register a operator
+    // @opt : subclass of Operator
+    void Regist     ( sptr<Operator> opt );
+
+    // Unregister a operator
+    // @opt : subclass of Operator
     void Unregist   ( sptr<Operator> opt );
+
+    // Unregister a operator
+    // @opt : subclass of Operator
     void Unregist   ( const Operator * opt );
+
+    // Run the main loop
+    // this method will block the thread.
+    // Return if there is no more event to handle
     void Run        ();
 
 private:
 
     Maraton( )
     {
+        loop_event = make_sptr( LoopEvent );
     };
 
     ~Maraton( )
@@ -71,6 +90,7 @@ private:
 
     uv_loop_t*          uv_loop( );
     sptr<Operator>      elements_[MAX_CONNECTION_SIZE];
+    sptr<LoopEvent>     loop_event;
     int                 elements_index_                 = 0;
      
     static void uv_process_resolved( uv_getaddrinfo_t * req , int status , addrinfo * res );

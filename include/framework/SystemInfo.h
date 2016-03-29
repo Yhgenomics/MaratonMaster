@@ -28,25 +28,40 @@ limitations under the License.
 #define SYSETEM_INFO_H_
 
 #include <string>
+#include <vector>
 #include <Macro.h>
 #include <uv.h>
 
+#ifdef _WIN32
+#include <winsock2.h>
+#else
+#include <unistd.h>
+#endif
+
 NS_MARATON_BEGIN
 
+using std::vector;
+using std::string;
+
+// @Description : Helpe get the system information
 class SystemInfo
 {
 public:
 
+
+    // Get the total memory size
     static size_t MemorySize( )
     {
         return uv_get_total_memory( );
     };
 
+    // Get the free memory size
     static size_t MemoryFreeSize( )
     {
         return uv_get_free_memory( );
     };
 
+    // Get the cpu core number
     static int CPUNum( )
     {
         int cpu_count            = 0;
@@ -58,6 +73,8 @@ public:
         return cpu_count;
     };
 
+    // Get the cpu speed
+    // @id : cpu index
     static int CPUSpeed( int id )
     {
         int cpu_speed            = 0;
@@ -69,7 +86,7 @@ public:
 
         if ( result < 0 )
         {
-            LOG_DEBUG_UV( result );
+            //LOG_DEBUG_UV( result );
             return result;
         }
 
@@ -83,6 +100,7 @@ public:
         return cpu_speed;
     };
 
+    // Get the current work directory
     static std::string CurrentDirectory( )
     {
         char    path[1024] = { 0 };
@@ -93,10 +111,45 @@ public:
         return std::string( path , path_len );
     };
 
+    // Get the current time in microsecond 
+    // This function may not work in some version of windows
     static size_t Time( )
     {
         return ( uv_hrtime( ) / 1000 );
     };
+
+    // Get all the IP addresses
+    static vector<string> IPAddres()
+    {
+        vector<string> ret;
+        int count = 0;
+        uv_interface_address_t* addrs = nullptr;
+        uv_interface_addresses( &addrs , &count );
+
+        for ( int i = 0; i < count; i++ )
+        {
+            char ipv4[64] = { 0 };
+            uv_ip4_name( &addrs[i].address.address4 , ipv4 , 64 );
+
+            if ( ipv4[0] != 0 )
+            {
+                ret.push_back( string( ipv4 ) );
+            }
+        }
+
+        uv_free_interface_addresses( addrs , count );
+        return vector<string>( ret ); 
+    }
+
+    //Get the host name
+    static string HostName()
+    {
+        char name[128] = { 0 };
+        gethostname( name , 128 );
+        
+        return string( name );
+    }
+
 };
 
 NS_MARATON_END
