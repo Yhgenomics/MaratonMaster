@@ -29,12 +29,18 @@ limitations under the License.
 #include <iostream>
 using namespace std;
 
+// Callback when receiving REST data from net
+// @data    : Buffer in unique pointer
 void BusinessSession::OnRead( uptr<MRT::Buffer> data )
 {
-    MRT::HTTPRequest request;
-    request.Parse( move_ptr( data ) );
-    auto content = string( request.Content()->Data() , request.Content()->Size() );
-    auto result  = Protocal::MessageHub::Instance()->HandleREST( this ,
-                                                                 request.RequestUrl() ,
-                                                                 content );
+    request_.Parse( move_ptr( data ) );
+
+    if ( request_.Finish() )
+    {
+        auto content = string( request_.Content()->Data() , request_.Content()->Size() );
+        auto result  = Protocal::MessageHub::Instance()->HandleREST( this ,
+                                                                     request_.RequestUrl() ,
+                                                                     content );
+    }
+    
 }

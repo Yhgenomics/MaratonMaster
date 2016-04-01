@@ -52,6 +52,8 @@ public:
     // @data    : Buffer in unique pointer
     virtual void OnRead( uptr<MRT::Buffer> data )  override;
 
+    MRT::HTTPRequest request_;
+
 };
 
 #endif //!BUSINESS_SESSION_H_ 
