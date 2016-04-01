@@ -22,6 +22,9 @@
     <Filter Include="Proto\defines">
       <UniqueIdentifier>{4f7f3a76-ad9d-4217-9fc6-d64998b4aa7c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="RESTHandlers">
+      <UniqueIdentifier>{cd427d17-7510-4549-b33d-0774b52d324c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\LICENSE" />
@@ -127,6 +130,9 @@
       <Filter>Proto</Filter>
     </ClCompile>
     <ClCompile Include="..\source\TaskDescriptor.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\source\BusinessSession.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -241,6 +247,18 @@
     </ClInclude>
     <ClInclude Include="..\include\StatusBook.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\RESTHandler.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\handler\TaskDeliverRESTHandler.h">
+      <Filter>RESTHandlers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\MessageConverter.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\handler\ServantStatusRESTHandler.h">
+      <Filter>RESTHandlers</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

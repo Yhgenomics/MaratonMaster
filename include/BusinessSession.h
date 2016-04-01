@@ -48,6 +48,10 @@ public:
     // Destructor.
     ~BusinessSession() override {};
 
+    // Callback when receiving REST data from net
+    // @data    : Buffer in unique pointer
+    virtual void OnRead( uptr<MRT::Buffer> data )  override;
+
 };
 
 #endif //!BUSINESS_SESSION_H_ 

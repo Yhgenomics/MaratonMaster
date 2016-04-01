@@ -58,6 +58,32 @@ namespace Protocal
         return result;
     }
 
+    bool MessageHub::AddRESTHandler( uptr<RESTHandler> oneHandler )
+    {
+        // The handler's method cannot be empty
+        if ( oneHandler->Method == nullptr )
+        {
+            return false;
+        }
+
+        bool result;
+
+        // New handler
+        if ( rest_handler_map_.find( oneHandler->MessageType() ) == rest_handler_map_.end() )
+        {
+            rest_handler_map_[ oneHandler->MessageType() ] = std::move( oneHandler );
+            result = true;
+        }
+
+        // Do not allow binding different handlers for same message
+        else
+        {
+            result = false;
+        }
+
+        return result;
+    }
+
     // Handle one message arcoding to the handler map
     // @note    : only parse the messageID out and pass the original data pointer
     //            to the handler
@@ -71,6 +97,16 @@ namespace Protocal
 
         handler_map_[ messageID ]->Method( session , pData , length );
 
+        return 0;
+    }
+
+    // Handler one REST Message arcoding to the REST Handler map
+    // @session : The source of the message.
+    // @url     : The url of the request.
+    // @content : The contentn in the request.s
+    int MessageHub::HandleREST( GeneralSession * session , const string & url , const string & content )
+    {
+        rest_handler_map_[ url ]->Method( session , content );
         return 0;
     }
 

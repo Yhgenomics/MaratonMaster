@@ -62,6 +62,18 @@ void GeneralSession::SendOut( uptr<::google::protobuf::Message> message )
     this->Send( move_ptr( body   ) );
 }
 
+// Send back REST response
+// @response : REST response.
+void GeneralSession::SendRESTResponse( uptr<MRT::HTTPResponse> response )
+{
+    auto head = response->BuildHeader( );
+    auto body = response->BuildBody( );
+
+    this->Send( move_ptr( head ) );
+    this->Send( move_ptr( body ) );
+}
+
+
 // Callback when receiving data from net
 // @data    : Buffer in unique pointer
 // @note    : header, length and body is delivered separately

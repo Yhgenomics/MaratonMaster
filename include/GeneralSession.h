@@ -51,6 +51,10 @@ public:
     // @message : protobuf message in unqiue pointer.
     virtual void SendOut( uptr<::google::protobuf::Message> message );
 
+    // Send back REST response
+    // @response : REST response.
+    virtual void SendRESTResponse( uptr<MRT::HTTPResponse> response);
+
 protected:
     
     // Callback when session connecting

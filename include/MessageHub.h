@@ -28,6 +28,7 @@ limitations under the License.
 #define MESSAGE_HUB_H_
 
 #include "MessageHandler.h"
+#include "RESTHandler.h"
 #include "GeneralSession.h"
 #include "MRT.h"
 #include <string>
@@ -76,6 +77,10 @@ namespace Protocal
         // @oneHandler : one message handler in unique pointer.
         bool AddHandler( uptr<MessageHandler> oneHandler );
 
+        // Add one REST handler to the Hub
+        // @oneHandler : one REST handler in unique pointer.
+        bool AddRESTHandler( uptr<RESTHandler> oneHandler );
+
         // Gloable Message handlers management
         // @note    : Implement in AddAllHandler.cpp seprately.
         bool AddAllHandlers();
@@ -87,6 +92,12 @@ namespace Protocal
         // @note    : Just get the messageID in this function, the translation from the pData
         //            to message should be done at certain MessageHandler.
         int Handle( GeneralSession* session , const void* pData , size_t length );
+
+        // Handler one REST Message arcoding to the REST Handler map
+        // @session : The source of the message.
+        // @url     : The url of the request.
+        // @content : The contentn in the request.
+        int HandleREST( GeneralSession* session , const string& url , const string& content );
         
         // Build the protobuf message to buffer
         // @message : protobuf message in unique pointer
@@ -95,7 +106,9 @@ namespace Protocal
     private:
 
         // Handler map keep the messageID and Handler in a 1:1 relationship
-        std::map<size_t , uptr<MessageHandler> > handler_map_;
+        std::map<size_t , uptr<MessageHandler>> handler_map_;
+
+        std::map<string , uptr<RESTHandler>>    rest_handler_map_;
 
         // Hash the name of a message
         // @messageType : message name's string

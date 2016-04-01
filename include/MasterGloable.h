@@ -45,7 +45,7 @@ limitations under the License.
 #define BUSINESS_PORT       91
 #define RESTAPI_PORT        8080
 
-#define WEB_SERVER_NAME         "YHGenomics/Maraton"
+#define WEB_SERVER_NAME         "YHGenomics/MaratonMaster"
 #define CONF_KEY_WEBSUBSCRIBER  "web_subscriber"
 
 #endif // !MARATON_GLOABLE_H_ 
