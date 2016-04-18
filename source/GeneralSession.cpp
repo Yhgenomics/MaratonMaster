@@ -97,15 +97,17 @@ void GeneralSession::OnRead( uptr<MRT::Buffer> data )
                     this->parse_state_ = MessageParseState::kLength;
                 }*/
 
-                auto buf = circle_buffer_.Pop(1);
+                auto buf = circle_buffer_.Pop( 1 );
 
                 if ( buf == nullptr ) return;
 
                 if ( buf->Data()[ 0 ] != 'Y' ) break;
 
-                buf = circle_buffer_.Pop(1);
+                buf = circle_buffer_.Pop( 1 );
 
-                if (buf->Data()[0] != 'H' ) break;
+                if ( buf == nullptr ) return;
+
+                if ( buf->Data()[ 0 ] != 'H' ) break;
 
                 this->parse_state_ = MessageParseState::kLength;
 
