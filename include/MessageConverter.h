@@ -48,6 +48,7 @@ namespace Protocal
             auto result = make_uptr( MessageTaskDeliver );
 
             auto taskJson = json::parse( jsonContent );
+            Logger::Log( "Task in \n %" , taskJson.dump( 4 ) );
 
             result->set_id( taskJson["id"] );
             result->set_originalid( taskJson["originalID"] );
