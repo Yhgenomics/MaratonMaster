@@ -1,6 +1,6 @@
 #!/bin/sh
 rm -rf cmakebuild/
-CMaker project:MaratonMaster head:*.h,*.hpp src:*.cpp,*.hpp,*.cc,*.c flag:-Wall-std=c++11-pthread lib:lib/libuv.a,lib/maraton-framework-v3.a
+CMaker project:MaratonMaster compiler:clang++ head:*.h src:*.cpp,*.c,*.cc,*.hpp lib:/usr/local/lib/libprotobuf.a,./lib/libMaratonFramework.a,./lib/libuv.a
 cd cmakebuild
 cmake .
 make -j 4

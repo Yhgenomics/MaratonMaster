@@ -1,4 +1,3 @@
-#include "..\include\TaskDescriptor.h"
 /***********************************************************************************
 This file is part of Project for MaratonMaster
 For the latest info, see  https://github.com/Yhgenomics/MaratonMaster.git
@@ -24,6 +23,7 @@ limitations under the License.
 * Date          : 2016/2/29
 * Modifed       : When      | Who       | What
 ***********************************************************************************/
+#include "TaskDescriptor.h"
 
 // Constructor from the protobuf message
 TaskDescriptor::TaskDescriptor( const MessageTaskDeliver & orignalMessage )
