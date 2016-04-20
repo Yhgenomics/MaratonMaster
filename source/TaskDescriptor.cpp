@@ -128,5 +128,5 @@ void TaskDescriptor::PrepareAsSubtask()
 {
     ResetInput();
     ResetServants();
-    ID( MRT::UUID::Create() );
+    ID( MRT::UUID::Instance()->Create() );
 }

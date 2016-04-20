@@ -52,7 +52,7 @@ bool Task::MakeSubtasks()
     if ( !original_task_->IsParallel() )
     {
         auto tempSubtask = make_sptr( TaskDescriptor , *original_task_ );
-        tempSubtask->ID( MRT::UUID::Create() );
+        tempSubtask->ID( MRT::UUID::Instance()->Create() );
         sub_tasks_.push_back( tempSubtask );
         sub_tasks_status_[ tempSubtask->ID() ] = TaskStatus::kPending;
     }
