@@ -28,12 +28,28 @@ limitations under the License.
 
 #ifdef TEST_ON
 #include "RunList.h"
+#include "../3rd/json.hpp"
+#include <string>
+#include <vector>
+
+using nlohmann::json;
+using std::string;
+using std::vector;
+using namespace std;
 
 int main( int argc , char** argv )
 {
     testing::InitGoogleTest( &argc , argv );
     RUN_ALL_TESTS();
-
+    json test1;
+    json big;
+    vector<string> vec1= { "123" };
+    vec1.clear();
+    test1[ "vec1" ] = vec1;
+    big["big"] = test1;
+    cout << "json now is like \n" << big.dump( 4 ) << endl;
+    cout << big[ "input" ].is_null() << endl;
+    cout << big[ "big" ].size() << endl;
     system( "pause" );
     return 0;
 }

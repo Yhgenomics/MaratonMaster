@@ -45,37 +45,80 @@ namespace Protocal
         TaskDeliverRESTHandler()
         {
             MessageType( "/task/deliver" );
-            Method = []( GeneralSession* session , const string& content )
+            Method = [ this ] ( GeneralSession* session , const string& content )
             {
-                // Add the task
-                auto msg  = MessageConverter::Instance()->GenerateTaskDescriptor(content);
-                auto task = make_sptr( Task , move_ptr( msg ) );
-                task->Status( TaskStatus::Code::kPending );
-                TaskManager::Instance()->Push( task );
+                // Add the task if its valid
+                if ( IsInputValid( content ) )
+                {
+                    auto msg  = MessageConverter::Instance()->GenerateTaskDescriptor( content );
+                    auto task = make_sptr( Task , move_ptr( msg ) );
+                    task->Status( TaskStatus::Code::kPending );
+                    TaskManager::Instance()->Push( task );
 
-                // Send the reply 
-                auto response = make_uptr(MRT::HTTPResponse) ;
+                    // Send the reply 
+                    auto response = make_uptr( MRT::HTTPResponse );
 
-                response->Status( 200 );
-                response->Header( "Server" , WEB_SERVER_NAME );
-                response->Header( "Connection" , "Close" );
+                    response->Status( 200 );
+                    response->Header( "Server" , WEB_SERVER_NAME );
+                    response->Header( "Connection" , "Close" );
 
-                auto taskIn = json::parse( content );
-                
-                json taskDeliverReply;
-                taskDeliverReply[ "taskid"  ] = taskIn[ "id" ];
-                taskDeliverReply[ "code"    ] = ErrorCode::kNoError;
-                taskDeliverReply[ "message" ] = "task received!";
+                    auto taskIn = json::parse( content );
 
-                auto body = make_uptr( MRT::Buffer , taskDeliverReply.dump() );
+                    json taskDeliverReply;
+                    taskDeliverReply[ "taskid" ] = taskIn[ "id" ];
+                    taskDeliverReply[ "code" ] = ErrorCode::kNoError;
+                    taskDeliverReply[ "message" ] = "task received!";
 
-                response->Content( move_ptr( body ) );
-                session->SendRESTResponse( move_ptr( response ) );
-                session->Close();
-                // TODO add your codes here
-                return true;
+                    auto body = make_uptr( MRT::Buffer , taskDeliverReply.dump() );
+
+                    response->Content( move_ptr( body ) );
+                    session->SendRESTResponse( move_ptr( response ) );
+                    session->Close();
+                    // TODO add your codes here
+                    return true;
+                }
+                // TODO : distinguish the Error and Busy
+                else
+                {
+                }
             };
         }
+
+        // Check the format of the content.
+        // Such as confirming the exsitence of null empty key elements.
+        // This check makes sure the message can be trans into the system.
+        // @content : The content in JSON 
+        virtual bool CheckFormat( const string& content ) override
+        {
+            auto taskCheck = json::parse( content );
+            return   ! taskCheck[ "id"         ].is_null()
+                &&   ! taskCheck[ "originalID" ].is_null()
+                &&   ! taskCheck[ "pipeline"   ].is_null()
+                &&   ! taskCheck[ "isParallel" ].is_null()
+                && 0 < taskCheck[ "input"      ].size()
+                && 0 < taskCheck[ "servants"   ].size();
+        }
+
+
+        // Check the constraints from higher level needs.
+        // This check makes sure the meaningful and acceptable to the system.
+        // @content : The content in JSON
+        virtual bool CheckConstraints( const string& content ) override
+        {
+            auto taskCheck = json::parse( content );
+            bool atLeastOneStandby = false;
+            for (auto const& item : taskCheck["servants"] )
+            {
+               if( ServantStatus::kStandby == ServantManager::Instance()->FindByServantID(item)->Status())
+               {
+                   atLeastOneStandby= true;
+                   break;
+               }
+            }
+
+            return atLeastOneStandby;
+        }
+
     };
 }
 

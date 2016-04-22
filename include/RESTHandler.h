@@ -74,6 +74,25 @@ namespace Protocal
         std::string MessageType()                    { return message_type_;  }
         void        MessageType( std::string value ) { message_type_ = value; }
 
+        // REST API may cause errors.
+        // The content must be checked.
+        // @content : The content in JSON
+        virtual bool IsInputValid( const string& content )
+        {
+            return CheckFormat( content ) && CheckConstraints( content );
+        };
+
+        // Check the format of the content.
+        // Such as confirming the exsitence of null empty key elements.
+        // This check makes sure the message can be trans into the system.
+        // @content : The content in JSON
+        virtual bool CheckFormat( const string& content ) = 0;
+
+        // Check the constraints from higher level needs.
+        // This check makes sure the meaningful and acceptable to the system.
+        // @content : The content in JSON
+        virtual bool CheckConstraints( const string& content ) = 0;
+
         // Handler method on the message type
         // @note    : Be given in the constructor for each dervied class. 
         RESTHandlerMethod   Method = nullptr;

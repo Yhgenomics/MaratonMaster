@@ -75,6 +75,24 @@ namespace Protocal
                 return true;
             };
         }
+
+        // Check the format of the content.
+        // Such as confirming the exsitence of null empty key elements.
+        // This check makes sure the message can be trans into the system.
+        // @content : The content in JSON 
+        virtual bool CheckFormat( const string& content ) override
+        {
+            return true;
+        }
+
+
+        // Check the constraints from higher level needs.
+        // This check makes sure the meaningful and acceptable to the system.
+        // @content : The content in JSON
+        virtual bool CheckConstraints( const string& content ) override
+        {
+            return true;
+        }
     };
 }
 

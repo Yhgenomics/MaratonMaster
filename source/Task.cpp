@@ -238,11 +238,15 @@ void Task::OnFinish()
     result[ "pipelineid" ] = original_message_->pipeline().id();
     result[ "data" ]       = outputs_;
 
+    Logger::Log( "Task result \n % ", result.dump(4) );
     MRT::WebClient myWebClient;
     myWebClient.Header( "Content-Type" , "application/json" );
     myWebClient.Post( "http://10.0.0.20:80/maraton/result" ,
                       result.dump() ,
-                      [] ( uptr<MRT::HTTPResponse> response ) {}
+                      [ this ] ( uptr<MRT::HTTPResponse> response ) 
+                      {
+                          Logger::Log( "Result Delivered!");
+                      }
                     );
 }
 
