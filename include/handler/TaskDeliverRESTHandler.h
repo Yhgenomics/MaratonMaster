@@ -50,8 +50,7 @@ namespace Protocal
                 // Add the task if its valid
                 if ( content.empty() )
                 {
-                    Logger::Log( "Task Deliver REST input is Empty!" );
-                    
+                    Logger::Log( "Task Deliver REST input is Empty!" );                 
                 }
                 if ( IsInputValid( content ) )
                 {
