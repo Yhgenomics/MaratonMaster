@@ -48,6 +48,11 @@ namespace Protocal
             Method = [ this ] ( GeneralSession* session , const string& content )
             {
                 // Add the task if its valid
+                if ( content.empty() )
+                {
+                    Logger::Log( "Task Deliver REST input is Empty!" );
+                    
+                }
                 if ( IsInputValid( content ) )
                 {
                     auto msg  = MessageConverter::Instance()->GenerateTaskDescriptor( content );
@@ -80,6 +85,7 @@ namespace Protocal
                 // TODO : distinguish the Error and Busy
                 else
                 {
+                    Logger::Log( "Task Devlier Input invalid !" );
                 }
             };
         }
