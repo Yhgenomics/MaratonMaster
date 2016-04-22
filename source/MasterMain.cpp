@@ -35,6 +35,7 @@ limitations under the License.
 // Main function for Maraton Master
 int main( int argc , char** agrv )
 {  
+    Logger::Sys("build % %" , __DATE__ , __TIME__);
     Protocal::MessageHub::Instance()->AddAllHandlers();
 
     // By returning flase will keep this worker running.

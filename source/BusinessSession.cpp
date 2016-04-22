@@ -33,11 +33,13 @@ using namespace std;
 // @data    : Buffer in unique pointer
 void BusinessSession::OnRead( uptr<MRT::Buffer> data )
 {
+    Logger::Log("On Read[%] \r\n %",data->Size(), data->Data() );
     request_.Parse( move_ptr( data ) );
 
     if ( request_.Finish() )
     {
         auto content = string( request_.Content()->Data() , request_.Content()->Size() );
+        Logger::Log("content is \r\n %", content );
         auto result  = Protocal::MessageHub::Instance()->HandleREST( this ,
                                                                      request_.RequestUrl() ,
                                                                      content );
