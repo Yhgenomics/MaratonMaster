@@ -170,7 +170,6 @@
     <ClInclude Include="..\include\MessageConverter.h" />
     <ClInclude Include="..\include\RESTHandler.h" />
     <ClInclude Include="..\include\StatusBook.h" />
-    <ClInclude Include="..\include\Error.h" />
     <ClInclude Include="..\include\GeneralSession.h" />
     <ClInclude Include="..\include\handler\MessageGreetingHandler.h" />
     <ClInclude Include="..\include\handler\MessageHeartBeatHandler.h" />

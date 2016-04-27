@@ -55,6 +55,10 @@ public:
     // @response : REST response.
     virtual void SendRESTResponse( uptr<MRT::HTTPResponse> response);
 
+    // Send back REST response and close session
+    // @content : the json body for response
+    virtual void SendRESTCloseSession( const string& content );
+
 protected:
     
     // Callback when session connecting

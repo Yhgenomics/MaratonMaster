@@ -60,12 +60,12 @@ namespace Protocal
                 {
 
                     json oneServant;
-                    oneServant["id"] = item->ID();
-                    oneServant["state"] = item->Status();
-                    oneServant["cpu"] = ( int )item->CPU();
-                    oneServant["memory"] = ( int )item->MemorySize();
-                    oneServant["type"] = item->Type();
-                    replyBody.push_back(oneServant);
+                    oneServant[ "id"     ] = item->ID();
+                    oneServant[ "state"  ] = item->Status();
+                    oneServant[ "cpu"    ] = ( int )item->CPU();
+                    oneServant[ "memory" ] = ( int )item->MemorySize();
+                    oneServant[ "type"   ] = item->Type();
+                    replyBody.push_back( oneServant );
                 }
                 auto body = make_uptr( MRT::Buffer , replyBody.dump() );
                 response->Content( move_ptr( body ) );

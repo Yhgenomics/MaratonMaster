@@ -41,12 +41,14 @@ namespace ServantStatus
 {  
     enum Code
     {
-        kUnknown    = 100 ,
-        kStandby    = 101 ,
-        kWorking    = 102 ,
-        kRecovering = 103 ,
-        kException  = 104 ,  
-        kError      = 105     
+        kUnknown     = 100 ,
+        kStandby     = 101 ,
+        kWorking     = 102 ,
+        kRecovering  = 103 ,
+        kException   = 104 ,  
+        kError       = 105 ,
+        // PreOccupied only used in Master
+        kPreOccupied = 106   
     };
 }
 

@@ -45,6 +45,7 @@ namespace Protocal
 {
     bool MessageHub::AddAllHandlers()
     {
+        Logger::Log( "Message Hub Add Protobuf message handlers" );
         AddHandler( std::move( make_uptr( Protocal::MessageServantStateHandler      ) ) );
         AddHandler( std::move( make_uptr( Protocal::MessageServantStateReplyHandler ) ) );
         AddHandler( std::move( make_uptr( Protocal::MessageStateHandler             ) ) );
@@ -57,6 +58,7 @@ namespace Protocal
         AddHandler( std::move( make_uptr( Protocal::MessageServantUpdateHandler     ) ) );
         AddHandler( std::move( make_uptr( Protocal::MessageTaskUpdateHandler        ) ) );
 
+        Logger::Log( "Message Hub Add REST message handlers" );
         AddRESTHandler( std::move( make_uptr( Protocal::TaskDeliverRESTHandler   ) ) );
         AddRESTHandler( std::move( make_uptr( Protocal::ServantStatusRESTHandler ) ) );
         return true;

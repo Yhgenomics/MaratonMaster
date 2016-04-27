@@ -26,6 +26,9 @@ limitations under the License.
 
 #include "ServantManager.h"
 #include "Servant.h"
+#include "json.hpp"
+
+using nlohmann::json;
 
 // Find Servant by a session's shared pointer.
 // @session : a shared pointer to a GeneralSession
@@ -119,6 +122,47 @@ size_t ServantManager::GetScore( const std::string & servantID )
 std::vector<sptr<Servant>> ServantManager::AllServants()
 {
     return Instances();
+}
+
+
+// Preocuupy the resources for a task
+// @taskNeedResources : reference to task JSON from REST API
+//                      the servants list will be re-confirmed in this method 
+// @return : if preoccupied successed.
+bool ServantManager::PreoccupyResources( string & taskNeedResources )
+{
+    bool IsPreOcupped = false;
+    auto taskCheck    = json::parse( taskNeedResources );
+    bool onlyNeedOne  = !taskCheck[ "isParallel" ];
+    vector<string> preOcuppiedServants;
+    preOcuppiedServants.clear();
+
+    for ( auto const& item : taskCheck[ "servants" ] )
+    {
+        if ( ServantStatus::kStandby == FindByServantID( item )->Status() )
+        {
+            FindByServantID( item )->Status( ServantStatus::kPreOccupied );
+            preOcuppiedServants.push_back( item );
+            IsPreOcupped = true;
+            if ( onlyNeedOne )
+                break;
+        }
+    }
+
+    taskCheck[ "servants" ].clear();
+    taskCheck[ "servants" ] = preOcuppiedServants;
+
+    taskNeedResources = taskCheck.dump();
+    return IsPreOcupped;
+}
+
+// Log out all servants status
+void ServantManager::ShowServants()
+{
+    for ( auto const &item : AllServants() )
+    {
+        Logger::Log( "[ID, status]% ,% " , item->ID() , item->Status() );
+    }
 }
 
 // Update each Servant's status

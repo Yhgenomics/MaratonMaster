@@ -47,45 +47,43 @@ namespace Protocal
             MessageType( "/task/deliver" );
             Method = [ this ] ( GeneralSession* session , const string& content )
             {
-                // Add the task if its valid
-                if ( content.empty() )
-                {
-                    Logger::Log( "Task Deliver REST input is Empty!" );                 
-                }
+
+                json taskDeliverReply;
+                auto taskIn = json::parse( content );     
+                taskDeliverReply[ "taskid" ] = taskIn[ "id" ];
+
                 if ( IsInputValid( content ) )
                 {
-                    auto msg  = MessageConverter::Instance()->GenerateTaskDescriptor( content );
-                    auto task = make_sptr( Task , move_ptr( msg ) );
-                    task->Status( TaskStatus::Code::kPending );
-                    TaskManager::Instance()->Push( task );
+                    string taskNeedResources = content;
+                    bool IsPreOcupied = ServantManager::Instance()->PreoccupyResources( taskNeedResources );
 
-                    // Send the reply 
-                    auto response = make_uptr( MRT::HTTPResponse );
+                    if ( IsPreOcupied )
+                    {
+                        auto msg  = MessageConverter::Instance()->GenerateTaskDescriptor( taskNeedResources );
 
-                    response->Status( 200 );
-                    response->Header( "Server" , WEB_SERVER_NAME );
-                    response->Header( "Connection" , "Close" );
+                        auto task = make_sptr( Task , move_ptr( msg ) );
+                        task->Status( TaskStatus::Code::kPending );
+                        TaskManager::Instance()->Push( task );
 
-                    auto taskIn = json::parse( content );
-
-                    json taskDeliverReply;
-                    taskDeliverReply[ "taskid" ] = taskIn[ "id" ];
-                    taskDeliverReply[ "code" ] = ErrorCode::kNoError;
-                    taskDeliverReply[ "message" ] = "task received!";
-
-                    auto body = make_uptr( MRT::Buffer , taskDeliverReply.dump() );
-
-                    response->Content( move_ptr( body ) );
-                    session->SendRESTResponse( move_ptr( response ) );
-                    session->Close();
-                    // TODO add your codes here
-                    return true;
+                        taskDeliverReply[ "code"    ] = ErrorCode::kNoError;
+                        taskDeliverReply[ "message" ] = "task received!";
+                    }
+                    else
+                    {
+                        taskDeliverReply[ "code"    ] = ErrorCode::kServantBusy;
+                        taskDeliverReply[ "message" ] = "not enough free resources to be preoccupied!";
+                    }
                 }
-                // TODO : distinguish the Error and Busy
                 else
                 {
                     Logger::Log( "Task Devlier Input invalid !" );
+                    taskDeliverReply[ "code"    ] = ErrorCode::kSubTaskError;
+                    taskDeliverReply[ "message" ] = "input invalid";
                 }
+
+                // Send the reply and close the session
+                session->SendRESTCloseSession(taskDeliverReply.dump());
+                return true;
             };
         }
 
@@ -96,10 +94,10 @@ namespace Protocal
         virtual bool CheckFormat( const string& content ) override
         {
             auto taskCheck = json::parse( content );
-            return   ! taskCheck[ "id"         ].is_null()
-                &&   ! taskCheck[ "originalID" ].is_null()
-                &&   ! taskCheck[ "pipeline"   ].is_null()
-                &&   ! taskCheck[ "isParallel" ].is_null()
+            return    !taskCheck[ "id"         ].is_null()
+                &&    !taskCheck[ "originalID" ].is_null()
+                &&    !taskCheck[ "pipeline"   ].is_null()
+                &&    !taskCheck[ "isParallel" ].is_null()
                 && 0 < taskCheck[ "input"      ].size()
                 && 0 < taskCheck[ "servants"   ].size();
         }
@@ -110,18 +108,7 @@ namespace Protocal
         // @content : The content in JSON
         virtual bool CheckConstraints( const string& content ) override
         {
-            auto taskCheck = json::parse( content );
-            bool atLeastOneStandby = false;
-            for (auto const& item : taskCheck["servants"] )
-            {
-               if( ServantStatus::kStandby == ServantManager::Instance()->FindByServantID(item)->Status())
-               {
-                   atLeastOneStandby= true;
-                   break;
-               }
-            }
-
-            return atLeastOneStandby;
+            return true;           
         }
 
     };

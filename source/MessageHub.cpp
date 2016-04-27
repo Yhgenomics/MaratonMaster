@@ -22,8 +22,9 @@ limitations under the License.
 * Creator       : Ke Yang(keyang@yhgenomics.com)
 * Date          : 2016/3/12
 * Modifed       : When      | Who       | What
-***********************************************************************************/
+fibonacci
 
+***********************************************************************************/
 #include "MessageHub.h"
 
 using std::string;
@@ -130,6 +131,50 @@ namespace Protocal
 #endif
 
         return move_ptr( buffer );
+    }
+
+    // Set the REST IP and Port
+
+    int MessageHub::SetRESTReportAddress( const string & ip , const string & port )
+    {
+        rest_report_ip_ = ip;
+        rest_report_port_= port;
+        return true;
+    }
+
+    // Send the rest report to remote ip adn port
+    // @report : in json format
+    // @logInfo: log to be printed when message deliverd.
+    int MessageHub::SendRESTReport( const string & report , const string & logInfo )
+    {
+        MRT::WebClient myWebClient;
+        myWebClient.Header( "Content-Type" , "application/json" );
+        myWebClient.Post( GetRESTReportFullPath() ,
+                          report ,
+                          [ this , logInfo ] ( uptr<MRT::HTTPResponse> response )
+        {
+            Logger::Log( "REST Message Delivered! % " , logInfo );
+        }
+        );
+        return true;
+    }
+
+    // Constructor
+    MessageHub::MessageHub() { Init(); }
+
+    // Destructor
+    inline MessageHub::~MessageHub() {}
+    
+    // Initialization
+    void MessageHub::Init()
+    {
+        Logger::Log( "Message Hub Initializing." );
+        rest_report_ip_       = "";
+        rest_report_port_     = "80";
+        rest_report_path_     = "/maraton/result";
+        rest_report_protocal_ = "http://";
+        AddAllHandlers();
+        Logger::Log( "Message Hub Initialized" );
     }
 
     // Hash the name of a message

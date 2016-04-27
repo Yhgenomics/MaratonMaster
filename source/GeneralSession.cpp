@@ -73,6 +73,23 @@ void GeneralSession::SendRESTResponse( uptr<MRT::HTTPResponse> response )
     this->Send( move_ptr( body ) );
 }
 
+// Send back REST response and close session
+// @content : the json body for response
+void GeneralSession::SendRESTCloseSession( const string & content )
+{
+    auto response = make_uptr( MRT::HTTPResponse );
+
+    response->Status( 200 );
+    response->Header( "Server" , WEB_SERVER_NAME );
+    response->Header( "Connection" , "Close" );
+
+    auto body = make_uptr( MRT::Buffer , content );
+
+    response->Content( move_ptr( body ) );
+    SendRESTResponse( move_ptr( response ) );
+    Close();
+}
+
 
 // Callback when receiving data from net
 // @data    : Buffer in unique pointer

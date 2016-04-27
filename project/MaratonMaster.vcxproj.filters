@@ -149,9 +149,6 @@
     <ClInclude Include="..\include\ServantListener.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\include\Error.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="..\include\MasterGloable.h">
       <Filter>Header Files</Filter>
     </ClInclude>

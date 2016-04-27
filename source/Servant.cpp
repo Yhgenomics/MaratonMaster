@@ -83,10 +83,12 @@ Error Servant::LaunchTask( sptr<TaskDescriptor> task )
     Error launchResult;
     launchResult.Code( ErrorCode::kNoError );
 
-    if (status_ != ServantStatus::kStandby )
+    //TODO
+    if ( status_ != ServantStatus::kStandby && status_ != ServantStatus::kPreOccupied )
     {
         launchResult.Code( ErrorCode::kServantBusy );
-        launchResult.Message( this->ID() + " servant busy." );
+        launchResult.Message( this->ID() + " servant busy. status ");
+        Logger::Log( "Error % status %",launchResult.Message(), status_);
         return launchResult;
     }
 

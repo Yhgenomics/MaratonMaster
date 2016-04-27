@@ -26,6 +26,7 @@ limitations under the License.
 
 #include "Task.h"
 #include "ServantManager.h"
+#include "MessageHub.h"
 #include "MRT.h"
 #include "json.hpp"
 #include <vector>
@@ -57,9 +58,8 @@ bool Task::MakeSubtasks()
         sub_tasks_status_[ tempSubtask->ID() ] = TaskStatus::kPending;
     }
 
-    else
+    else // parallel
     {
-
         auto totalScore       = ServantManager::Instance()->GetScore( original_task_->Servants() );
         auto totalInputs      = original_task_->Input().size();
         auto leftInputs       = totalInputs;
@@ -73,6 +73,11 @@ bool Task::MakeSubtasks()
             // All inputs has been asigned to srvants
             if ( leftInputs <= 0 )
             {
+                while(sentialMark != originalServants.end() )
+                {
+                    ServantManager::Instance()->FindByServantID( *sentialMark )->Status(ServantStatus::kStandby);
+                    sentialMark++;
+                }
                 break;
             }
 
@@ -83,7 +88,7 @@ bool Task::MakeSubtasks()
 
             if ( sentialMark != originalServants.end() - 1 && tempInputNum == 0 )
             {
-                // Do not need this servant
+                // Servant's ability is too low to use
                 continue;
             }
 
@@ -175,6 +180,9 @@ Task::~Task()
 // @note    : Launch all subtasks
 Error Task::Launch()
 {
+    Logger::Log( "Servants snapshot before make sub tasks!" );
+    ServantManager::Instance()->ShowServants();
+    
     Error TaskLaunchResult( ErrorCode::kNoError , "" );
 
     if ( !is_sub_tasks_ready )
@@ -182,6 +190,10 @@ Error Task::Launch()
         MakeSubtasks();
     }
 
+    Logger::Log( "After make sub tasks!" );
+    ServantManager::Instance()->ShowServants();
+
+    // kFinished here for re-start a task
     if ( this->status_ != TaskStatus::kFinished &&
          this->status_ != TaskStatus::kPending )
     {
@@ -204,6 +216,7 @@ Error Task::Launch()
             TaskLaunchResult.Message( "Servant ID:"
                                       + *subtask->Servants().begin()
                                       + "return Error when launching task" );
+            Logger::Log( "Error %",TaskLaunchResult.Message() );
             Status( TaskStatus::kError );
             break;
         }
@@ -239,15 +252,18 @@ void Task::OnFinish()
     result[ "data" ]       = outputs_;
 
     Logger::Log( "Task result \n % ", result.dump(4) );
-    MRT::WebClient myWebClient;
-    myWebClient.Header( "Content-Type" , "application/json" );
-    myWebClient.Post( "http://10.0.0.20:80/maraton/result" ,
-                      result.dump() ,
-                      [ this ] ( uptr<MRT::HTTPResponse> response ) 
-                      {
-                          Logger::Log( "Result Delivered!");
-                      }
-                    );
+    
+    Protocal::MessageHub::Instance()->SendRESTReport(result.dump(), "Result of Task ID " + original_message_->id());
+    
+    //MRT::WebClient myWebClient;
+    //myWebClient.Header( "Content-Type" , "application/json" );
+    //myWebClient.Post( "http://10.0.0.20:80/maraton/result" ,
+    //                  result.dump() ,
+    //                  [ this ] ( uptr<MRT::HTTPResponse> response ) 
+    //                  {
+    //                      Logger::Log( "Result Delivered!");
+    //                  }
+    //                );
 }
 
 // Abort task

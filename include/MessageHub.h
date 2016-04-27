@@ -67,12 +67,6 @@ namespace Protocal
     {
     public:
 
-        // Constructor
-        MessageHub()  {};
-
-        // Destructor
-        ~MessageHub() {};
-
         // Add one handler to the Hub
         // @oneHandler : one message handler in unique pointer.
         bool AddHandler( uptr<MessageHandler> oneHandler );
@@ -103,6 +97,33 @@ namespace Protocal
         // @message : protobuf message in unique pointer
         uptr<MRT::Buffer> Build( uptr<::google::protobuf::Message> message );
 
+        // Set the REST IP and Port
+        int SetRESTReportAddress( const string& ip , const string& port );
+
+        // Send the rest report to remote ip adn port
+        // @report : in json format
+        // @logInfo: log to be printed when message deliverd.
+        int SendRESTReport( const string& report , const string& logInfo );
+
+        // Get the REST report full path
+        string GetRESTReportFullPath()
+        {
+            return rest_report_protocal_
+                 + rest_report_ip_ + ":"
+                 + rest_report_port_
+                 + rest_report_path_;
+        }
+
+    protected:
+        // Constructor
+        MessageHub();
+
+        // Destructor
+        ~MessageHub();
+
+        // Initialization
+        void Init();
+
     private:
 
         // Handler map keep the messageID and Handler in a 1:1 relationship
@@ -116,6 +137,18 @@ namespace Protocal
         size_t HashName( const std::string& messageType );
 
         friend MRT::Singleton<MessageHub>;
+
+        // REST Report IP address
+        string                       rest_report_ip_;
+
+        // REST Report Port
+        string                       rest_report_port_;
+
+        // REST Report Path
+        string                       rest_report_path_;
+
+        // REST Report Protocal
+        string                       rest_report_protocal_;
 
     };
 }

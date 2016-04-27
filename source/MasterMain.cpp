@@ -33,10 +33,11 @@ limitations under the License.
 #include <memory>
 
 // Main function for Maraton Master
-int main( int argc , char** agrv )
+int main( int argc , char** argv )
 {  
     Logger::Sys("build % %" , __DATE__ , __TIME__);
-    Protocal::MessageHub::Instance()->AddAllHandlers();
+    /*Protocal::MessageHub::Instance()->AddAllHandlers();*/
+    Protocal::MessageHub::Instance()->SetRESTReportAddress( argv[ 1 ] , argv[ 2 ] );
 
     // By returning flase will keep this worker running.
     MRT::SyncWorker::Create( 1 , [] ( MRT::SyncWorker* worker )

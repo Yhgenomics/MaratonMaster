@@ -72,6 +72,14 @@ public:
     // Access to all alived servants.
     std::vector<sptr<Servant>>  AllServants();
 
+    // Preocuupy the resources for a task
+    // @taskNeedResources : task in JSON from REST API
+    // @return : if preoccupied successed.
+    bool PreoccupyResources( string& taskNeedResources );
+
+    // Log out all servants status
+    void ShowServants();
+
     // Update each Servant's status
     void                        Update();
 
