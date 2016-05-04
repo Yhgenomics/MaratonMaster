@@ -60,7 +60,7 @@ namespace Protocal
                 if ( servant )
                 {
                     //add the IP address as a prefix to avoid ID crash 
-                    servant->ID( session->ip_address() + "_" + msg->id() );
+                    servant->ID( msg->id() );
                     servant->Status( ServantStatus::Code( msg->state() ) );
                     servant->CPU( msg->cpu() );
                     servant->MemorySize( msg->memory() );

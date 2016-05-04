@@ -34,6 +34,7 @@ Servant::Servant( ServantSession * session )
 {
     this->session_ = session;
     auto msg = make_uptr( MessageGreeting );
+    msg->set_prefix( session->ip_address() + "_");
     msg->set_code(91);
     session->SendOut( move_ptr( msg ) );
     this->Refresh();

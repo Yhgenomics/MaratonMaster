@@ -61,6 +61,12 @@
     <None Include="..\proto\MessageServantUpdate.proto">
       <Filter>Proto\defines</Filter>
     </None>
+    <None Include="..\proto\MessageTaskLogsQuery.proto">
+      <Filter>Proto\defines</Filter>
+    </None>
+    <None Include="..\proto\MessageTaskLogsUpdate.proto">
+      <Filter>Proto\defines</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\source\MasterMain.cpp">
@@ -134,6 +140,12 @@
     </ClCompile>
     <ClCompile Include="..\source\BusinessSession.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\include\message\MessageTaskLogsQuery.pb.cc">
+      <Filter>Proto</Filter>
+    </ClCompile>
+    <ClCompile Include="..\include\message\MessageTaskLogsUpdate.pb.cc">
+      <Filter>Proto</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -256,6 +268,15 @@
     </ClInclude>
     <ClInclude Include="..\include\handler\ServantStatusRESTHandler.h">
       <Filter>RESTHandlers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\handler\TaskLogsRESTHandler.h">
+      <Filter>RESTHandlers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\message\MessageTaskLogsQuery.pb.h">
+      <Filter>Proto</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\message\MessageTaskLogsUpdate.pb.h">
+      <Filter>Proto</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -134,6 +134,8 @@
     <None Include="..\proto\MessageStateReply.proto" />
     <None Include="..\proto\MessageTaskDeliver.proto" />
     <None Include="..\proto\MessageTaskDeliverReply.proto" />
+    <None Include="..\proto\MessageTaskLogsQuery.proto" />
+    <None Include="..\proto\MessageTaskLogsUpdate.proto" />
     <None Include="..\proto\MessageTaskUpdate.proto" />
   </ItemGroup>
   <ItemGroup>
@@ -147,6 +149,8 @@
     <ClCompile Include="..\include\message\MessageStateReply.pb.cc" />
     <ClCompile Include="..\include\message\MessageTaskDeliver.pb.cc" />
     <ClCompile Include="..\include\message\MessageTaskDeliverReply.pb.cc" />
+    <ClCompile Include="..\include\message\MessageTaskLogsQuery.pb.cc" />
+    <ClCompile Include="..\include\message\MessageTaskLogsUpdate.pb.cc" />
     <ClCompile Include="..\include\message\MessageTaskUpdate.pb.cc" />
     <ClCompile Include="..\source\AddAllHandler.cpp" />
     <ClCompile Include="..\source\BusinessListener.cpp" />
@@ -167,7 +171,10 @@
     <ClInclude Include="..\include\BusinessSession.h" />
     <ClInclude Include="..\include\handler\ServantStatusRESTHandler.h" />
     <ClInclude Include="..\include\handler\TaskDeliverRESTHandler.h" />
+    <ClInclude Include="..\include\handler\TaskLogsRESTHandler.h" />
     <ClInclude Include="..\include\MessageConverter.h" />
+    <ClInclude Include="..\include\message\MessageTaskLogsQuery.pb.h" />
+    <ClInclude Include="..\include\message\MessageTaskLogsUpdate.pb.h" />
     <ClInclude Include="..\include\RESTHandler.h" />
     <ClInclude Include="..\include\StatusBook.h" />
     <ClInclude Include="..\include\GeneralSession.h" />

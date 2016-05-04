@@ -32,8 +32,9 @@ void protobuf_AssignDesc_MessageGreeting_2eproto() {
       "MessageGreeting.proto");
   GOOGLE_CHECK(file != NULL);
   MessageGreeting_descriptor_ = file->message_type(0);
-  static const int MessageGreeting_offsets_[1] = {
+  static const int MessageGreeting_offsets_[2] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MessageGreeting, code_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MessageGreeting, prefix_),
   };
   MessageGreeting_reflection_ =
     new ::google::protobuf::internal::GeneratedMessageReflection(
@@ -76,8 +77,8 @@ void protobuf_AddDesc_MessageGreeting_2eproto() {
   GOOGLE_PROTOBUF_VERIFY_VERSION;
 
   ::google::protobuf::DescriptorPool::InternalAddGeneratedFile(
-    "\n\025MessageGreeting.proto\"\037\n\017MessageGreeti"
-    "ng\022\014\n\004code\030\001 \002(\005", 56);
+    "\n\025MessageGreeting.proto\"/\n\017MessageGreeti"
+    "ng\022\014\n\004code\030\001 \002(\005\022\016\n\006prefix\030\002 \002(\t", 72);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "MessageGreeting.proto", &protobuf_RegisterTypes);
   MessageGreeting::default_instance_ = new MessageGreeting();
@@ -96,6 +97,7 @@ struct StaticDescriptorInitializer_MessageGreeting_2eproto {
 
 #ifndef _MSC_VER
 const int MessageGreeting::kCodeFieldNumber;
+const int MessageGreeting::kPrefixFieldNumber;
 #endif  // !_MSC_VER
 
 MessageGreeting::MessageGreeting()
@@ -115,8 +117,10 @@ MessageGreeting::MessageGreeting(const MessageGreeting& from)
 }
 
 void MessageGreeting::SharedCtor() {
+  ::google::protobuf::internal::GetEmptyString();
   _cached_size_ = 0;
   code_ = 0;
+  prefix_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
 }
 
@@ -126,6 +130,9 @@ MessageGreeting::~MessageGreeting() {
 }
 
 void MessageGreeting::SharedDtor() {
+  if (prefix_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    delete prefix_;
+  }
   if (this != default_instance_) {
   }
 }
@@ -152,7 +159,14 @@ MessageGreeting* MessageGreeting::New() const {
 }
 
 void MessageGreeting::Clear() {
-  code_ = 0;
+  if (_has_bits_[0 / 32] & 3) {
+    code_ = 0;
+    if (has_prefix()) {
+      if (prefix_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+        prefix_->clear();
+      }
+    }
+  }
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
   mutable_unknown_fields()->Clear();
 }
@@ -174,6 +188,23 @@ bool MessageGreeting::MergePartialFromCodedStream(
                    ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
                  input, &code_)));
           set_has_code();
+        } else {
+          goto handle_unusual;
+        }
+        if (input->ExpectTag(18)) goto parse_prefix;
+        break;
+      }
+
+      // required string prefix = 2;
+      case 2: {
+        if (tag == 18) {
+         parse_prefix:
+          DO_(::google::protobuf::internal::WireFormatLite::ReadString(
+                input, this->mutable_prefix()));
+          ::google::protobuf::internal::WireFormat::VerifyUTF8StringNamedField(
+            this->prefix().data(), this->prefix().length(),
+            ::google::protobuf::internal::WireFormat::PARSE,
+            "prefix");
         } else {
           goto handle_unusual;
         }
@@ -211,6 +242,16 @@ void MessageGreeting::SerializeWithCachedSizes(
     ::google::protobuf::internal::WireFormatLite::WriteInt32(1, this->code(), output);
   }
 
+  // required string prefix = 2;
+  if (has_prefix()) {
+    ::google::protobuf::internal::WireFormat::VerifyUTF8StringNamedField(
+      this->prefix().data(), this->prefix().length(),
+      ::google::protobuf::internal::WireFormat::SERIALIZE,
+      "prefix");
+    ::google::protobuf::internal::WireFormatLite::WriteStringMaybeAliased(
+      2, this->prefix(), output);
+  }
+
   if (!unknown_fields().empty()) {
     ::google::protobuf::internal::WireFormat::SerializeUnknownFields(
         unknown_fields(), output);
@@ -224,6 +265,17 @@ void MessageGreeting::SerializeWithCachedSizes(
   // required int32 code = 1;
   if (has_code()) {
     target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(1, this->code(), target);
+  }
+
+  // required string prefix = 2;
+  if (has_prefix()) {
+    ::google::protobuf::internal::WireFormat::VerifyUTF8StringNamedField(
+      this->prefix().data(), this->prefix().length(),
+      ::google::protobuf::internal::WireFormat::SERIALIZE,
+      "prefix");
+    target =
+      ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
+        2, this->prefix(), target);
   }
 
   if (!unknown_fields().empty()) {
@@ -243,6 +295,13 @@ int MessageGreeting::ByteSize() const {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::Int32Size(
           this->code());
+    }
+
+    // required string prefix = 2;
+    if (has_prefix()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::StringSize(
+          this->prefix());
     }
 
   }
@@ -275,6 +334,9 @@ void MessageGreeting::MergeFrom(const MessageGreeting& from) {
     if (from.has_code()) {
       set_code(from.code());
     }
+    if (from.has_prefix()) {
+      set_prefix(from.prefix());
+    }
   }
   mutable_unknown_fields()->MergeFrom(from.unknown_fields());
 }
@@ -292,7 +354,7 @@ void MessageGreeting::CopyFrom(const MessageGreeting& from) {
 }
 
 bool MessageGreeting::IsInitialized() const {
-  if ((_has_bits_[0] & 0x00000001) != 0x00000001) return false;
+  if ((_has_bits_[0] & 0x00000003) != 0x00000003) return false;
 
   return true;
 }
@@ -300,6 +362,7 @@ bool MessageGreeting::IsInitialized() const {
 void MessageGreeting::Swap(MessageGreeting* other) {
   if (other != this) {
     std::swap(code_, other->code_);
+    std::swap(prefix_, other->prefix_);
     std::swap(_has_bits_[0], other->_has_bits_[0]);
     _unknown_fields_.Swap(&other->_unknown_fields_);
     std::swap(_cached_size_, other->_cached_size_);

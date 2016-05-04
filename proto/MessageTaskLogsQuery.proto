@@ -1,0 +1,5 @@
+message MessageTaskLogsQuery
+{
+    required string          taskID     = 1;
+    optional string          token      = 2;
+}

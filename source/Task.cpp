@@ -254,16 +254,6 @@ void Task::OnFinish()
     Logger::Log( "Task result \n % ", result.dump(4) );
     
     Protocal::MessageHub::Instance()->SendRESTReport(result.dump(), "Result of Task ID " + original_message_->id());
-    
-    //MRT::WebClient myWebClient;
-    //myWebClient.Header( "Content-Type" , "application/json" );
-    //myWebClient.Post( "http://10.0.0.20:80/maraton/result" ,
-    //                  result.dump() ,
-    //                  [ this ] ( uptr<MRT::HTTPResponse> response ) 
-    //                  {
-    //                      Logger::Log( "Result Delivered!");
-    //                  }
-    //                );
 }
 
 // Abort task

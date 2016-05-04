@@ -1545,6 +1545,7 @@ void MessageTaskDeliver::Swap(MessageTaskDeliver* other) {
   return metadata;
 }
 
+
 // @@protoc_insertion_point(namespace_scope)
 
 // @@protoc_insertion_point(global_scope)

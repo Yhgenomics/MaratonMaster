@@ -1,4 +1,5 @@
 message MessageGreeting
 {
     required int32 code = 1;
+	required string prefix = 2;
 }
