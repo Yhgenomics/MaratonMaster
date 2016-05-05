@@ -39,6 +39,7 @@ limitations under the License.
 #include "handler/TaskDeliverRESTHandler.h"
 #include "handler/ServantStatusRESTHandler.h"
 #include "handler/TaskLogsRESTHandler.h"
+#include "handler/MessageTaskLogsUpdateHandler.h"
 #include "MRT.h"
 #include <memory>
 
@@ -58,11 +59,13 @@ namespace Protocal
         AddHandler( std::move( make_uptr( Protocal::MessageHeartBeatHandler         ) ) );
         AddHandler( std::move( make_uptr( Protocal::MessageServantUpdateHandler     ) ) );
         AddHandler( std::move( make_uptr( Protocal::MessageTaskUpdateHandler        ) ) );
+        AddHandler( std::move( make_uptr( Protocal::MessageTaskLogsUpdateHandler    ) ) );
 
         Logger::Log( "Message Hub Add REST message handlers" );
         AddRESTHandler( std::move( make_uptr( Protocal::TaskDeliverRESTHandler   ) ) );
         AddRESTHandler( std::move( make_uptr( Protocal::ServantStatusRESTHandler ) ) );
         AddRESTHandler( std::move( make_uptr( Protocal::TaskLogsRESTHandler      ) ) );
+
         return true;
     }
 }

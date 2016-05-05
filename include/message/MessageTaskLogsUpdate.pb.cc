@@ -81,7 +81,7 @@ void protobuf_AddDesc_MessageTaskLogsUpdate_2eproto() {
 
   ::google::protobuf::DescriptorPool::InternalAddGeneratedFile(
     "\n\033MessageTaskLogsUpdate.proto\"q\n\025Message"
-    "TaskLogsUpdate\022\021\n\terrorMark\030\001 \002(\t\022\016\n\006tas"
+    "TaskLogsUpdate\022\021\n\terrorMark\030\001 \002(\005\022\016\n\006tas"
     "kID\030\002 \002(\t\022\021\n\tsubtaskID\030\003 \002(\t\022\021\n\tservantI"
     "D\030\004 \002(\t\022\017\n\007content\030\005 \002(\t", 144);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
@@ -127,7 +127,7 @@ MessageTaskLogsUpdate::MessageTaskLogsUpdate(const MessageTaskLogsUpdate& from)
 void MessageTaskLogsUpdate::SharedCtor() {
   ::google::protobuf::internal::GetEmptyString();
   _cached_size_ = 0;
-  errormark_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  errormark_ = 0;
   taskid_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   subtaskid_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   servantid_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
@@ -141,9 +141,6 @@ MessageTaskLogsUpdate::~MessageTaskLogsUpdate() {
 }
 
 void MessageTaskLogsUpdate::SharedDtor() {
-  if (errormark_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
-    delete errormark_;
-  }
   if (taskid_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
     delete taskid_;
   }
@@ -183,11 +180,7 @@ MessageTaskLogsUpdate* MessageTaskLogsUpdate::New() const {
 
 void MessageTaskLogsUpdate::Clear() {
   if (_has_bits_[0 / 32] & 31) {
-    if (has_errormark()) {
-      if (errormark_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
-        errormark_->clear();
-      }
-    }
+    errormark_ = 0;
     if (has_taskid()) {
       if (taskid_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
         taskid_->clear();
@@ -223,15 +216,13 @@ bool MessageTaskLogsUpdate::MergePartialFromCodedStream(
     tag = p.first;
     if (!p.second) goto handle_unusual;
     switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
-      // required string errorMark = 1;
+      // required int32 errorMark = 1;
       case 1: {
-        if (tag == 10) {
-          DO_(::google::protobuf::internal::WireFormatLite::ReadString(
-                input, this->mutable_errormark()));
-          ::google::protobuf::internal::WireFormat::VerifyUTF8StringNamedField(
-            this->errormark().data(), this->errormark().length(),
-            ::google::protobuf::internal::WireFormat::PARSE,
-            "errormark");
+        if (tag == 8) {
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
+                 input, &errormark_)));
+          set_has_errormark();
         } else {
           goto handle_unusual;
         }
@@ -332,14 +323,9 @@ failure:
 void MessageTaskLogsUpdate::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
   // @@protoc_insertion_point(serialize_start:MessageTaskLogsUpdate)
-  // required string errorMark = 1;
+  // required int32 errorMark = 1;
   if (has_errormark()) {
-    ::google::protobuf::internal::WireFormat::VerifyUTF8StringNamedField(
-      this->errormark().data(), this->errormark().length(),
-      ::google::protobuf::internal::WireFormat::SERIALIZE,
-      "errormark");
-    ::google::protobuf::internal::WireFormatLite::WriteStringMaybeAliased(
-      1, this->errormark(), output);
+    ::google::protobuf::internal::WireFormatLite::WriteInt32(1, this->errormark(), output);
   }
 
   // required string taskID = 2;
@@ -392,15 +378,9 @@ void MessageTaskLogsUpdate::SerializeWithCachedSizes(
 ::google::protobuf::uint8* MessageTaskLogsUpdate::SerializeWithCachedSizesToArray(
     ::google::protobuf::uint8* target) const {
   // @@protoc_insertion_point(serialize_to_array_start:MessageTaskLogsUpdate)
-  // required string errorMark = 1;
+  // required int32 errorMark = 1;
   if (has_errormark()) {
-    ::google::protobuf::internal::WireFormat::VerifyUTF8StringNamedField(
-      this->errormark().data(), this->errormark().length(),
-      ::google::protobuf::internal::WireFormat::SERIALIZE,
-      "errormark");
-    target =
-      ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
-        1, this->errormark(), target);
+    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(1, this->errormark(), target);
   }
 
   // required string taskID = 2;
@@ -459,10 +439,10 @@ int MessageTaskLogsUpdate::ByteSize() const {
   int total_size = 0;
 
   if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
-    // required string errorMark = 1;
+    // required int32 errorMark = 1;
     if (has_errormark()) {
       total_size += 1 +
-        ::google::protobuf::internal::WireFormatLite::StringSize(
+        ::google::protobuf::internal::WireFormatLite::Int32Size(
           this->errormark());
     }
 

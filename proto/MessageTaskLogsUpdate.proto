@@ -1,6 +1,6 @@
 message MessageTaskLogsUpdate
 {
-    required string errorMark  = 1;
+    required int32  errorMark  = 1;
 	required string taskID     = 2;
 	required string subtaskID  = 3;
 	required string servantID  = 4;

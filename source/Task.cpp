@@ -253,7 +253,11 @@ void Task::OnFinish()
 
     Logger::Log( "Task result \n % ", result.dump(4) );
     
-    Protocal::MessageHub::Instance()->SendRESTReport(result.dump(), "Result of Task ID " + original_message_->id());
+    //Protocal::MessageHub::Instance()->SendRESTReport(result.dump(), "Result of Task ID " + original_message_->id());
+    Protocal::MessageHub::Instance()->SendRESTInfo( Protocal::MessageHub::Instance()->GetRESTReportFullPath() ,
+                                                    result.dump() ,
+                                                    "Result of Task ID " + original_message_->id() );
+
 }
 
 // Abort task

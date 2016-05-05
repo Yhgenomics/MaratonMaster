@@ -24,34 +24,58 @@ limitations under the License.
 * Modifed       : When      | Who       | What
 ***********************************************************************************/
 
-#ifndef MESSAGEHEARTBEAT_HANDLER_H_
-#define MESSAGEHEARTBEAT_HANDLER_H_
+#ifndef MESSAGETASKLOGSUPDATE_HANDLER_H_
+#define MESSAGETASKLOGSUPDATE_HANDLER_H_
 
-#include "MessageHeartBeat.pb.h"
+#include "MessageTaskLogsUpdate.pb.h"
 #include "MessageHandler.h"
 #include "GeneralSession.h"
+#include "json.hpp"
 #include <functional>
 #include <string>
 #include <memory>
 
+using nlohmann::json;
+
 namespace Protocal
 {
-    class MessageHeartBeatHandler : public MessageHandler
+    class MessageTaskLogsUpdateHandler : public MessageHandler
     {
     public:
-
-        MessageHeartBeatHandler()
+        MessageTaskLogsUpdateHandler()
         {
-            MessageType("MessageHeartBeat");
-
+            MessageType("MessageTaskLogsUpdate");
             Method = []( GeneralSession* session , const void* pData , size_t length )
             {
-                ServantManager::Instance()->FindBySessionID( session->ID() )->Refresh();
+                char* dataContent  = ( char* )pData;
+                      dataContent += sizeof( size_t );
+                int   msgLength    = scast<int>( length - sizeof( size_t ) );
+
+                auto msg = make_uptr( MessageTaskLogsUpdate );
+                msg->ParseFromArray( dataContent , msgLength );
+                json RESTLog;
+                RESTLog["errorMark"] = msg->errormark();
+                RESTLog["taskID"]    = msg->taskid();
+                RESTLog["subtaskID"] = msg->subtaskid();
+                RESTLog["servantID"] = msg->servantid();
+
+                // [TODO] encode the special charactors
+                RESTLog["content"]   = msg->content();
+
+                //Logger::Log( "Log to be send");
+                //Logger::Log( "%" , msg->errormark() );
+                //Logger::Log( "%" , msg->taskid() );
+                //Logger::Log( "%" , msg->subtaskid() );
+                //Logger::Log( "%" , msg->servantid() );
+                //Logger::Log( "%" , msg->content() );
+
+
+                 
                 return true;
             };
         }
     };
 }
 
-#endif //!MESSAGEHEARTBEAT_HANDLER_H_
+#endif //!MESSAGETASKLOGSUPDATE_HANDLER_H_
 

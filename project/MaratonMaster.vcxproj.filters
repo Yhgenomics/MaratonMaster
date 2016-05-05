@@ -278,5 +278,8 @@
     <ClInclude Include="..\include\message\MessageTaskLogsUpdate.pb.h">
       <Filter>Proto</Filter>
     </ClInclude>
+    <ClInclude Include="..\include\handler\MessageTaskLogsUpdateHandler.h">
+      <Filter>MessageHandlers</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

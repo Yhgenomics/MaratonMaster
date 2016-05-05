@@ -100,10 +100,31 @@ namespace Protocal
         // Set the REST IP and Port
         int SetRESTReportAddress( const string& ip , const string& port );
 
-        // Send the rest report to remote ip adn port
+        // Send the rest report to remote ip and port
         // @report : in json format
-        // @logInfo: log to be printed when message deliverd.
-        int SendRESTReport( const string& report , const string& logInfo );
+        // @logInfo: log to be printed after message delivered.
+        //int SendRESTReport( const string& report , const string& logInfo );
+
+        // Send the rest log to remote ip and port
+        // @log    : task's log in json format 
+        // @logInfo: log to be printed after message delivered.
+        //int SendRESTLog(const string& log, const string&logInfo);
+
+        // Send any content to remote dest
+        // @destFullPath: should contains the protocal ,ip address, port and path
+        //                such as http://123.123.123.123:80/path/path2/path3
+        // @content     : any content in JSON
+        // @logInfo     : log to be printed after message delivered.
+        int SendRESTInfo(const string& destFullPath, const string& content, const string&logInfo);
+
+        // Get the REST log full path
+        string GetRESTLogFulPath()
+        {
+            return rest_report_protocal_
+                + rest_report_ip_ + ":"
+                + rest_report_port_
+                + rest_log_path_;
+        }
 
         // Get the REST report full path
         string GetRESTReportFullPath()
@@ -146,6 +167,9 @@ namespace Protocal
 
         // REST Report Path
         string                       rest_report_path_;
+
+        // REST Log Path
+        string                       rest_log_path_;
 
         // REST Report Protocal
         string                       rest_report_protocal_;

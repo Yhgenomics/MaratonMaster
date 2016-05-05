@@ -134,7 +134,6 @@ namespace Protocal
     }
 
     // Set the REST IP and Port
-
     int MessageHub::SetRESTReportAddress( const string & ip , const string & port )
     {
         rest_report_ip_ = ip;
@@ -142,10 +141,24 @@ namespace Protocal
         return true;
     }
 
+    int MessageHub::SendRESTInfo( const string & destFullPath , const string & content , const string & logInfo )
+    {
+        MRT::WebClient myWebClient;
+        myWebClient.Header( "Content-Type" , "application/json" );
+        myWebClient.Post( destFullPath ,
+                          content ,
+                          [ this , logInfo ] ( uptr<MRT::HTTPResponse> response )
+        {
+            Logger::Log( "REST Info Delivered : % " , logInfo );
+        }
+        );
+        return 0;
+    }
+
     // Send the rest report to remote ip adn port
     // @report : in json format
     // @logInfo: log to be printed when message deliverd.
-    int MessageHub::SendRESTReport( const string & report , const string & logInfo )
+    /*int MessageHub::SendRESTReport( const string & report , const string & logInfo )
     {
         MRT::WebClient myWebClient;
         myWebClient.Header( "Content-Type" , "application/json" );
@@ -156,11 +169,31 @@ namespace Protocal
             Logger::Log( "REST Message Delivered! % " , logInfo );
         }
         );
-        return true;
-    }
+        return 0;
+    }*/
+
+    // Send the rest log to remote ip and port
+    // @log    : task's log in json format 
+    // @logInfo: log to be printed when message deliverd.
+    /*int MessageHub::SendRESTLog( const string & log , const string & logInfo )
+    {
+        MRT::WebClient myWebClient;
+        myWebClient.Header( "Content-Type" , "application/json" );
+        myWebClient.Post( GetRESTLogFulPath() ,
+                          log ,
+                          [ this , logInfo ] ( uptr<MRT::HTTPResponse> response )
+        {
+            Logger::Log( "Log Message Delivered! % " , logInfo );
+        }
+        );
+        return 0;
+    }*/
 
     // Constructor
-    MessageHub::MessageHub() { Init(); }
+    MessageHub::MessageHub() 
+    {
+        Init();
+    }
 
     // Destructor
     inline MessageHub::~MessageHub() {}
@@ -172,6 +205,7 @@ namespace Protocal
         rest_report_ip_       = "";
         rest_report_port_     = "80";
         rest_report_path_     = "/maraton/result";
+        rest_log_path_        = "/maraton/log";
         rest_report_protocal_ = "http://";
         AddAllHandlers();
         Logger::Log( "Message Hub Initialized" );

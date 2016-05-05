@@ -88,17 +88,12 @@ class MessageTaskLogsUpdate : public ::google::protobuf::Message {
 
   // accessors -------------------------------------------------------
 
-  // required string errorMark = 1;
+  // required int32 errorMark = 1;
   inline bool has_errormark() const;
   inline void clear_errormark();
   static const int kErrorMarkFieldNumber = 1;
-  inline const ::std::string& errormark() const;
-  inline void set_errormark(const ::std::string& value);
-  inline void set_errormark(const char* value);
-  inline void set_errormark(const char* value, size_t size);
-  inline ::std::string* mutable_errormark();
-  inline ::std::string* release_errormark();
-  inline void set_allocated_errormark(::std::string* errormark);
+  inline ::google::protobuf::int32 errormark() const;
+  inline void set_errormark(::google::protobuf::int32 value);
 
   // required string taskID = 2;
   inline bool has_taskid() const;
@@ -165,11 +160,11 @@ class MessageTaskLogsUpdate : public ::google::protobuf::Message {
 
   ::google::protobuf::uint32 _has_bits_[1];
   mutable int _cached_size_;
-  ::std::string* errormark_;
   ::std::string* taskid_;
   ::std::string* subtaskid_;
   ::std::string* servantid_;
   ::std::string* content_;
+  ::google::protobuf::int32 errormark_;
   friend void  protobuf_AddDesc_MessageTaskLogsUpdate_2eproto();
   friend void protobuf_AssignDesc_MessageTaskLogsUpdate_2eproto();
   friend void protobuf_ShutdownFile_MessageTaskLogsUpdate_2eproto();
@@ -184,7 +179,7 @@ class MessageTaskLogsUpdate : public ::google::protobuf::Message {
 
 // MessageTaskLogsUpdate
 
-// required string errorMark = 1;
+// required int32 errorMark = 1;
 inline bool MessageTaskLogsUpdate::has_errormark() const {
   return (_has_bits_[0] & 0x00000001u) != 0;
 }
@@ -195,69 +190,17 @@ inline void MessageTaskLogsUpdate::clear_has_errormark() {
   _has_bits_[0] &= ~0x00000001u;
 }
 inline void MessageTaskLogsUpdate::clear_errormark() {
-  if (errormark_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
-    errormark_->clear();
-  }
+  errormark_ = 0;
   clear_has_errormark();
 }
-inline const ::std::string& MessageTaskLogsUpdate::errormark() const {
+inline ::google::protobuf::int32 MessageTaskLogsUpdate::errormark() const {
   // @@protoc_insertion_point(field_get:MessageTaskLogsUpdate.errorMark)
-  return *errormark_;
-}
-inline void MessageTaskLogsUpdate::set_errormark(const ::std::string& value) {
-  set_has_errormark();
-  if (errormark_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
-    errormark_ = new ::std::string;
-  }
-  errormark_->assign(value);
-  // @@protoc_insertion_point(field_set:MessageTaskLogsUpdate.errorMark)
-}
-inline void MessageTaskLogsUpdate::set_errormark(const char* value) {
-  set_has_errormark();
-  if (errormark_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
-    errormark_ = new ::std::string;
-  }
-  errormark_->assign(value);
-  // @@protoc_insertion_point(field_set_char:MessageTaskLogsUpdate.errorMark)
-}
-inline void MessageTaskLogsUpdate::set_errormark(const char* value, size_t size) {
-  set_has_errormark();
-  if (errormark_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
-    errormark_ = new ::std::string;
-  }
-  errormark_->assign(reinterpret_cast<const char*>(value), size);
-  // @@protoc_insertion_point(field_set_pointer:MessageTaskLogsUpdate.errorMark)
-}
-inline ::std::string* MessageTaskLogsUpdate::mutable_errormark() {
-  set_has_errormark();
-  if (errormark_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
-    errormark_ = new ::std::string;
-  }
-  // @@protoc_insertion_point(field_mutable:MessageTaskLogsUpdate.errorMark)
   return errormark_;
 }
-inline ::std::string* MessageTaskLogsUpdate::release_errormark() {
-  clear_has_errormark();
-  if (errormark_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
-    return NULL;
-  } else {
-    ::std::string* temp = errormark_;
-    errormark_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
-    return temp;
-  }
-}
-inline void MessageTaskLogsUpdate::set_allocated_errormark(::std::string* errormark) {
-  if (errormark_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
-    delete errormark_;
-  }
-  if (errormark) {
-    set_has_errormark();
-    errormark_ = errormark;
-  } else {
-    clear_has_errormark();
-    errormark_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
-  }
-  // @@protoc_insertion_point(field_set_allocated:MessageTaskLogsUpdate.errorMark)
+inline void MessageTaskLogsUpdate::set_errormark(::google::protobuf::int32 value) {
+  set_has_errormark();
+  errormark_ = value;
+  // @@protoc_insertion_point(field_set:MessageTaskLogsUpdate.errorMark)
 }
 
 // required string taskID = 2;

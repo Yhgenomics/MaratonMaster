@@ -94,7 +94,10 @@ namespace ErrorCode
         kTaskNotReady = 10300,
         kSubTaskError = 10301,
 
-        kUndefined    = 19999 ,
+        // 10600-10799 Log Error
+        kLogNotFound  = 10600,
+
+        kUndefined    = 19999,
     };
 }
 
