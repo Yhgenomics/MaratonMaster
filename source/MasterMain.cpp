@@ -32,11 +32,13 @@ limitations under the License.
 #include "BusinessListener.h"
 #include <memory>
 
+#include "Base64Coder.h"
 // Main function for Maraton Master
 int main( int argc , char** argv )
 {  
     Logger::Sys("build % %" , __DATE__ , __TIME__);
-    /*Protocal::MessageHub::Instance()->AddAllHandlers();*/
+
+    // The first time call the MessagHub will initialise it
     Protocal::MessageHub::Instance()->SetRESTReportAddress( argv[ 1 ] , argv[ 2 ] );
 
     // By returning flase will keep this worker running.

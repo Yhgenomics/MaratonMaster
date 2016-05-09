@@ -31,6 +31,7 @@ limitations under the License.
 #include "MessageHandler.h"
 #include "GeneralSession.h"
 #include "json.hpp"
+#include "Base64Coder.h"
 #include <functional>
 #include <string>
 #include <memory>
@@ -54,23 +55,18 @@ namespace Protocal
                 auto msg = make_uptr( MessageTaskLogsUpdate );
                 msg->ParseFromArray( dataContent , msgLength );
                 json RESTLog;
-                RESTLog["errorMark"] = msg->errormark();
-                RESTLog["taskID"]    = msg->taskid();
-                RESTLog["subtaskID"] = msg->subtaskid();
-                RESTLog["servantID"] = msg->servantid();
+                RESTLog[ "errorMark" ] = msg->errormark();
+                RESTLog[ "taskID"    ] = msg->taskid();
+                RESTLog[ "subtaskID" ] = msg->subtaskid();
+                RESTLog[ "servantID" ] = msg->servantid();
 
-                // [TODO] encode the special charactors
-                RESTLog["content"]   = msg->content();
-
-                //Logger::Log( "Log to be send");
-                //Logger::Log( "%" , msg->errormark() );
-                //Logger::Log( "%" , msg->taskid() );
-                //Logger::Log( "%" , msg->subtaskid() );
-                //Logger::Log( "%" , msg->servantid() );
-                //Logger::Log( "%" , msg->content() );
-
-
-                 
+                // Encode the special charactors for transforming via HTTP                
+                RESTLog[ "content" ] = *( Base64Coder::Encode( msg->content() ) );
+                
+                Protocal::MessageHub::Instance()->SendRESTInfo( Protocal::MessageHub::Instance()->GetRESTLogFulPath() ,
+                                                                RESTLog.dump() ,
+                                                                "Log of Task ID " + msg->taskid() );
+ 
                 return true;
             };
         }

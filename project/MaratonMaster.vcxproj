@@ -167,6 +167,7 @@
     <ClCompile Include="..\source\TaskManager.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\include\Base64Coder.h" />
     <ClInclude Include="..\include\BusinessListener.h" />
     <ClInclude Include="..\include\BusinessSession.h" />
     <ClInclude Include="..\include\handler\MessageTaskLogsUpdateHandler.h" />
