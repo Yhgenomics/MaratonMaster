@@ -160,6 +160,7 @@ void Task::UpdateSubtaskStatus( const string&         subTaskID ,
 // @task : Task descriptor in a unique pointer.
 Task::Task( uptr<TaskDescriptor> task )
 {
+    Init();
     original_task_    = move_ptr( task );
     original_message_ = original_task_->MakeMessage();
 }
@@ -167,7 +168,8 @@ Task::Task( uptr<TaskDescriptor> task )
 // Constructor from a protobuf message MessageTaskDeliver.
 // @message : task deliver message in a unique pointer
 Task::Task( uptr<MessageTaskDeliver> message )
-{
+{   
+    Init();
     original_task_    = make_uptr( TaskDescriptor , *( message.get() ) );
     original_message_ = move_ptr( message );
 }

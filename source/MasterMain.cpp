@@ -44,6 +44,7 @@ int main( int argc , char** argv )
     // By returning flase will keep this worker running.
     MRT::SyncWorker::Create( 1 , [] ( MRT::SyncWorker* worker )
     {
+        Logger::Log( "Master still alive!" );
         ServantManager::Instance()->Update();
         TaskManager::Instance()->Update();
         return false;

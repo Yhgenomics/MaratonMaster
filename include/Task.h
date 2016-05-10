@@ -94,6 +94,20 @@ public:
     // Getter of the task ID
     std::string ID()                             { return original_task_->ID(); }
 
+    // Initialization
+    void Init()
+    {
+        original_task_     = nullptr;
+        original_message_  = nullptr;
+        is_finished_       = false;
+        is_sub_tasks_ready = false;
+        status_            = TaskStatus::kUnknown;
+
+        sub_tasks_.clear();
+        sub_tasks_status_.clear();
+        outputs_.clear();
+    }
+
 private:
 
     // Task descriptor of the original task from Business.
