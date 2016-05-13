@@ -115,7 +115,7 @@ namespace Protocal
         //                such as http://123.123.123.123:80/path/path2/path3
         // @content     : any content in JSON
         // @logInfo     : log to be printed after message delivered.
-        int SendRESTInfo(const string& destFullPath, const string& content, const string&logInfo);
+        int SendRESTInfo(const string& destFullPath, const string& content);
 
         // Get the REST log full path
         string GetRESTLogFulPath()

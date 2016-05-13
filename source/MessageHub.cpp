@@ -141,15 +141,16 @@ namespace Protocal
         return true;
     }
 
-    int MessageHub::SendRESTInfo( const string & destFullPath , const string & content , const string & logInfo )
+    int MessageHub::SendRESTInfo( const string & destFullPath , const string & content )
     {
+        Logger::Log( "send REST dest [%] content[%]" , destFullPath , content );
         MRT::WebClient myWebClient;
         myWebClient.Header( "Content-Type" , "application/json" );
         myWebClient.Post( destFullPath ,
                           content ,
-                          [ this , logInfo ] ( uptr<MRT::HTTPResponse> response )
+                          [ this ] ( uptr<MRT::HTTPResponse> response )
         {
-            Logger::Log( "REST Info Delivered : % " , logInfo );
+            Logger::Log( "REST Info Delivered" );
         }
         );
         return 0;

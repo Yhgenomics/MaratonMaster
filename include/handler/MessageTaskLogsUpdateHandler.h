@@ -63,9 +63,10 @@ namespace Protocal
                 // Encode the special charactors for transforming via HTTP                
                 RESTLog[ "content" ] = *( Base64Coder::Encode( msg->content() ) );
                 
+                Logger::Log( "Begin to send log" );
                 Protocal::MessageHub::Instance()->SendRESTInfo( Protocal::MessageHub::Instance()->GetRESTLogFulPath() ,
-                                                                RESTLog.dump() ,
-                                                                "Log of Task ID " + msg->taskid() );
+                                                                RESTLog.dump() /*,
+                                                                "Log of Task ID " + msg->taskid()*/ );
  
                 return true;
             };

@@ -82,7 +82,7 @@ namespace Protocal
                 }
 
                 // Send the reply and close the session
-                session->SendRESTCloseSession(taskDeliverReply.dump());
+                session->SendRESTCloseSession( taskDeliverReply.dump() );
                 return true;
             };
         }
