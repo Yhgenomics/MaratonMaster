@@ -32,7 +32,6 @@ limitations under the License.
 #include "BusinessListener.h"
 #include <memory>
 
-#include "Base64Coder.h"
 // Main function for Maraton Master
 int main( int argc , char** argv )
 {  
@@ -43,8 +42,7 @@ int main( int argc , char** argv )
 
     // By returning flase will keep this worker running.
     MRT::SyncWorker::Create( 1 , [] ( MRT::SyncWorker* worker )
-    {
-        Logger::Log( "Master still alive!" );
+    {  
         ServantManager::Instance()->Update();
         TaskManager::Instance()->Update();
         return false;

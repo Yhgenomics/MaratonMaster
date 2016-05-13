@@ -55,7 +55,7 @@ void Servant::Update()
 // Just for test
 void Servant::SelfEvaluate()
 {
-    Ability( CPU() * kCPUFactor + MemorySize() );
+    Ability( CPU() * kCPUFactor /*+ MemorySize()*/ );
 }
 
 

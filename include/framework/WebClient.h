@@ -44,8 +44,8 @@ class WebClient
 public:
 
     // Default constructor
-    WebClient ( );
-
+    WebClient ();
+    ~WebClient();
     // Send a get requrest to the url 
     // @url      : url
     // @callback : callback when the server responsed
