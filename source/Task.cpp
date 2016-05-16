@@ -268,7 +268,7 @@ void Task::Abort()
 
     for ( auto& item : sub_tasks_status_ )
     {
-        //TODO cancel task each servants vid a cancel task message
+        //TODO cancel task each servants by a cancel task message
         item.second = TaskStatus::kError;
     }
 
