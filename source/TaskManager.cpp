@@ -31,7 +31,8 @@ limitations under the License.
 using std::vector;
 using std::string;
 
-// Update each task status and launch it if is pending. 
+// Update and do the operations by the status
+// No directly control of task's status in Task Manager
 void TaskManager::Update()
 {   
     if( task_need_pop_ )
@@ -48,6 +49,7 @@ void TaskManager::Update()
 
     for ( auto item : Instances() )
     {
+        // launch pending task
         if ( TaskStatus::kPending == item->Status() )
         {
             auto result = item->Launch();
@@ -58,9 +60,15 @@ void TaskManager::Update()
             }
         } // end of kPending
         
-        if( TaskStatus::kFinished == item->Status() )
+        // a running task can finally finished or get errors
+        else if( TaskStatus::kRunning == item->Status() )
         {
-            // check a task can finish
+            item->CheckRunningTask(); 
+        }
+
+        else if( TaskStatus::kFinished == item->Status() )
+        {
+            // A task can finish after the resources not at working status
             if ( item->CanFinish() )
             {
                 item->OnFinish();
@@ -69,14 +77,25 @@ void TaskManager::Update()
                 task_need_pop_ = true;
             }
         }// end of kFinished
+
+        else if( TaskStatus::kAborting == item->Status() )
+        {
+             // check all task is final
+             // kfinished or kerror or aborted or servant no longer existed
+             // all pass task will be kError
+        }// end of kAborting
+
+        else if( TaskStatus::kError == item->Status() )
+        {
+            // 1.check if all servants is released 
+            // 2.Send back a task report
+            // 3.add the task to pop list            
+        }// end of kError
+
     } // end of for ( auto task : Instances() )
 }
 
-// Abort task by aborting all subtasks
-// this will be caused by the following reasons:
-// 1.One subtask failed.
-// 2.One servant processing task 
-// 3.Upper layer ordered the task to abort.
+// Abort specified task by setting the abort mark
 // @taskID   : taskID
 void TaskManager::Abort( const std::string & taskID )
 {
@@ -84,7 +103,7 @@ void TaskManager::Abort( const std::string & taskID )
     {
         if ( taskID == item->MainTaskID() )
         {
-            item->Abort();
+            item->UpperLayerAbort( true );
         }
     }
 }

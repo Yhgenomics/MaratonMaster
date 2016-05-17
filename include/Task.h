@@ -18,7 +18,7 @@ limitations under the License.
 ***********************************************************************************/
 
 /***********************************************************************************
-* Description   : One task from bussiness level may be dispatched to different 
+* Description   : One task from bussiness level may be dispatched to different
                   servants.
 * Creator       : Ke Yang(keyang@yhgenomics.com)
 * Date          : 2016/2/29
@@ -49,52 +49,39 @@ using std::vector;
 class Task
 {
 public:
-    
+
     // Constructor from a task descriptor.
     // @task : Task descriptor in a unique pointer.
-    Task( uptr<TaskDescriptor> task);
+    Task( uptr<TaskDescriptor> task );
 
     // Constructor from a protobuf message MessageTaskDeliver.
     // @message : task deliver message in a unique pointer
-    Task( uptr<MessageTaskDeliver> message);
-        
+    Task( uptr<MessageTaskDeliver> message );
+
     // Destructor
     ~Task();
 
     // Launch task
     Error Launch();
-    
+
     // return true when all subtasks finished successfully, flase otherwise.
     bool  IsAllSubtasksFinished();
+
+    // return if error happens
+    // 1. subtask error
+    // 2. servant no longger exsited and it's work not finished.
+    bool  IsAnyError();
+
+    // check 
+    // 1. if all subtasks have been finished
+    // 2. if any eror happens(that will cause an abort operation.
+    void  CheckRunningTask();
 
     // check if this task can finish
     // two constrains
     // 1. task finished
     // 2. servant at a final status
-    bool  CanFinish()
-    {
-         bool result = true;
-
-         if ( TaskStatus::kFinished != Status() )
-         {
-             result = false;
-         }
-         
-         else
-         {
-             bool isAllFinal = true;
-             for ( auto item : sub_tasks_ )
-             {
-                 //break when on sub task's servant(s) is not at a final status
-                 if ( !isAllFinal ) { break; }           
-
-                 isAllFinal = ServantManager::Instance()->IsFinal( item->Servants() ) && isAllFinal;
-             }
-             result = isAllFinal && result;
-         }
-
-         return result;
-    }
+    bool  CanFinish();
 
     // On every subtask finished
     void  OnFinish();
@@ -114,9 +101,9 @@ public:
     // @outputs   : The subtask's output information witch should be append to
     //              the task.
     void  UpdateSubtaskStatus( const string&         subTaskID ,
-                               const TaskStatus::Code&     status    ,
-                               const vector<string>& outputs   );
-               
+                               const TaskStatus::Code&     status ,
+                               const vector<string>& outputs );
+
     // Getter and Setter for task status
     TaskStatus::Code Status()                    { return this->status_;                }
     void Status( const TaskStatus::Code& value ) { this->status_ = value;               }
@@ -124,19 +111,12 @@ public:
     // Getter of the task ID
     std::string MainTaskID()                     { return original_task_->OriginalID(); }
 
-    // Initialization
-    void Init()
-    {
-        original_task_     = nullptr;
-        original_message_  = nullptr;
-        is_finished_       = false;
-        is_sub_tasks_ready = false;
-        status_            = TaskStatus::kUnknown;
+    // Getter and Setter for Abort mark
+    bool UpperLayerAbort()                       { return upper_layer_abort_;           }
+    void UpperLayerAbort( const bool& value )    { upper_layer_abort_ = value;          }
 
-        sub_tasks_.clear();
-        sub_tasks_status_.clear();
-        outputs_.clear();
-    }
+    // Initialization
+    void Init();
 
 private:
 
@@ -148,22 +128,26 @@ private:
 
     // Flag for task finishing.
     // @note    : be true only when all task is finished.
-    bool                         is_finished_       = false;
-    
+    bool                         is_finished_;
+
     // Flag for sub task ready
     // @note    : Be true after MakeSubtasks at least once.
-    bool                         is_sub_tasks_ready = false;
+    bool                         is_sub_tasks_ready;
+
+    // Flag for abort running task 
+    // @note    : no use to finished task.
+    bool                         upper_layer_abort_;
 
     // The Status for the task.
-    TaskStatus::Code             status_      = TaskStatus::kUnknown;
+    TaskStatus::Code             status_;
 
     // The descriptor for all subtasks
     vector<sptr<TaskDescriptor>> sub_tasks_;
 
     // The status for all subtasks
-    std::map<std::string ,       
+    std::map<std::string ,
         TaskStatus::Code>        sub_tasks_status_;
-    
+
     // List gathering all subtasks' products information
     vector<std::string>          outputs_;
 

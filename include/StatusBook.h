@@ -63,7 +63,8 @@ namespace TaskStatus
         kRunning  = 302 ,
         kFinished = 303 ,
         kStopped  = 304 ,
-        kError    = 305
+        kError    = 305 ,
+        kAborting = 306 ,
     };
 }
 
@@ -89,6 +90,7 @@ namespace ErrorCode
 
         // 10100-10299 Servant Error
         kServantBusy  = 10100,
+        kServantLost  = 10101,
 
         // 10300-10499 Task Error
         kTaskNotReady = 10300,

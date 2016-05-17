@@ -67,7 +67,7 @@ inline void Servant::Refresh()
 }
 
 // Stop the current runing task.
-void Servant::StopTask()
+void Servant::AbortTask()
 {
 }
 

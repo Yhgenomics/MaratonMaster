@@ -135,9 +135,9 @@ bool Task::MakeSubtasks()
 // @status    : The status for subtask
 // @outputs   : The subtask's output information witch should be append to
 //              the task.
-void Task::UpdateSubtaskStatus( const string&         subTaskID ,
-                                const TaskStatus::Code&     status ,
-                                const vector<string>& outputs )
+void Task::UpdateSubtaskStatus( const string&           subTaskID ,
+                                const TaskStatus::Code& status ,
+                                const vector<string>&   outputs )
 {
     if ( sub_tasks_status_.count( subTaskID ) > 0 )
     {
@@ -145,19 +145,23 @@ void Task::UpdateSubtaskStatus( const string&         subTaskID ,
         {
             outputs_.push_back( item );
         }
-
         sub_tasks_status_[ subTaskID ] = status;
-
-        if ( IsAllSubtasksFinished() )
-        {
-            Status( TaskStatus::kFinished );
-            // delay this operation in TaskManger::Update()
-            // to ensure the servants resources used by the tasks
-            // is aready free when the task report is sended
-            // OnFinish();
-        }
-
     }
+}
+
+// Initialization
+void Task::Init()
+{
+    original_task_     = nullptr;
+    original_message_  = nullptr;
+    is_finished_       = false;
+    is_sub_tasks_ready = false;
+    upper_layer_abort_ = false;
+    status_            = TaskStatus::kUnknown;
+
+    sub_tasks_.clear();
+    sub_tasks_status_.clear();
+    outputs_.clear();
 }
 
 // Constructor from a task descriptor.
@@ -226,6 +230,11 @@ Error Task::Launch()
             Status( TaskStatus::kError );
             break;
         }
+
+        else
+        {
+            sub_tasks_status_[ subtask->ID() ] = TaskStatus::kRunning;
+        }
     }
 
     //TODO report to business layer
@@ -240,6 +249,80 @@ bool Task::IsAllSubtasksFinished()
     for ( const auto& subtask : sub_tasks_status_ )
     {
         result = result && subtask.second == TaskStatus::kFinished;
+    }
+
+    return result;
+}
+
+// return if error happens
+// 1. subtask error
+// 2. servant no longger exsited and it's work not finished.
+bool Task::IsAnyError()
+{
+    bool result = false;
+
+    for ( const auto& subtask : sub_tasks_status_ )
+    {
+        // Error happened
+        if ( subtask.second == TaskStatus::kError )
+        {
+            result = true;
+        }
+
+        // Running task's servant is no longer existed
+        else if ( subtask.second == TaskStatus::kRunning 
+        && !ServantManager::Instance()->FindByServantID( subtask.first ) )
+        {
+            result = true;
+        }
+
+    }
+
+    return result;
+}
+
+// Check 
+// 1. if all subtasks have been finished
+// 2. if any eror happens(that will cause an abort operation.
+void Task::CheckRunningTask()
+{
+    if ( IsAllSubtasksFinished() )
+    {
+        Status( TaskStatus::kFinished );
+        return;// return as no need for considering about aborting
+    }
+
+    if ( IsAnyError() || UpperLayerAbort() )
+    {
+        Abort();
+    }
+    return;
+}
+
+// check if this task can finish
+// two constrains
+// 1. task finished
+// 2. servant at a final status
+bool Task::CanFinish()
+{
+    bool result = true;
+
+    if ( TaskStatus::kFinished != Status() )
+    {
+        result = false;
+    }
+
+    else
+    {
+        bool isAllFinal = true;
+        for ( auto item : sub_tasks_ )
+        {
+            //break when on sub task's servant(s) is not at a final status
+            if ( !isAllFinal ) { break; }           
+
+            isAllFinal = ServantManager::Instance()->IsFinal( item->Servants() ) && isAllFinal;
+        }
+        result = isAllFinal && result;
     }
 
     return result;
@@ -268,12 +351,19 @@ void Task::OnFinish()
 // Abort task
 void Task::Abort()
 {
-    Status( TaskStatus::kError );
+    Status( TaskStatus::kAborting );
 
-    for ( auto& item : sub_tasks_status_ )
+    for ( auto item : sub_tasks_ )
     {
-        //TODO cancel task each servants by a cancel task message
-        item.second = TaskStatus::kError;
+        // TODO Send Message abort all subtasks
+        
+        // Abort running tasks;
+        // Finished tasks OK
+
+        // error tasks OK
+
+        // Aborted tasks OK
+        // servant no longer exsited OK
     }
 
     return;

@@ -60,8 +60,8 @@ public:
     // @note    : be called when reciving a heartbeat message from servant.
     void Refresh();;
 
-    // Stop the current runing task.
-    void StopTask();
+    // Stop current runing task.
+    void AbortTask();
 
     // Launch a task specified by a TaskDescriptor.
     // @task    : The task descriptor for a substak
