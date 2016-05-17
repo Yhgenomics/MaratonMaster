@@ -83,7 +83,7 @@ public:
     TaskDescriptor& operator=( const TaskDescriptor& other )
     {
         this->id_          = other.id_;
-        this->id_          = other.original_id_;
+        this->original_id_ = other.original_id_;
         this->is_parallel_ = other.is_parallel_;
         this->resources_   = other.resources_;
         this->input_       = other.input_;
@@ -95,6 +95,10 @@ public:
     // Getter and Setter for task ID.
     string ID()                                      { return id_;                          }
     void ID( const string& value )                   { id_= value;                          }
+
+    // Getter and Setter for orignal task ID
+    string OriginalID()                              { return original_id_;                 }
+    void OriginalID( const string& value )           { original_id_ = value;                }
     
     // Getter and Setter for Parallel mark
     bool IsParallel()                                { return is_parallel_;                 }
@@ -131,7 +135,7 @@ public:
 private:
     
     // Task ID
-    string             id_ ;
+    string             id_;
     
     // Origninal task ID
     // @note    : use for connect a sub task to an original task,

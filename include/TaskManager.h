@@ -43,9 +43,13 @@ public:
     // Update each task status and launch it if is pending. 
     void  Update();
 
-    // Stop task
+    // Abort task by aborting all subtasks
+    // this will be caused by the following reasons:
+    // 1.One subtask failed.
+    // 2.One servant processing task 
+    // 3.Upper layer ordered the task to abort.
     // @taskID   : taskID
-    void  Stop( const std::string& taskID );
+    void  Abort( const std::string& taskID );
     
     // Launch task
     // @taskID   : taskID
@@ -56,11 +60,27 @@ public:
     // @status  : The status for subtask
     // @outputs : The subtask's output information witch should be append to
     //            the task.
-    void  UpdateSubtaskStatus( const std::string&      taskID ,
-                               const TaskStatus::Code& status ,
-                               const vector<string>&   outputs );
+    void  UpdateSubtaskStatus( const std::string&      subtaskID ,
+                               const TaskStatus::Code& status    ,
+                               const vector<string>&   outputs   );
+
+protected:
+    // Constructor
+    TaskManager();
+
+    // Destructor
+    ~TaskManager();
+
+    // Initialization
+    void Init();
 
 private:
+
+    // list of the task need to be pop
+    std::vector<sptr<Task>> pop_list_;
+
+    // use this bool to avoid clear pop_list_ frequently
+    bool task_need_pop_;
 
     friend Singleton<TaskManager>; 
 

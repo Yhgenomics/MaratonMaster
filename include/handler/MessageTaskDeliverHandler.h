@@ -64,7 +64,7 @@ namespace Protocal
 
                 // Send the task received 
                 auto deliverReply = make_uptr( MessageTaskDeliverReply );
-                deliverReply->set_taskid( task->ID() );
+                deliverReply->set_taskid( task->MainTaskID() );
                 deliverReply->set_code( int(ErrorCode::Code::kNoError) );
                 deliverReply->set_message( "task received!" );
                 session->SendOut( std::move( deliverReply ) );

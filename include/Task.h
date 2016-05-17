@@ -29,6 +29,7 @@ limitations under the License.
 #define TASK_H_ 
 
 #include "TaskDescriptor.h"
+#include "ServantManager.h"
 #include "Servant.h"
 #include "Error.h"
 #include "MRT.h"
@@ -66,6 +67,35 @@ public:
     // return true when all subtasks finished successfully, flase otherwise.
     bool  IsAllSubtasksFinished();
 
+    // check if this task can finish
+    // two constrains
+    // 1. task finished
+    // 2. servant at a final status
+    bool  CanFinish()
+    {
+         bool result = true;
+
+         if ( TaskStatus::kFinished != Status() )
+         {
+             result = false;
+         }
+         
+         else
+         {
+             bool isAllFinal = true;
+             for ( auto item : sub_tasks_ )
+             {
+                 //break when on sub task's servant(s) is not at a final status
+                 if ( !isAllFinal ) { break; }           
+
+                 isAllFinal = ServantManager::Instance()->IsFinal( item->Servants() ) && isAllFinal;
+             }
+             result = isAllFinal && result;
+         }
+
+         return result;
+    }
+
     // On every subtask finished
     void  OnFinish();
 
@@ -88,11 +118,11 @@ public:
                                const vector<string>& outputs   );
                
     // Getter and Setter for task status
-    TaskStatus::Code Status()                    { return this->status_;        }
-    void Status( const TaskStatus::Code& value ) { this->status_ = value;       }
+    TaskStatus::Code Status()                    { return this->status_;                }
+    void Status( const TaskStatus::Code& value ) { this->status_ = value;               }
 
     // Getter of the task ID
-    std::string ID()                             { return original_task_->ID(); }
+    std::string MainTaskID()                     { return original_task_->OriginalID(); }
 
     // Initialization
     void Init()

@@ -172,6 +172,7 @@
     <ClInclude Include="..\include\BusinessSession.h" />
     <ClInclude Include="..\include\handler\MessageTaskLogsUpdateHandler.h" />
     <ClInclude Include="..\include\handler\ServantStatusRESTHandler.h" />
+    <ClInclude Include="..\include\handler\TaskAbortRESTHandler.h" />
     <ClInclude Include="..\include\handler\TaskDeliverRESTHandler.h" />
     <ClInclude Include="..\include\handler\TaskLogsRESTHandler.h" />
     <ClInclude Include="..\include\MessageConverter.h" />

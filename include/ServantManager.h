@@ -63,11 +63,15 @@ public:
     
     // Get sum score for a list of Servants' ID 
     // @servantIDList : ID of servants need to be counted in.
-    size_t                      GetScore(const vector<std::string>& servantIDList);
+    size_t                      GetScore( const std::vector<std::string>& servantIDList );
     
     // Get the score for one Servant.
     // @servantID : ID of a servant
     size_t                      GetScore(const std::string& servantID);
+
+    // Check if a list of servants are all in a final status
+    // thus, kStandy kError or on longer exist.
+    bool                        IsFinal( const std::vector<std::string>& servantIDList );
     
     // Access to all alived servants.
     std::vector<sptr<Servant>>  AllServants();

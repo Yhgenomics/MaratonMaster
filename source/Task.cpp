@@ -73,9 +73,9 @@ bool Task::MakeSubtasks()
             // All inputs has been asigned to srvants
             if ( leftInputs <= 0 )
             {
-                while(sentialMark != originalServants.end() )
+                while ( sentialMark != originalServants.end() )
                 {
-                    ServantManager::Instance()->FindByServantID( *sentialMark )->Status(ServantStatus::kStandby);
+                    ServantManager::Instance()->FindByServantID( *sentialMark )->Status( ServantStatus::kStandby );
                     sentialMark++;
                 }
                 break;
@@ -150,7 +150,11 @@ void Task::UpdateSubtaskStatus( const string&         subTaskID ,
 
         if ( IsAllSubtasksFinished() )
         {
-            OnFinish();
+            Status( TaskStatus::kFinished );
+            // delay this operation in TaskManger::Update()
+            // to ensure the servants resources used by the tasks
+            // is aready free when the task report is sended
+            // OnFinish();
         }
 
     }
@@ -168,7 +172,7 @@ Task::Task( uptr<TaskDescriptor> task )
 // Constructor from a protobuf message MessageTaskDeliver.
 // @message : task deliver message in a unique pointer
 Task::Task( uptr<MessageTaskDeliver> message )
-{   
+{
     Init();
     original_task_    = make_uptr( TaskDescriptor , *( message.get() ) );
     original_message_ = move_ptr( message );
@@ -184,7 +188,7 @@ Error Task::Launch()
 {
     Logger::Log( "Servants snapshot before make sub tasks!" );
     ServantManager::Instance()->ShowServants();
-    
+
     Error TaskLaunchResult( ErrorCode::kNoError , "" );
 
     if ( !is_sub_tasks_ready )
@@ -218,7 +222,7 @@ Error Task::Launch()
             TaskLaunchResult.Message( "Servant ID:"
                                       + *subtask->Servants().begin()
                                       + "return Error when launching task" );
-            Logger::Log( "Error %",TaskLaunchResult.Message() );
+            Logger::Log( "Error %" , TaskLaunchResult.Message() );
             Status( TaskStatus::kError );
             break;
         }
@@ -244,17 +248,17 @@ bool Task::IsAllSubtasksFinished()
 // On every subtask finished
 void Task::OnFinish()
 {
-    Logger::Log( "All Subtasks finished!");
+    Logger::Log( "All Subtasks finished!" );
 
     json result;
 
-    result[ "status" ]     = TaskStatus::kFinished;
+    result[ "status" ]     = Status();//TaskStatus::kFinished;
     result[ "taskid" ]     = original_message_->id();
     result[ "pipelineid" ] = original_message_->pipeline().id();
     result[ "data" ]       = outputs_;
 
-    Logger::Log( "Task result \n % ", result.dump(4) );
-    
+    Logger::Log( "Task result \n % " , result.dump( 4 ) );
+
     Protocal::MessageHub::Instance()->SendRESTInfo( Protocal::MessageHub::Instance()->GetRESTReportFullPath() ,
                                                     result.dump() /*,
                                                     "Result of Task ID " + original_message_->id()*/ );

@@ -87,7 +87,7 @@ std::vector<sptr<Servant>> ServantManager::FindByTaskID( const std::string& task
 
 // Get sum score for a list of Servants' ID 
 // @servantIDList : ID of servants need to be counted in.
-size_t ServantManager::GetScore(const vector<std::string>& servantIDList )
+size_t ServantManager::GetScore(const std::vector<std::string>& servantIDList )
 {
     size_t result = 0;
 
@@ -113,6 +113,40 @@ size_t ServantManager::GetScore( const std::string & servantID )
     if ( tempServant )
     {
         result = tempServant->Ability();
+    }
+
+    return result;
+}
+
+// Check if a list of servants are all in a final status
+// thus, servant no longer exist or not at work.
+bool ServantManager::IsFinal( const std::vector<std::string>& servantIDList )
+{
+    bool result = true;
+    
+    for ( const auto& item : servantIDList )
+    {
+        bool isOneFinal = false;
+
+        // break when on not final servant exsit
+        if ( !result ) { break; }
+
+        auto tempServant = FindByServantID( item );
+        
+        // servant on longer exsit
+        if ( !tempServant )
+        {
+            isOneFinal = true;
+        }
+        
+        // servant not at work
+        else if ( ServantStatus::kWorking != tempServant->Status() )
+        {
+            isOneFinal = true;
+        }
+        
+        result = isOneFinal && result;
+
     }
 
     return result;

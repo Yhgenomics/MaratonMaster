@@ -24,8 +24,8 @@ limitations under the License.
 * Modifed       : When      | Who       | What
 ***********************************************************************************/
 
-#ifndef TASK_LOGS_REST_HANDLER_H_
-#define TASK_LOGS_REST_HANDLER_H_
+#ifndef TASK_ABORT_REST_HANDLER_H_
+#define TASK_ABORT_REST_HANDLER_H_
 
 #include "MessageConverter.h"
 #include "RESTHandler.h"
@@ -39,28 +39,28 @@ using nlohmann::json;
 
 namespace Protocal
 {
-    class TaskLogsRESTHandler : public RESTHandler
+    class TaskAbortRESTHandler : public RESTHandler
     {
     public:
-        TaskLogsRESTHandler()
+        TaskAbortRESTHandler()
         {
-            MessageType( "/task/logs" );
+            MessageType( "/task/abort" );
             Method = [ this ] ( GeneralSession* session , const string& content )
             {
 
-                json taskLogsReply;
+                json taskAbortReply;
                 auto taskIn = json::parse( content );     
-                taskLogsReply[ "taskid" ] = taskIn[ "id" ];
+                taskAbortReply[ "taskid" ] = taskIn[ "id" ];
 
                 if ( IsInputValid( content ) )
                 {
                     
                 }
 
-                taskLogsReply[ "code"    ] = ErrorCode::kNoError;
-                taskLogsReply[ "message" ] = "Logs order pushed!";
+                taskAbortReply[ "code"    ] = ErrorCode::kNoError;
+                taskAbortReply[ "message" ] = "Abort order pushed!";
                 // Send the reply and close the session
-                session->SendRESTCloseSession(taskLogsReply.dump());
+                session->SendRESTCloseSession(taskAbortReply.dump());
                 return true;
             };
         }
@@ -86,5 +86,5 @@ namespace Protocal
     };
 }
 
-#endif //!TASK_DELIVER_REST_HANDLER_H_
+#endif //!TASK_ABORT_REST_HANDLER_H_
 

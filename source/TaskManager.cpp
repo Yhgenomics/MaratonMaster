@@ -33,19 +33,60 @@ using std::string;
 
 // Update each task status and launch it if is pending. 
 void TaskManager::Update()
-{
-    for ( auto task : Instances() )
+{   
+    if( task_need_pop_ )
     {
-        if ( TaskStatus::kPending == task->Status() )
+        for( auto item : pop_list_ )
         {
-            auto result = task->Launch();
+            Logger::Log("Pop");
+            Pop( item );
+        }
+        pop_list_.clear();
+        task_need_pop_ = false;
+        Logger::Log( "TaskManager Size is %" , Instances().size() );
+    }
+
+    for ( auto item : Instances() )
+    {
+        if ( TaskStatus::kPending == item->Status() )
+        {
+            auto result = item->Launch();
             
             if ( ErrorCode::kNoError != result.Code() )
             {
                 break;
             }
-        } // end of if ( Task::TaskStatus::kPending == task->Status() )
+        } // end of kPending
+        
+        if( TaskStatus::kFinished == item->Status() )
+        {
+            // check a task can finish
+            if ( item->CanFinish() )
+            {
+                item->OnFinish();
+
+                pop_list_.push_back( item);
+                task_need_pop_ = true;
+            }
+        }// end of kFinished
     } // end of for ( auto task : Instances() )
+}
+
+// Abort task by aborting all subtasks
+// this will be caused by the following reasons:
+// 1.One subtask failed.
+// 2.One servant processing task 
+// 3.Upper layer ordered the task to abort.
+// @taskID   : taskID
+void TaskManager::Abort( const std::string & taskID )
+{
+    for ( auto item : Instances() )
+    {
+        if ( taskID == item->MainTaskID() )
+        {
+            item->Abort();
+        }
+    }
 }
 
 // Try UpdateSubtaskStatus in every task
@@ -53,14 +94,32 @@ void TaskManager::Update()
 // @status  : The status for subtask
 // @outputs : The subtask's output information witch should be append to
 //            the task.
-void TaskManager::UpdateSubtaskStatus( const std::string&      taskID ,
-                                       const TaskStatus::Code& status ,
-                                       const vector<string>&   outputs )
+void TaskManager::UpdateSubtaskStatus( const std::string&      subtaskID ,
+                                       const TaskStatus::Code& status    ,
+                                       const vector<string>&   outputs   )
 {
     for ( auto task : Instances() )
     {
-        task->UpdateSubtaskStatus( taskID ,
-                                   status ,
-                                   outputs);
+        task->UpdateSubtaskStatus( subtaskID ,
+                                   status    ,
+                                   outputs   );
     }
+}
+
+// Constructor
+TaskManager::TaskManager()
+{
+    Init();
+}
+
+// Destructor
+TaskManager::~TaskManager()
+{
+}
+
+// Initialization
+void TaskManager::Init()
+{
+    pop_list_.clear();
+    task_need_pop_ = false;
 }

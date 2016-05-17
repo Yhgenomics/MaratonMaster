@@ -284,5 +284,8 @@
     <ClInclude Include="..\include\Base64Coder.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="..\include\handler\TaskAbortRESTHandler.h">
+      <Filter>RESTHandlers</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
