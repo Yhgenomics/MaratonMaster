@@ -90,7 +90,8 @@ namespace ErrorCode
 
         // 10100-10299 Servant Error
         kServantBusy  = 10100,
-        kServantLost  = 10101,
+        kDefaultExit  = 10101,
+        kServantLost  = 10102,
 
         // 10300-10499 Task Error
         kTaskNotReady = 10300,
