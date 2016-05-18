@@ -27,7 +27,7 @@ limitations under the License.
 #ifndef TASK_ABORT_REST_HANDLER_H_
 #define TASK_ABORT_REST_HANDLER_H_
 
-#include "MessageConverter.h"
+#include "TaskManager.h"
 #include "RESTHandler.h"
 #include "GeneralSession.h"
 #include "json.hpp"
@@ -54,7 +54,7 @@ namespace Protocal
 
                 if ( IsInputValid( content ) )
                 {
-                    
+                    TaskManager::Instance()->Abort( taskIn[ "id" ] );
                 }
 
                 taskAbortReply[ "code"    ] = ErrorCode::kNoError;

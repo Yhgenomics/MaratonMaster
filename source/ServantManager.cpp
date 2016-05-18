@@ -190,6 +190,22 @@ bool ServantManager::PreoccupyResources( string & taskNeedResources )
     return IsPreOcupped;
 }
 
+// set preoccupied servants to standby 
+bool ServantManager::FreePreoccupied( const string & servantID )
+{
+    bool result = false;
+    auto servant = FindByServantID( servantID );
+    if ( servant )
+    {
+        if( ServantStatus::kPreOccupied == servant->Status())
+        {
+            servant->Status(ServantStatus::kStandby);
+            result = true;
+        }
+    }
+    return result;
+}
+
 // Log out all servants status
 void ServantManager::ShowServants()
 {

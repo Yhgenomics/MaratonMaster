@@ -132,6 +132,7 @@
     <None Include="..\proto\MessageServantUpdate.proto" />
     <None Include="..\proto\MessageState.proto" />
     <None Include="..\proto\MessageStateReply.proto" />
+    <None Include="..\proto\MessageTaskAbort.proto" />
     <None Include="..\proto\MessageTaskDeliver.proto" />
     <None Include="..\proto\MessageTaskDeliverReply.proto" />
     <None Include="..\proto\MessageTaskLogsQuery.proto" />
@@ -147,6 +148,7 @@
     <ClCompile Include="..\include\message\MessageServantUpdate.pb.cc" />
     <ClCompile Include="..\include\message\MessageState.pb.cc" />
     <ClCompile Include="..\include\message\MessageStateReply.pb.cc" />
+    <ClCompile Include="..\include\message\MessageTaskAbort.pb.cc" />
     <ClCompile Include="..\include\message\MessageTaskDeliver.pb.cc" />
     <ClCompile Include="..\include\message\MessageTaskDeliverReply.pb.cc" />
     <ClCompile Include="..\include\message\MessageTaskLogsQuery.pb.cc" />
@@ -176,20 +178,15 @@
     <ClInclude Include="..\include\handler\TaskDeliverRESTHandler.h" />
     <ClInclude Include="..\include\handler\TaskLogsRESTHandler.h" />
     <ClInclude Include="..\include\MessageConverter.h" />
+    <ClInclude Include="..\include\message\MessageTaskAbort.pb.h" />
     <ClInclude Include="..\include\message\MessageTaskLogsQuery.pb.h" />
     <ClInclude Include="..\include\message\MessageTaskLogsUpdate.pb.h" />
     <ClInclude Include="..\include\RESTHandler.h" />
     <ClInclude Include="..\include\StatusBook.h" />
     <ClInclude Include="..\include\GeneralSession.h" />
-    <ClInclude Include="..\include\handler\MessageGreetingHandler.h" />
     <ClInclude Include="..\include\handler\MessageHeartBeatHandler.h" />
     <ClInclude Include="..\include\handler\MessageRegistHandler.h" />
-    <ClInclude Include="..\include\handler\MessageServantStateHandler.h" />
-    <ClInclude Include="..\include\handler\MessageServantStateReplyHandler.h" />
     <ClInclude Include="..\include\handler\MessageServantUpdateHandler.h" />
-    <ClInclude Include="..\include\handler\MessageStateHandler.h" />
-    <ClInclude Include="..\include\handler\MessageStateReplyHandler.h" />
-    <ClInclude Include="..\include\handler\MessageTaskDeliverHandler.h" />
     <ClInclude Include="..\include\handler\MessageTaskDeliverReplyHandler.h" />
     <ClInclude Include="..\include\handler\MessageTaskUpdateHandler.h" />
     <ClInclude Include="..\include\MasterGloable.h" />

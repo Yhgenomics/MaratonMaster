@@ -81,6 +81,9 @@ public:
     // @return : if preoccupied successed.
     bool PreoccupyResources( string& taskNeedResources );
 
+    // set preoccupied servants to standby 
+    bool FreePreoccupied( const string& servantID );
+
     // Log out all servants status
     void ShowServants();
 

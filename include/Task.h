@@ -118,6 +118,12 @@ public:
     // Initialization
     void Init();
 
+    // Free all preoccupied servants
+    void FreePreOccupiedServants();
+
+    // Set Error message to make a report
+    void SetErrorMessage( Error& msg );
+
 private:
 
     // Task descriptor of the original task from Business.
@@ -150,6 +156,9 @@ private:
 
     // List gathering all subtasks' products information
     vector<std::string>          outputs_;
+
+    // Error informations to be report out
+    Error                        error_message_;
 
 };
 

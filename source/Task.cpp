@@ -75,7 +75,8 @@ bool Task::MakeSubtasks()
             {
                 while ( sentialMark != originalServants.end() )
                 {
-                    ServantManager::Instance()->FindByServantID( *sentialMark )->Status( ServantStatus::kStandby );
+                    /*ServantManager::Instance()->FindByServantID( *sentialMark )->Status( ServantStatus::kStandby );*/
+                    ServantManager::Instance()->FreePreoccupied( *sentialMark );
                     sentialMark++;
                 }
                 break;
@@ -164,6 +165,25 @@ void Task::Init()
     outputs_.clear();
 }
 
+// Free all preoccupied servants
+void Task::FreePreOccupiedServants()
+{
+    for ( auto item : sub_tasks_status_ )
+    {
+        ServantManager::Instance()->FreePreoccupied( item.first );
+    }
+}
+
+// Set Error message to make a report
+void Task::SetErrorMessage( Error& msg )
+{
+    error_message_ = msg;
+    if ( ErrorCode::kNoError != msg.Code() )
+    {
+        Status( TaskStatus::kError );
+    }
+}
+
 // Constructor from a task descriptor.
 // @task : Task descriptor in a unique pointer.
 Task::Task( uptr<TaskDescriptor> task )
@@ -190,28 +210,28 @@ Task::~Task()
 // @note    : Launch all subtasks
 Error Task::Launch()
 {
-    Logger::Log( "Servants snapshot before make sub tasks!" );
-    ServantManager::Instance()->ShowServants();
+   /* Logger::Log( "Servants snapshot before make sub tasks!" );
+    ServantManager::Instance()->ShowServants();*/
 
-    Error TaskLaunchResult( ErrorCode::kNoError , "" );
+    Error taskLaunchResult( ErrorCode::kNoError , "No Errors" );
 
     if ( !is_sub_tasks_ready )
     {
         MakeSubtasks();
     }
 
-    Logger::Log( "After make sub tasks!" );
-    ServantManager::Instance()->ShowServants();
+   /* Logger::Log( "After make sub tasks!" );
+    ServantManager::Instance()->ShowServants();*/
 
     // kFinished here for re-start a task
     if ( this->status_ != TaskStatus::kFinished &&
          this->status_ != TaskStatus::kPending )
     {
-        Abort();
-        TaskLaunchResult.Code( ErrorCode::kTaskNotReady );
-        TaskLaunchResult.Message( "task is not ready" );
-
-        return TaskLaunchResult;
+        FreePreOccupiedServants();
+        Status( TaskStatus::kError );
+        taskLaunchResult.Code( ErrorCode::kTaskNotReady );
+        taskLaunchResult.Message( "task is not ready" );
+        return taskLaunchResult;
     }
 
     Status( TaskStatus::kRunning );
@@ -222,11 +242,13 @@ Error Task::Launch()
 
         if ( ErrorCode::kNoError != servant->LaunchTask( subtask ).Code() )
         {
-            TaskLaunchResult.Code( ErrorCode::kSubTaskError );
-            TaskLaunchResult.Message( "Servant ID:"
+            taskLaunchResult.Code( ErrorCode::kSubTaskError );
+            taskLaunchResult.Message( "Servant ID:"
                                       + *subtask->Servants().begin()
                                       + "return Error when launching task" );
-            Logger::Log( "Error %" , TaskLaunchResult.Message() );
+            Logger::Log( "Error %" , taskLaunchResult.Message() );
+
+            sub_tasks_status_[ subtask->ID() ] = TaskStatus::kError;
             Status( TaskStatus::kError );
             break;
         }
@@ -236,9 +258,7 @@ Error Task::Launch()
             sub_tasks_status_[ subtask->ID() ] = TaskStatus::kRunning;
         }
     }
-
-    //TODO report to business layer
-    return TaskLaunchResult;
+    return taskLaunchResult;
 }
 
 // return true when all subtasks finished successfully, flase otherwise.
@@ -351,17 +371,29 @@ void Task::OnFinish()
 // Abort task
 void Task::Abort()
 {
+    // in case some subtasks not launched
+    FreePreOccupiedServants();
+
     Status( TaskStatus::kAborting );
 
     for ( auto item : sub_tasks_ )
     {
-        // TODO Send Message abort all subtasks
+        // Abort all running subtasks on esxist servants
+        for ( auto item : sub_tasks_ )
+        {
+            if ( TaskStatus::kRunning == sub_tasks_status_[ item->ID() ] )
+            {
+                auto servant = ServantManager::Instance()->FindByServantID( *item->Servants().begin() );
+                if(servant)
+                {
+                    servant->AbortTask();
+                }
+            }         
+        }
         
-        // Abort running tasks;
+        // for other situation
         // Finished tasks OK
-
         // error tasks OK
-
         // Aborted tasks OK
         // servant no longer exsited OK
     }

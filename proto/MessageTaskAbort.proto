@@ -1,0 +1,6 @@
+message MessageTaskAbort
+{
+    required string          id         = 1;
+	required string          originalID = 2;
+	optional string          reason     = 3;
+}

@@ -54,10 +54,11 @@ void TaskManager::Update()
         {
             auto result = item->Launch();
             
-            if ( ErrorCode::kNoError != result.Code() )
+            item->SetErrorMessage( result );
+            /*if ( ErrorCode::kNoError != result.Code() )
             {
                 break;
-            }
+            }*/
         } // end of kPending
         
         // a running task can finally finished or get errors

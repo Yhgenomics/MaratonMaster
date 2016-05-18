@@ -25,10 +25,6 @@ limitations under the License.
 ***********************************************************************************/
 
 #include "MessageHub.h"
-#include "handler/MessageServantStateHandler.h"
-#include "handler/MessageServantStateReplyHandler.h"
-#include "handler/MessageStateHandler.h"
-#include "handler/MessageStateReplyHandler.h"
 #include "handler/MessageTaskDeliverHandler.h"
 #include "handler/MessageTaskDeliverReplyHandler.h"
 #include "handler/MessageGreetingHandler.h"
@@ -40,6 +36,7 @@ limitations under the License.
 #include "handler/ServantStatusRESTHandler.h"
 #include "handler/TaskLogsRESTHandler.h"
 #include "handler/MessageTaskLogsUpdateHandler.h"
+#include "handler/TaskAbortRESTHandler.h"
 #include "MRT.h"
 #include <memory>
 
@@ -48,13 +45,7 @@ namespace Protocal
     bool MessageHub::AddAllHandlers()
     {
         Logger::Log( "Message Hub Add Protobuf message handlers" );
-        AddHandler( std::move( make_uptr( Protocal::MessageServantStateHandler      ) ) );
-        AddHandler( std::move( make_uptr( Protocal::MessageServantStateReplyHandler ) ) );
-        AddHandler( std::move( make_uptr( Protocal::MessageStateHandler             ) ) );
-        AddHandler( std::move( make_uptr( Protocal::MessageStateReplyHandler        ) ) );
-        AddHandler( std::move( make_uptr( Protocal::MessageTaskDeliverHandler       ) ) );
         AddHandler( std::move( make_uptr( Protocal::MessageTaskDeliverReplyHandler  ) ) );
-        AddHandler( std::move( make_uptr( Protocal::MessageGreetingHandler          ) ) );
         AddHandler( std::move( make_uptr( Protocal::MessageRegistHandler            ) ) );
         AddHandler( std::move( make_uptr( Protocal::MessageHeartBeatHandler         ) ) );
         AddHandler( std::move( make_uptr( Protocal::MessageServantUpdateHandler     ) ) );
@@ -65,7 +56,7 @@ namespace Protocal
         AddRESTHandler( std::move( make_uptr( Protocal::TaskDeliverRESTHandler   ) ) );
         AddRESTHandler( std::move( make_uptr( Protocal::ServantStatusRESTHandler ) ) );
         AddRESTHandler( std::move( make_uptr( Protocal::TaskLogsRESTHandler      ) ) );
-
+        AddRESTHandler( std::move( make_uptr( Protocal::TaskAbortRESTHandler      ) ) );
         return true;
     }
 }

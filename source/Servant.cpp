@@ -27,6 +27,7 @@ limitations under the License.
 #include "Servant.h"
 #include "TaskDescriptor.h"
 #include "MessageGreeting.pb.h"
+#include "MessageTaskAbort.pb.h"
 
 // Constructor
 // @note    : Use the raw pointer as the constrains from Maraton Framework. 
@@ -69,6 +70,10 @@ inline void Servant::Refresh()
 // Stop the current runing task.
 void Servant::AbortTask()
 {
+    auto msg =  make_uptr( MessageTaskAbort );
+    msg->set_id( current_task_->ID() );
+    msg->set_originalid( current_task_->OriginalID() );
+    this->Session()->SendOut( move_ptr( msg ) );
 }
 
 // Getter for servant session's raw pointer.

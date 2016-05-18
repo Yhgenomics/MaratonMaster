@@ -67,6 +67,9 @@
     <None Include="..\proto\MessageTaskLogsUpdate.proto">
       <Filter>Proto\defines</Filter>
     </None>
+    <None Include="..\proto\MessageTaskAbort.proto">
+      <Filter>Proto\defines</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\source\MasterMain.cpp">
@@ -147,6 +150,9 @@
     <ClCompile Include="..\include\message\MessageTaskLogsUpdate.pb.cc">
       <Filter>Proto</Filter>
     </ClCompile>
+    <ClCompile Include="..\include\message\MessageTaskAbort.pb.cc">
+      <Filter>Proto</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\include\Servant.h">
@@ -182,26 +188,11 @@
     <ClInclude Include="..\include\MessageHandler.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\include\handler\MessageServantStateHandler.h">
-      <Filter>MessageHandlers</Filter>
-    </ClInclude>
-    <ClInclude Include="..\include\handler\MessageServantStateReplyHandler.h">
-      <Filter>MessageHandlers</Filter>
-    </ClInclude>
     <ClInclude Include="..\include\BusinessSession.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\include\BusinessListener.h">
       <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\include\handler\MessageStateHandler.h">
-      <Filter>MessageHandlers</Filter>
-    </ClInclude>
-    <ClInclude Include="..\include\handler\MessageStateReplyHandler.h">
-      <Filter>MessageHandlers</Filter>
-    </ClInclude>
-    <ClInclude Include="..\include\handler\MessageTaskDeliverHandler.h">
-      <Filter>MessageHandlers</Filter>
     </ClInclude>
     <ClInclude Include="..\include\handler\MessageTaskDeliverReplyHandler.h">
       <Filter>MessageHandlers</Filter>
@@ -229,9 +220,6 @@
     </ClInclude>
     <ClInclude Include="..\include\message\MessageRegist.pb.h">
       <Filter>Proto</Filter>
-    </ClInclude>
-    <ClInclude Include="..\include\handler\MessageGreetingHandler.h">
-      <Filter>MessageHandlers</Filter>
     </ClInclude>
     <ClInclude Include="..\include\handler\MessageRegistHandler.h">
       <Filter>MessageHandlers</Filter>
@@ -286,6 +274,9 @@
     </ClInclude>
     <ClInclude Include="..\include\handler\TaskAbortRESTHandler.h">
       <Filter>RESTHandlers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\message\MessageTaskAbort.pb.h">
+      <Filter>Proto</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
