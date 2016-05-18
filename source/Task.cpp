@@ -379,6 +379,7 @@ void Task::Abort()
     for ( auto item : sub_tasks_ )
     {
         // Abort all running subtasks on esxist servants
+        // this task will be stopped if it's not finished or error
         for ( auto item : sub_tasks_ )
         {
             if ( TaskStatus::kRunning == sub_tasks_status_[ item->ID() ] )
@@ -394,7 +395,7 @@ void Task::Abort()
         // for other situation
         // Finished tasks OK
         // error tasks OK
-        // Aborted tasks OK
+        // Stopped tasks OK
         // servant no longer exsited OK
     }
 
