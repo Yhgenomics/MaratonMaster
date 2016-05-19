@@ -348,6 +348,53 @@ bool Task::CanFinish()
     return result;
 }
 
+
+// check if every subtasks is Finished Stopped or Error
+// or the related servant no longer exsited
+bool Task::IsAbortEnd()
+{
+    bool result = true;
+
+    if ( TaskStatus::kAborting != Status() )
+    {
+        result = false;
+    }
+
+    else
+    {
+        bool isAllFinal = true;
+        
+        for ( auto item : sub_tasks_ )
+        {
+            //break when on sub task's servant(s) is not at a final status
+            if ( !isAllFinal ) { break; }           
+
+            for ( auto servantID : item->Servants() )
+            {   
+                if ( !isAllFinal ) { break; }           
+                auto servant = ServantManager::Instance()->FindByServantID( servantID );
+                
+                if ( nullptr == servant ) // servant no longer exist
+                {
+                    isAllFinal = true && isAllFinal;
+                }
+                
+                else
+                {
+                    isAllFinal =   ( ServantStatus::kWorking  != servant->Status() )   // servant not at work
+                                && (    TaskStatus::kFinished == sub_tasks_status_[ item->ID() ]
+                                     || TaskStatus::kStopped  == sub_tasks_status_[ item->ID() ]
+                                     || TaskStatus::kError    == sub_tasks_status_[ item->ID() ] )   // task end
+                                && ( isAllFinal );
+                }
+            }
+        }
+        result = isAllFinal && result;
+    }
+
+    return result;
+}
+
 // On every subtask finished
 void Task::OnFinish()
 {
@@ -366,6 +413,39 @@ void Task::OnFinish()
                                                     result.dump() /*,
                                                     "Result of Task ID " + original_message_->id()*/ );
 
+}
+
+
+// after the task was aborted the main task is in kError status
+void Task::OnAborted()
+{
+    if ( UpperLayerAbort() )
+    {
+        SetErrorMessage( Error( ErrorCode::kAbortbyREST , "Abort by upper layer." ) );
+    }
+    else
+    {
+        SetErrorMessage( Error( ErrorCode::kSubTaskError , "At least one sub task failed" ) );
+    }
+}
+
+// Report Error based on the error message
+void Task::ReportError()
+{
+    Logger::Log( "Task Error Report!" );
+
+    json result;
+
+    result[ "status"     ] = Status();
+    result[ "taskid"     ] = original_message_->id();
+    result[ "pipelineid" ] = original_message_->pipeline().id();
+    result[ "data"       ] = outputs_;
+    result[ "errormsg"   ] = error_message_.Message();
+
+    Logger::Log( "Task result \n % " , result.dump( 4 ) );
+
+    Protocal::MessageHub::Instance()->SendRESTInfo( Protocal::MessageHub::Instance()->GetRESTReportFullPath() ,
+                                                    result.dump() );
 }
 
 // Abort task
@@ -391,12 +471,6 @@ void Task::Abort()
                 }
             }         
         }
-        
-        // for other situation
-        // Finished tasks OK
-        // error tasks OK
-        // Stopped tasks OK
-        // servant no longer exsited OK
     }
 
     return;

@@ -96,6 +96,7 @@ namespace ErrorCode
         // 10300-10499 Task Error
         kTaskNotReady = 10300,
         kSubTaskError = 10301,
+        kAbortbyREST  = 10302,
 
         // 10600-10799 Log Error
         kLogNotFound  = 10600,

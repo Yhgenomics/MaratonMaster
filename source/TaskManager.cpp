@@ -81,9 +81,11 @@ void TaskManager::Update()
 
         else if( TaskStatus::kAborting == item->Status() )
         {
-             // check all task is final
-             // kfinished or kerror or aborted or servant no longer existed
-             // all pass task will be kError
+            if ( item->IsAbortEnd() )
+            {
+                item->ReportError();
+            }
+
         }// end of kAborting
 
         else if( TaskStatus::kError == item->Status() )

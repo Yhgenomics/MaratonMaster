@@ -83,8 +83,18 @@ public:
     // 2. servant at a final status
     bool  CanFinish();
 
+    // check if every subtasks is Finished Stopped or Error
+    // or the related servant no longer exsited
+    bool  IsAbortEnd();
+
     // On every subtask finished
     void  OnFinish();
+
+    // after the task was aborted the main task is in kError status
+    void  OnAborted();
+
+    // Report Error based on the error message
+    void  ReportError();
 
     // Abort task
     void  Abort();

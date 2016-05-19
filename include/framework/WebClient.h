@@ -49,36 +49,48 @@ public:
     // Send a get requrest to the url 
     // @url      : url
     // @callback : callback when the server responsed
-    void Get        ( std::string url , 
+    void Get        ( const std::string & url , 
                       CallbackResponseType callback );
 
     // Send a get requrest to the url
     // @url      : url
     // @callback : callback when the server responsed
-    void GetX       ( std::string url , 
+    void GetX       ( const std::string & url , 
                       CallbackStreamType callback );
 
     // Send a post requrest to the url 
     // @url      : url
     // @data     : post data
     // @callback : callback when the server responsed
-    void Post       ( std::string url , 
-                      std::string data , 
+    void Post       ( const std::string & url , 
+                      const std::string & data , 
                       CallbackResponseType callback ); 
 
     // Send a post requrest to the url 
     // @url      : url
     // @data     : post data
     // @callback : callback when the server responsed
-    void PostX      ( std::string url , 
-                      std::string data , 
+    void PostX      ( const std::string & url , 
+                      const std::string & data , 
                       CallbackStreamType callback ); 
+
+    // Send a requrest to the url and wait for response
+    // This function will block the thread
+    // @method   : get,post,delete or other methods
+    //             it must be upper letters
+    // @url      : url
+    // @data     : data to post
+    // @callback : callback when the server responsed
+    void Req        ( const std::string & method ,
+                      const std::string & url ,
+                      const std::string & data ,
+                      CallbackResponseType callback );
 
     // Post a file to the url 
     // @url      : url
     // @pfile    : file pointer
     // @callback : callback when the server responsed
-    void PostFile   ( std::string url , 
+    void PostFile   ( const std::string & url , 
                       FILE* pfile , 
                       CallbackResponseType callback );
 
@@ -86,7 +98,7 @@ public:
     // @url      : url
     // @pfile    : file pointer
     // @callback : callback when the server responsed
-    void DownloadFile ( std::string url ,
+    void DownloadFile ( const std::string & url ,
                         FILE* pfile ,
                         CallbackResponseType callback);
 
@@ -94,21 +106,31 @@ public:
     // This function will block the thread
     // @url      : url
     // @callback : callback when the server responsed
-    uptr<HTTPResponse> GetSync  ( std::string url );
+    uptr<HTTPResponse> GetSync  ( const std::string & url );
                        
     // Send a post requrest to the url and wait for response
     // This function will block the thread
     // @url      : url
     // @data     : data to post
     // @callback : callback when the server responsed
-    uptr<HTTPResponse> PostSync ( std::string url , 
-                                  std::string data);
+    uptr<HTTPResponse> PostSync ( const std::string & rl , 
+                                  const std::string & ata);
+
+    // Send a requrest to the url and wait for response
+    // This function will block the thread
+    // @method   : get,post,delete or other methods
+    //             it must be upper letters
+    // @url      : url
+    // @data     : data to post
+    uptr<HTTPResponse> ReqSync  ( const std::string & method ,
+                                  const std::string & url ,
+                                  const std::string & data );
 
 
     // Set the request head protperties
     // @key   : property name
     // @value : property value
-    void Header( std::string key, std::string value );
+    void Header( const std::string & key, const std::string & value );
 
 private:
 
