@@ -289,12 +289,22 @@ bool Task::IsAnyError()
             result = true;
         }
 
-        // Running task's servant is no longer existed
-        else if ( subtask.second == TaskStatus::kRunning 
-        && !ServantManager::Instance()->FindByServantID( subtask.first ) )
+        for( auto item : sub_tasks_ )
         {
-            result = true;
+            // get the task description for the subtask
+            if ( item->ID() == subtask.first )
+            {
+
+                // Running task's servant is no longer existed
+                if ( subtask.second == TaskStatus::kRunning
+                     && ServantManager::Instance()->AtLeastOneMissed( item->Servants()) )
+                {
+                    result = true;
+                }
+            }
         }
+        
+        
 
     }
 
@@ -415,18 +425,22 @@ void Task::OnFinish()
 
 }
 
-
 // after the task was aborted the main task is in kError status
 void Task::OnAborted()
 {
+    Error abortInfo;
     if ( UpperLayerAbort() )
     {
-        SetErrorMessage( Error( ErrorCode::kAbortbyREST , "Abort by upper layer." ) );
+        abortInfo.Code( ErrorCode::kAbortbyREST );
+        abortInfo.Message( "Abort by upper layer." );
     }
+
     else
     {
-        SetErrorMessage( Error( ErrorCode::kSubTaskError , "At least one sub task failed" ) );
+       abortInfo.Code( ErrorCode::kSubTaskError );
+       abortInfo.Message( "At least one sub task failed" );
     }
+    SetErrorMessage( abortInfo );
 }
 
 // Report Error based on the error message

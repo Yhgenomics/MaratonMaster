@@ -152,6 +152,22 @@ bool ServantManager::IsFinal( const std::vector<std::string>& servantIDList )
     return result;
 }
 
+// check if a list of servant at least one no longer exited
+bool ServantManager::AtLeastOneMissed( const std::vector<std::string>& servantIDList )
+{
+    bool result = false;
+
+    for( const auto& item : servantIDList )
+    {
+        if ( nullptr == FindByServantID( item ) )
+        {
+            result = true;
+            break;
+        }
+    }
+    return result;
+}
+
 // Access to all alived servants.
 std::vector<sptr<Servant>> ServantManager::AllServants()
 {

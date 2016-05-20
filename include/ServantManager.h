@@ -72,6 +72,9 @@ public:
     // Check if a list of servants are all in a final status
     // thus, kStandy kError or on longer exist.
     bool                        IsFinal( const std::vector<std::string>& servantIDList );
+
+    // check if a list of servant at least one no longer exited
+    bool                        AtLeastOneMissed(const std::vector<std::string>& servantIDList );
     
     // Access to all alived servants.
     std::vector<sptr<Servant>>  AllServants();
