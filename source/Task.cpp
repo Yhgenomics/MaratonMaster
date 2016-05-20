@@ -419,14 +419,18 @@ void Task::OnFinish()
 // after the task was aborted the main task is in kError status
 void Task::OnAborted()
 {
+    Error abortInfo;
     if ( UpperLayerAbort() )
     {
-        SetErrorMessage( Error( ErrorCode::kAbortbyREST , "Abort by upper layer." ) );
+        abortInfo.Code( ErrorCode::kAbortbyREST );
+        abortInfo.Message( "Abort by upper layer." );
     }
     else
     {
-        SetErrorMessage( Error( ErrorCode::kSubTaskError , "At least one sub task failed" ) );
+        abortInfo.Code( ErrorCode::kSubTaskError );
+        abortInfo.Message( "At least one sub task failed" );
     }
+    SetErrorMessage( abortInfo );
 }
 
 // Report Error based on the error message
