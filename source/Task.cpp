@@ -437,8 +437,8 @@ void Task::OnAborted()
 
     else
     {
-       abortInfo.Code( ErrorCode::kSubTaskError );
-       abortInfo.Message( "At least one sub task failed" );
+        abortInfo.Code( ErrorCode::kSubTaskError );
+        abortInfo.Message( "At least one sub task failed" );
     }
     SetErrorMessage( abortInfo );
 }
