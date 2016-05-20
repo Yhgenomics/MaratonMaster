@@ -83,16 +83,22 @@ void TaskManager::Update()
         {
             if ( item->IsAbortEnd() )
             {
-                item->ReportError();
+                item->OnAborted();
             }
 
         }// end of kAborting
 
+         // 1.check if all servants is released 
+         // 2.Send back a task report
+         // 3.add the task to pop list    
         else if( TaskStatus::kError == item->Status() )
         {
-            // 1.check if all servants is released 
-            // 2.Send back a task report
-            // 3.add the task to pop list            
+            if ( item->IsAllServantFinal() )
+            {
+                item->ReportError();
+                pop_list_.push_back( item);
+                task_need_pop_ = true;
+            }
         }// end of kError
 
     } // end of for ( auto task : Instances() )

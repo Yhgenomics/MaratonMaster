@@ -83,6 +83,9 @@ public:
     // 2. servant at a final status
     bool  CanFinish();
 
+    // check if all servants is in a final status
+    bool  IsAllServantFinal();
+
     // check if every subtasks is Finished Stopped or Error
     // or the related servant no longer exsited
     bool  IsAbortEnd();

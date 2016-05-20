@@ -344,18 +344,24 @@ bool Task::CanFinish()
 
     else
     {
-        bool isAllFinal = true;
-        for ( auto item : sub_tasks_ )
-        {
-            //break when on sub task's servant(s) is not at a final status
-            if ( !isAllFinal ) { break; }           
-
-            isAllFinal = ServantManager::Instance()->IsFinal( item->Servants() ) && isAllFinal;
-        }
-        result = isAllFinal && result;
+        result = IsAllServantFinal() && result;
     }
 
     return result;
+}
+
+// check if all servants is in a final status
+bool Task::IsAllServantFinal()
+{
+    bool isAllFinal = true;
+    for ( auto item : sub_tasks_ )
+    {
+        //break when on sub task's servant(s) is not at a final status
+        if ( !isAllFinal ) { break; }           
+
+        isAllFinal = ServantManager::Instance()->IsFinal( item->Servants() ) && isAllFinal;
+    }
+    return isAllFinal;
 }
 
 
