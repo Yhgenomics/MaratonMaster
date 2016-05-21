@@ -146,13 +146,16 @@ namespace Protocal
         Logger::Log( "send REST dest [%] content[%]" , destFullPath , content );
         MRT::WebClient myWebClient;
         myWebClient.Header( "Content-Type" , "application/json" );
-        myWebClient.Post( destFullPath ,
-                          content ,
-                          [ this ] ( uptr<MRT::HTTPResponse> response )
+        auto result = myWebClient.PostSync( destFullPath , content );
+        int maxTry = kMaxRESTRetry;
+        
+        while( 200 != result->Status() && maxTry--)
         {
-            Logger::Log( "REST Info Delivered" );
+            result = myWebClient.PostSync( destFullPath , content );
         }
-        );
+
+        Logger::Log("Task Result final response status [ % ]",result->Status() );
+
         return 0;
     }
 

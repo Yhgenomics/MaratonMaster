@@ -174,6 +174,9 @@ namespace Protocal
         // REST Report Protocal
         string                       rest_report_protocal_;
 
+        // Max retry for a REST message
+        const int                    kMaxRESTRetry = 5;
+
     };
 }
 #endif // !MESSAGE_HUB_H_
