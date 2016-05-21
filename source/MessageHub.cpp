@@ -149,12 +149,14 @@ namespace Protocal
         auto result = myWebClient.PostSync( destFullPath , content );
         int maxTry = kMaxRESTRetry;
         
-        while( 200 != result->Status() && maxTry--)
+        while ( 200 != result->Status() && maxTry > 0 )
         {
-            result = myWebClient.PostSync( destFullPath , content );
+            maxTry--;
+            Logger::Log( "REST Retry as the satus is [ % ]" , result->Status() );
+            result =  myWebClient.PostSync( destFullPath , content ) ;
         }
 
-        Logger::Log("Task Result final response status [ % ]",result->Status() );
+        Logger::Log( "REST send response status [ % ]" , result->Status() );
 
         return 0;
     }
