@@ -146,7 +146,7 @@ namespace Protocal
         Logger::Log( "send REST dest [%] content[%]" , destFullPath , content );
         MRT::WebClient myWebClient;
         myWebClient.Header( "Content-Type" , "application/json" );
-        auto result = myWebClient.PostSync( destFullPath , content );
+       /* auto result = myWebClient.PostSync( destFullPath , content );
         int maxTry = kMaxRESTRetry;
         
         while ( 200 != result->Status() && maxTry > 0 )
@@ -156,8 +156,14 @@ namespace Protocal
             result =  myWebClient.PostSync( destFullPath , content ) ;
         }
 
-        Logger::Log( "REST send response status [ % ]" , result->Status() );
-
+        Logger::Log( "REST send response status [ % ]" , result->Status() );*/
+        myWebClient.Post( destFullPath , 
+                          content ,
+                          []( uptr<MRT::HTTPResponse> response)
+                          {
+                              Logger::Log( "REST Message Delivered! [%] " , response->Status() );
+                          } );
+       
         return 0;
     }
 
