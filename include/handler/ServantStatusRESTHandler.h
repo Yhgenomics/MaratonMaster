@@ -62,9 +62,23 @@ namespace Protocal
                     json oneServant;
                     oneServant[ "id"     ] = item->ID();
                     oneServant[ "state"  ] = item->Status();
+                    
+                    // the old cpu and memory is hold for debuging only
+                    // will be replce by new elements!
                     oneServant[ "cpu"    ] = ( int )item->CPU();
                     oneServant[ "memory" ] = ( int )item->MemorySize();
+                    
                     oneServant[ "type"   ] = item->Type();
+
+                    oneServant[ "sysinfo_mem_total"  ] = item->SysInfoMemTotal();
+                    oneServant[ "sysinfo_mem_uesed"  ] = item->SysInfoMemUsed();
+                    oneServant[ "sysinfo_cpu_num"    ] = item->SysInfoCPUNum();
+                    oneServant[ "sysinfo_cpu_user"   ] = item->SysInfoCPUUser();
+                    oneServant[ "sysinfo_cpu_sys"    ] = item->SysInfoCPUSys();
+                    oneServant[ "sysinfo_load_1min"  ] = item->SysInfoLoad1Min();
+                    oneServant[ "sysinfo_load_5min"  ] = item->SysInfoLoad5Min();
+                    oneServant[ "sysinfo_load_15min" ] = item->SysInfoLoad15Min();
+                    Logger::Log("%", oneServant.dump(4));
                     replyBody.push_back( oneServant );
                 }
                 auto body = make_uptr( MRT::Buffer , replyBody.dump() );

@@ -46,7 +46,14 @@ namespace Protocal
 
             Method = []( GeneralSession* session , const void* pData , size_t length )
             {
-                ServantManager::Instance()->FindBySessionID( session->ID() )->Refresh();
+                char* dataContent = ( char* )pData;
+                dataContent += sizeof( size_t );
+                int msgLength = scast<int>( length - sizeof( size_t ) );
+
+                auto msg = make_uptr( MessageHeartBeat );
+                msg->ParseFromArray( dataContent , msgLength );
+
+                ServantManager::Instance()->FindBySessionID( session->ID() )->Refresh( move_ptr(msg) );
                 return true;
             };
         }

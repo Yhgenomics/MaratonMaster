@@ -32,8 +32,16 @@ void protobuf_AssignDesc_MessageHeartBeat_2eproto() {
       "MessageHeartBeat.proto");
   GOOGLE_CHECK(file != NULL);
   MessageHeartBeat_descriptor_ = file->message_type(0);
-  static const int MessageHeartBeat_offsets_[1] = {
+  static const int MessageHeartBeat_offsets_[9] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MessageHeartBeat, code_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MessageHeartBeat, memtotal_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MessageHeartBeat, memuesed_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MessageHeartBeat, cpunum_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MessageHeartBeat, cpuuser_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MessageHeartBeat, cpusys_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MessageHeartBeat, load1min_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MessageHeartBeat, load5min_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MessageHeartBeat, load15min_),
   };
   MessageHeartBeat_reflection_ =
     new ::google::protobuf::internal::GeneratedMessageReflection(
@@ -76,8 +84,11 @@ void protobuf_AddDesc_MessageHeartBeat_2eproto() {
   GOOGLE_PROTOBUF_VERIFY_VERSION;
 
   ::google::protobuf::DescriptorPool::InternalAddGeneratedFile(
-    "\n\026MessageHeartBeat.proto\" \n\020MessageHeart"
-    "Beat\022\014\n\004code\030\001 \002(\005", 58);
+    "\n\026MessageHeartBeat.proto\"\254\001\n\020MessageHear"
+    "tBeat\022\014\n\004code\030\001 \002(\005\022\020\n\010memTotal\030\002 \001(\t\022\020\n"
+    "\010memUesed\030\003 \001(\t\022\016\n\006cpuNum\030\004 \001(\t\022\017\n\007cpuUs"
+    "er\030\005 \001(\t\022\016\n\006cpuSys\030\006 \001(\t\022\020\n\010load1min\030\007 \001"
+    "(\t\022\020\n\010load5min\030\010 \001(\t\022\021\n\tload15min\030\t \001(\t", 199);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "MessageHeartBeat.proto", &protobuf_RegisterTypes);
   MessageHeartBeat::default_instance_ = new MessageHeartBeat();
@@ -96,6 +107,14 @@ struct StaticDescriptorInitializer_MessageHeartBeat_2eproto {
 
 #ifndef _MSC_VER
 const int MessageHeartBeat::kCodeFieldNumber;
+const int MessageHeartBeat::kMemTotalFieldNumber;
+const int MessageHeartBeat::kMemUesedFieldNumber;
+const int MessageHeartBeat::kCpuNumFieldNumber;
+const int MessageHeartBeat::kCpuUserFieldNumber;
+const int MessageHeartBeat::kCpuSysFieldNumber;
+const int MessageHeartBeat::kLoad1MinFieldNumber;
+const int MessageHeartBeat::kLoad5MinFieldNumber;
+const int MessageHeartBeat::kLoad15MinFieldNumber;
 #endif  // !_MSC_VER
 
 MessageHeartBeat::MessageHeartBeat()
@@ -115,8 +134,17 @@ MessageHeartBeat::MessageHeartBeat(const MessageHeartBeat& from)
 }
 
 void MessageHeartBeat::SharedCtor() {
+  ::google::protobuf::internal::GetEmptyString();
   _cached_size_ = 0;
   code_ = 0;
+  memtotal_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  memuesed_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  cpunum_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  cpuuser_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  cpusys_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  load1min_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  load5min_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  load15min_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
 }
 
@@ -126,6 +154,30 @@ MessageHeartBeat::~MessageHeartBeat() {
 }
 
 void MessageHeartBeat::SharedDtor() {
+  if (memtotal_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    delete memtotal_;
+  }
+  if (memuesed_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    delete memuesed_;
+  }
+  if (cpunum_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    delete cpunum_;
+  }
+  if (cpuuser_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    delete cpuuser_;
+  }
+  if (cpusys_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    delete cpusys_;
+  }
+  if (load1min_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    delete load1min_;
+  }
+  if (load5min_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    delete load5min_;
+  }
+  if (load15min_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    delete load15min_;
+  }
   if (this != default_instance_) {
   }
 }
@@ -152,7 +204,49 @@ MessageHeartBeat* MessageHeartBeat::New() const {
 }
 
 void MessageHeartBeat::Clear() {
-  code_ = 0;
+  if (_has_bits_[0 / 32] & 255) {
+    code_ = 0;
+    if (has_memtotal()) {
+      if (memtotal_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+        memtotal_->clear();
+      }
+    }
+    if (has_memuesed()) {
+      if (memuesed_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+        memuesed_->clear();
+      }
+    }
+    if (has_cpunum()) {
+      if (cpunum_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+        cpunum_->clear();
+      }
+    }
+    if (has_cpuuser()) {
+      if (cpuuser_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+        cpuuser_->clear();
+      }
+    }
+    if (has_cpusys()) {
+      if (cpusys_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+        cpusys_->clear();
+      }
+    }
+    if (has_load1min()) {
+      if (load1min_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+        load1min_->clear();
+      }
+    }
+    if (has_load5min()) {
+      if (load5min_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+        load5min_->clear();
+      }
+    }
+  }
+  if (has_load15min()) {
+    if (load15min_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+      load15min_->clear();
+    }
+  }
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
   mutable_unknown_fields()->Clear();
 }
@@ -174,6 +268,142 @@ bool MessageHeartBeat::MergePartialFromCodedStream(
                    ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
                  input, &code_)));
           set_has_code();
+        } else {
+          goto handle_unusual;
+        }
+        if (input->ExpectTag(18)) goto parse_memTotal;
+        break;
+      }
+
+      // optional string memTotal = 2;
+      case 2: {
+        if (tag == 18) {
+         parse_memTotal:
+          DO_(::google::protobuf::internal::WireFormatLite::ReadString(
+                input, this->mutable_memtotal()));
+          ::google::protobuf::internal::WireFormat::VerifyUTF8StringNamedField(
+            this->memtotal().data(), this->memtotal().length(),
+            ::google::protobuf::internal::WireFormat::PARSE,
+            "memtotal");
+        } else {
+          goto handle_unusual;
+        }
+        if (input->ExpectTag(26)) goto parse_memUesed;
+        break;
+      }
+
+      // optional string memUesed = 3;
+      case 3: {
+        if (tag == 26) {
+         parse_memUesed:
+          DO_(::google::protobuf::internal::WireFormatLite::ReadString(
+                input, this->mutable_memuesed()));
+          ::google::protobuf::internal::WireFormat::VerifyUTF8StringNamedField(
+            this->memuesed().data(), this->memuesed().length(),
+            ::google::protobuf::internal::WireFormat::PARSE,
+            "memuesed");
+        } else {
+          goto handle_unusual;
+        }
+        if (input->ExpectTag(34)) goto parse_cpuNum;
+        break;
+      }
+
+      // optional string cpuNum = 4;
+      case 4: {
+        if (tag == 34) {
+         parse_cpuNum:
+          DO_(::google::protobuf::internal::WireFormatLite::ReadString(
+                input, this->mutable_cpunum()));
+          ::google::protobuf::internal::WireFormat::VerifyUTF8StringNamedField(
+            this->cpunum().data(), this->cpunum().length(),
+            ::google::protobuf::internal::WireFormat::PARSE,
+            "cpunum");
+        } else {
+          goto handle_unusual;
+        }
+        if (input->ExpectTag(42)) goto parse_cpuUser;
+        break;
+      }
+
+      // optional string cpuUser = 5;
+      case 5: {
+        if (tag == 42) {
+         parse_cpuUser:
+          DO_(::google::protobuf::internal::WireFormatLite::ReadString(
+                input, this->mutable_cpuuser()));
+          ::google::protobuf::internal::WireFormat::VerifyUTF8StringNamedField(
+            this->cpuuser().data(), this->cpuuser().length(),
+            ::google::protobuf::internal::WireFormat::PARSE,
+            "cpuuser");
+        } else {
+          goto handle_unusual;
+        }
+        if (input->ExpectTag(50)) goto parse_cpuSys;
+        break;
+      }
+
+      // optional string cpuSys = 6;
+      case 6: {
+        if (tag == 50) {
+         parse_cpuSys:
+          DO_(::google::protobuf::internal::WireFormatLite::ReadString(
+                input, this->mutable_cpusys()));
+          ::google::protobuf::internal::WireFormat::VerifyUTF8StringNamedField(
+            this->cpusys().data(), this->cpusys().length(),
+            ::google::protobuf::internal::WireFormat::PARSE,
+            "cpusys");
+        } else {
+          goto handle_unusual;
+        }
+        if (input->ExpectTag(58)) goto parse_load1min;
+        break;
+      }
+
+      // optional string load1min = 7;
+      case 7: {
+        if (tag == 58) {
+         parse_load1min:
+          DO_(::google::protobuf::internal::WireFormatLite::ReadString(
+                input, this->mutable_load1min()));
+          ::google::protobuf::internal::WireFormat::VerifyUTF8StringNamedField(
+            this->load1min().data(), this->load1min().length(),
+            ::google::protobuf::internal::WireFormat::PARSE,
+            "load1min");
+        } else {
+          goto handle_unusual;
+        }
+        if (input->ExpectTag(66)) goto parse_load5min;
+        break;
+      }
+
+      // optional string load5min = 8;
+      case 8: {
+        if (tag == 66) {
+         parse_load5min:
+          DO_(::google::protobuf::internal::WireFormatLite::ReadString(
+                input, this->mutable_load5min()));
+          ::google::protobuf::internal::WireFormat::VerifyUTF8StringNamedField(
+            this->load5min().data(), this->load5min().length(),
+            ::google::protobuf::internal::WireFormat::PARSE,
+            "load5min");
+        } else {
+          goto handle_unusual;
+        }
+        if (input->ExpectTag(74)) goto parse_load15min;
+        break;
+      }
+
+      // optional string load15min = 9;
+      case 9: {
+        if (tag == 74) {
+         parse_load15min:
+          DO_(::google::protobuf::internal::WireFormatLite::ReadString(
+                input, this->mutable_load15min()));
+          ::google::protobuf::internal::WireFormat::VerifyUTF8StringNamedField(
+            this->load15min().data(), this->load15min().length(),
+            ::google::protobuf::internal::WireFormat::PARSE,
+            "load15min");
         } else {
           goto handle_unusual;
         }
@@ -211,6 +441,86 @@ void MessageHeartBeat::SerializeWithCachedSizes(
     ::google::protobuf::internal::WireFormatLite::WriteInt32(1, this->code(), output);
   }
 
+  // optional string memTotal = 2;
+  if (has_memtotal()) {
+    ::google::protobuf::internal::WireFormat::VerifyUTF8StringNamedField(
+      this->memtotal().data(), this->memtotal().length(),
+      ::google::protobuf::internal::WireFormat::SERIALIZE,
+      "memtotal");
+    ::google::protobuf::internal::WireFormatLite::WriteStringMaybeAliased(
+      2, this->memtotal(), output);
+  }
+
+  // optional string memUesed = 3;
+  if (has_memuesed()) {
+    ::google::protobuf::internal::WireFormat::VerifyUTF8StringNamedField(
+      this->memuesed().data(), this->memuesed().length(),
+      ::google::protobuf::internal::WireFormat::SERIALIZE,
+      "memuesed");
+    ::google::protobuf::internal::WireFormatLite::WriteStringMaybeAliased(
+      3, this->memuesed(), output);
+  }
+
+  // optional string cpuNum = 4;
+  if (has_cpunum()) {
+    ::google::protobuf::internal::WireFormat::VerifyUTF8StringNamedField(
+      this->cpunum().data(), this->cpunum().length(),
+      ::google::protobuf::internal::WireFormat::SERIALIZE,
+      "cpunum");
+    ::google::protobuf::internal::WireFormatLite::WriteStringMaybeAliased(
+      4, this->cpunum(), output);
+  }
+
+  // optional string cpuUser = 5;
+  if (has_cpuuser()) {
+    ::google::protobuf::internal::WireFormat::VerifyUTF8StringNamedField(
+      this->cpuuser().data(), this->cpuuser().length(),
+      ::google::protobuf::internal::WireFormat::SERIALIZE,
+      "cpuuser");
+    ::google::protobuf::internal::WireFormatLite::WriteStringMaybeAliased(
+      5, this->cpuuser(), output);
+  }
+
+  // optional string cpuSys = 6;
+  if (has_cpusys()) {
+    ::google::protobuf::internal::WireFormat::VerifyUTF8StringNamedField(
+      this->cpusys().data(), this->cpusys().length(),
+      ::google::protobuf::internal::WireFormat::SERIALIZE,
+      "cpusys");
+    ::google::protobuf::internal::WireFormatLite::WriteStringMaybeAliased(
+      6, this->cpusys(), output);
+  }
+
+  // optional string load1min = 7;
+  if (has_load1min()) {
+    ::google::protobuf::internal::WireFormat::VerifyUTF8StringNamedField(
+      this->load1min().data(), this->load1min().length(),
+      ::google::protobuf::internal::WireFormat::SERIALIZE,
+      "load1min");
+    ::google::protobuf::internal::WireFormatLite::WriteStringMaybeAliased(
+      7, this->load1min(), output);
+  }
+
+  // optional string load5min = 8;
+  if (has_load5min()) {
+    ::google::protobuf::internal::WireFormat::VerifyUTF8StringNamedField(
+      this->load5min().data(), this->load5min().length(),
+      ::google::protobuf::internal::WireFormat::SERIALIZE,
+      "load5min");
+    ::google::protobuf::internal::WireFormatLite::WriteStringMaybeAliased(
+      8, this->load5min(), output);
+  }
+
+  // optional string load15min = 9;
+  if (has_load15min()) {
+    ::google::protobuf::internal::WireFormat::VerifyUTF8StringNamedField(
+      this->load15min().data(), this->load15min().length(),
+      ::google::protobuf::internal::WireFormat::SERIALIZE,
+      "load15min");
+    ::google::protobuf::internal::WireFormatLite::WriteStringMaybeAliased(
+      9, this->load15min(), output);
+  }
+
   if (!unknown_fields().empty()) {
     ::google::protobuf::internal::WireFormat::SerializeUnknownFields(
         unknown_fields(), output);
@@ -224,6 +534,94 @@ void MessageHeartBeat::SerializeWithCachedSizes(
   // required int32 code = 1;
   if (has_code()) {
     target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(1, this->code(), target);
+  }
+
+  // optional string memTotal = 2;
+  if (has_memtotal()) {
+    ::google::protobuf::internal::WireFormat::VerifyUTF8StringNamedField(
+      this->memtotal().data(), this->memtotal().length(),
+      ::google::protobuf::internal::WireFormat::SERIALIZE,
+      "memtotal");
+    target =
+      ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
+        2, this->memtotal(), target);
+  }
+
+  // optional string memUesed = 3;
+  if (has_memuesed()) {
+    ::google::protobuf::internal::WireFormat::VerifyUTF8StringNamedField(
+      this->memuesed().data(), this->memuesed().length(),
+      ::google::protobuf::internal::WireFormat::SERIALIZE,
+      "memuesed");
+    target =
+      ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
+        3, this->memuesed(), target);
+  }
+
+  // optional string cpuNum = 4;
+  if (has_cpunum()) {
+    ::google::protobuf::internal::WireFormat::VerifyUTF8StringNamedField(
+      this->cpunum().data(), this->cpunum().length(),
+      ::google::protobuf::internal::WireFormat::SERIALIZE,
+      "cpunum");
+    target =
+      ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
+        4, this->cpunum(), target);
+  }
+
+  // optional string cpuUser = 5;
+  if (has_cpuuser()) {
+    ::google::protobuf::internal::WireFormat::VerifyUTF8StringNamedField(
+      this->cpuuser().data(), this->cpuuser().length(),
+      ::google::protobuf::internal::WireFormat::SERIALIZE,
+      "cpuuser");
+    target =
+      ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
+        5, this->cpuuser(), target);
+  }
+
+  // optional string cpuSys = 6;
+  if (has_cpusys()) {
+    ::google::protobuf::internal::WireFormat::VerifyUTF8StringNamedField(
+      this->cpusys().data(), this->cpusys().length(),
+      ::google::protobuf::internal::WireFormat::SERIALIZE,
+      "cpusys");
+    target =
+      ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
+        6, this->cpusys(), target);
+  }
+
+  // optional string load1min = 7;
+  if (has_load1min()) {
+    ::google::protobuf::internal::WireFormat::VerifyUTF8StringNamedField(
+      this->load1min().data(), this->load1min().length(),
+      ::google::protobuf::internal::WireFormat::SERIALIZE,
+      "load1min");
+    target =
+      ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
+        7, this->load1min(), target);
+  }
+
+  // optional string load5min = 8;
+  if (has_load5min()) {
+    ::google::protobuf::internal::WireFormat::VerifyUTF8StringNamedField(
+      this->load5min().data(), this->load5min().length(),
+      ::google::protobuf::internal::WireFormat::SERIALIZE,
+      "load5min");
+    target =
+      ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
+        8, this->load5min(), target);
+  }
+
+  // optional string load15min = 9;
+  if (has_load15min()) {
+    ::google::protobuf::internal::WireFormat::VerifyUTF8StringNamedField(
+      this->load15min().data(), this->load15min().length(),
+      ::google::protobuf::internal::WireFormat::SERIALIZE,
+      "load15min");
+    target =
+      ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
+        9, this->load15min(), target);
   }
 
   if (!unknown_fields().empty()) {
@@ -243,6 +641,64 @@ int MessageHeartBeat::ByteSize() const {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::Int32Size(
           this->code());
+    }
+
+    // optional string memTotal = 2;
+    if (has_memtotal()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::StringSize(
+          this->memtotal());
+    }
+
+    // optional string memUesed = 3;
+    if (has_memuesed()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::StringSize(
+          this->memuesed());
+    }
+
+    // optional string cpuNum = 4;
+    if (has_cpunum()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::StringSize(
+          this->cpunum());
+    }
+
+    // optional string cpuUser = 5;
+    if (has_cpuuser()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::StringSize(
+          this->cpuuser());
+    }
+
+    // optional string cpuSys = 6;
+    if (has_cpusys()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::StringSize(
+          this->cpusys());
+    }
+
+    // optional string load1min = 7;
+    if (has_load1min()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::StringSize(
+          this->load1min());
+    }
+
+    // optional string load5min = 8;
+    if (has_load5min()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::StringSize(
+          this->load5min());
+    }
+
+  }
+  if (_has_bits_[8 / 32] & (0xffu << (8 % 32))) {
+    // optional string load15min = 9;
+    if (has_load15min()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::StringSize(
+          this->load15min());
     }
 
   }
@@ -275,6 +731,32 @@ void MessageHeartBeat::MergeFrom(const MessageHeartBeat& from) {
     if (from.has_code()) {
       set_code(from.code());
     }
+    if (from.has_memtotal()) {
+      set_memtotal(from.memtotal());
+    }
+    if (from.has_memuesed()) {
+      set_memuesed(from.memuesed());
+    }
+    if (from.has_cpunum()) {
+      set_cpunum(from.cpunum());
+    }
+    if (from.has_cpuuser()) {
+      set_cpuuser(from.cpuuser());
+    }
+    if (from.has_cpusys()) {
+      set_cpusys(from.cpusys());
+    }
+    if (from.has_load1min()) {
+      set_load1min(from.load1min());
+    }
+    if (from.has_load5min()) {
+      set_load5min(from.load5min());
+    }
+  }
+  if (from._has_bits_[8 / 32] & (0xffu << (8 % 32))) {
+    if (from.has_load15min()) {
+      set_load15min(from.load15min());
+    }
   }
   mutable_unknown_fields()->MergeFrom(from.unknown_fields());
 }
@@ -300,6 +782,14 @@ bool MessageHeartBeat::IsInitialized() const {
 void MessageHeartBeat::Swap(MessageHeartBeat* other) {
   if (other != this) {
     std::swap(code_, other->code_);
+    std::swap(memtotal_, other->memtotal_);
+    std::swap(memuesed_, other->memuesed_);
+    std::swap(cpunum_, other->cpunum_);
+    std::swap(cpuuser_, other->cpuuser_);
+    std::swap(cpusys_, other->cpusys_);
+    std::swap(load1min_, other->load1min_);
+    std::swap(load5min_, other->load5min_);
+    std::swap(load15min_, other->load15min_);
     std::swap(_has_bits_[0], other->_has_bits_[0]);
     _unknown_fields_.Swap(&other->_unknown_fields_);
     std::swap(_cached_size_, other->_cached_size_);

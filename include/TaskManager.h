@@ -40,7 +40,8 @@ class TaskManager :
 {
 public:
 
-    // Update each task status and launch it if is pending. 
+    // Update and do the operations by the status
+    // No directly control of task's status in Task Managers
     void  Update();
 
     // Abort task by aborting all subtasks

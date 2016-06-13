@@ -67,6 +67,23 @@ inline void Servant::Refresh()
     this->last_update_time_ = Timer::Tick();
 }
 
+// Update by a heartbeat message
+void Servant::Refresh( uptr<MessageHeartBeat> msg )
+{
+    // firstly refresh as the old one 
+    Refresh();
+
+    // then update all system information
+    sysinfo_mem_total  = msg->memtotal();
+    sysinfo_mem_uesed  = msg->memuesed();
+    sysinfo_cpu_num    = msg->cpunum();
+    sysinfo_cpu_user   = msg->cpuuser();
+    sysinfo_cpu_sys    = msg->cpusys();
+    sysinfo_load_1min  = msg->load1min();
+    sysinfo_load_5min  = msg->load5min();
+    sysinfo_load_15min = msg->load15min();
+}
+
 // Stop the current runing task.
 void Servant::AbortTask()
 {

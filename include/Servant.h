@@ -29,6 +29,7 @@ limitations under the License.
 
 #include "TaskDescriptor.h"
 #include "ServantSession.h"
+#include "MessageHeartBeat.pb.h"
 #include "Error.h"
 #include <string.h>
 
@@ -58,7 +59,10 @@ public:
 
     // Update the last update time
     // @note    : be called when reciving a heartbeat message from servant.
-    void Refresh();;
+    void Refresh();
+
+    // Update by a heartbeat message
+    void Refresh( uptr<MessageHeartBeat> msg );
 
     // Stop current runing task.
     void AbortTask();
@@ -108,6 +112,17 @@ public:
     sptr<TaskDescriptor> CurrentTask()              { return current_task_;        }
     void CurrentTask( sptr<TaskDescriptor> value )  { this->current_task_ = value; }
 
+    // Getters for sysinfos
+    // @note : no setter as this can be only updated via method Refresh( uptr<MessageHeartBeat> msg )
+    string SysInfoMemTotal()  { return sysinfo_mem_total;  }
+    string SysInfoMemUsed()   { return sysinfo_mem_uesed;  }
+    string SysInfoCPUNum()    { return sysinfo_cpu_num;    }
+    string SysInfoCPUUser()   { return sysinfo_cpu_user;   }
+    string SysInfoCPUSys()    { return sysinfo_cpu_sys;    }
+    string SysInfoLoad1Min()  { return sysinfo_load_1min;  }
+    string SysInfoLoad5Min()  { return sysinfo_load_5min;  }
+    string SysInfoLoad15Min() { return sysinfo_load_15min; }
+
 private:
 
     // Check time out and kick the dead session from ServantManager.
@@ -143,6 +158,16 @@ private:
     
     // Servant's type.
     ServantTypes::Code    type_        = ServantTypes::kOther;
+
+    // System Info for monitor will be update only by the heartbeat
+    string sysinfo_mem_total  = "";
+    string sysinfo_mem_uesed  = "";
+    string sysinfo_cpu_num    = "";
+    string sysinfo_cpu_user   = "";
+    string sysinfo_cpu_sys    = "";
+    string sysinfo_load_1min  = "";
+    string sysinfo_load_5min  = "";
+    string sysinfo_load_15min = "";
 
     // Current asigned task.
     sptr<TaskDescriptor> current_task_ = nullptr;

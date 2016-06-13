@@ -1,4 +1,12 @@
 message MessageHeartBeat
 {
-    required int32 code = 1;
+    required int32  code      = 1;
+	optional string memTotal  = 2;
+	optional string memUesed  = 3;
+	optional string cpuNum    = 4;
+	optional string cpuUser   = 5;
+	optional string cpuSys    = 6;
+	optional string load1min  = 7;
+	optional string load5min  = 8;
+	optional string load15min = 9;
 }
